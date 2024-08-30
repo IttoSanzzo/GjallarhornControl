@@ -18,6 +18,13 @@
 					class="formArea"
 					action="http://localhost:5500/Home/ControlPanel.html"
 					method="GET">
+					<label for="targetBot" id="targetBotLabel"
+						>Target Bot</label
+					>
+					<select name="targetBot" id="targetBot">
+						<option value="Gjallarhorn">Gjallarhorn</option>
+						<option value="ChariotSanzzo">ChariotSanzzo</option>
+					</select>
 					<div class="textEntry">
 						<label for="userId">User Id:</label>
 						<textarea
@@ -41,8 +48,8 @@
 							maxlength="90"
 							spellcheck="false"></textarea>
 					</div>
-					<span id="submitButton"
-						><button type="submit">Login</button></span
+					<span id="submitButton" onclick="trySubmit()"
+						><div>Login</div></span
 					>
 				</form>
 			</div>

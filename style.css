@@ -44,6 +44,19 @@ body * {
 
 /* Login Block */
 
+#targetBot {
+	display: block;
+	margin: 0 auto;
+	background-color: var(--SignInBlockBackground);
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+#targetBotLabel {
+	display: inline;
+	margin: 0 170px;
+}
+
 .entryBlock label {
 	color: var(--textGolden);
 }
@@ -67,7 +80,7 @@ body * {
 .textEntry {
 	color: var(--textGolden);
 	font-size: 20px;
-	margin: 5% 0;
+	margin: 2% 0;
 	padding: 8px;
 }
 
@@ -91,20 +104,22 @@ body * {
 
 /*  submitbutton */
 
-#submitButton button {
+#submitButton div {
 	color: var(--textGolden);
-	background: none;
+	background-color: rgb(10, 0, 51);
 	display: block;
 	margin: 0 auto;
 	width: 200px;
 	height: 40px;
+	text-align: center;
 	font-size: 22px;
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 		sans-serif;
 	border-radius: 20px;
+	border: 4px solid rgb(27, 13, 68);
 }
 #submitButton :hover {
-	background: var(--bg-color);
+	background: rgb(22, 0, 110);
 	border: 1.5px solid var(--button-hover);
 	color: var(--button-hover);
 }
