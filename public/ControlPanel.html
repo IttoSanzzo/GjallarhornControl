@@ -12,6 +12,21 @@
 	</head>
 	<body>
 		<div id="centralContainer">
+			<div id="utilsButtonsContainer">
+				<button
+					class="utilsButton"
+					id="loopButton"
+					onclick="SocketSimpleCall('Loop')">
+					<img src="/assets/CircularLoopIcon.png" alt="LoopButton" />
+				</button>
+				<button
+					class="utilsButton"
+					id="previousButton"
+					onclick="SocketSimpleCall('Previous')">
+					<img
+						src="/assets/CircularPreviousTrackIcon.png"
+						alt="PreviousButton" />
+				</button>
 				<button
 					class="utilsButton"
 					id="pauseButton"
@@ -19,14 +34,30 @@
 					<img
 						src="/assets/CircularPlayPauseIcon.png"
 						alt="PauseButton" />
+				</button>
+				<button
+					class="utilsButton"
+					id="nextButton"
+					onclick="SocketSimpleCall('Next')">
+					<img
+						src="/assets/CircularNextTrackIcon.png"
+						alt="NextButton" />
+				</button>
+				<button
+					class="utilsButton"
+					id="shuffleButton"
+					onclick="SocketSimpleCall('Shuffle')">
+					<img
+						src="/assets/CircularShuffleIcon.png"
+						alt="ShuffleButton" />
+				</button>
 				<button
 					class="utilsButton"
 					id="stopButton"
 					onclick="SocketSimpleCall('Stop')">
-					<img
-						src="/assets/CSHeads.png"
-						alt="StopButton" />
+					<img src="/assets/CircularStopIcon.png" alt="StopButton" />
 				</button>
+			</div>
 		</div>
 		<script src="./SocketHandler.js"></script>
 	</body>

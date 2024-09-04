@@ -32,7 +32,7 @@ body * {
 
 #centralContainer {
 	display: block;
-	position: relative;
+	/* position: relative; */
 	border: 1px, solid, var(--textGolden);
 	box-shadow: 0px 0px 30px 10px black;
 	width: 90%;
@@ -46,30 +46,29 @@ body * {
 	justify-content: center;
 }
 
+/* Utils Buttons */
+
+#utilsButtonsContainer {
+	position: fixed;
+	margin-left: -90%;
+}
+
 .utilsButton {
-	background: none;
 	display: block;
-	position: absolute;
-	margin-left: -100%;
 	border: 3px solid var(--textGolden);
 	width: 66px;
 	height: 66px;
 	border-radius: 50%;
 	overflow: hidden;
+	margin: 20px 0;
 }
 
 .utilsButton img {
 	background-color: rgb(89, 89, 89);
-	justify-self: center;
-	display: inline;
 	border-radius: inherit;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-}
-
-#stopButton {
-	margin-top: 75px;
 }
 
 /* SFX Blocks */
