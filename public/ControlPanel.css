@@ -1,0 +1,122 @@
+/* General Settings */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	background-color: var(--bg-color);
+	background-image: url(/assets/Gjallarhorn.jpg);
+	background-repeat: repeat-x;
+	background-attachment: fixed;
+	background-size: 33.33% 100vh;
+}
+
+body * {
+	font-family: "Roboto", sans-serif;
+	color: var(--text-color);
+}
+
+:root {
+	--bg-color: rgba(0, 0, 55, 1);
+	--text-color: #ffffff;
+	--centralContainerColor: rgba(0, 0, 50, 1);
+	--SignInBlockBackground: rgba(0, 0, 40, 1);
+	--textGolden: #ba9f08;
+	--button-hover: #ffff00;
+	--button-color: rgba (0, 0, 0, 0.05);
+}
+
+/* Central Container */
+
+#centralContainer {
+	display: block;
+	position: relative;
+	border: 1px, solid, var(--textGolden);
+	box-shadow: 0px 0px 30px 10px black;
+	width: 90%;
+	min-height: 90vh;
+	margin: 5vh auto;
+	padding: 30px;
+	border-radius: 15px;
+	background-color: var(--centralContainerColor);
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+}
+
+.utilsButton {
+	background: none;
+	display: block;
+	position: absolute;
+	margin-left: -100%;
+	border: 3px solid var(--textGolden);
+	width: 66px;
+	height: 66px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.utilsButton img {
+	background-color: rgb(89, 89, 89);
+	justify-self: center;
+	display: inline;
+	border-radius: inherit;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+#stopButton {
+	margin-top: 75px;
+}
+
+/* SFX Blocks */
+
+.sfxGroupContainer {
+	margin: 20px;
+	padding: 10px;
+	width: 520px;
+	min-height: 200px;
+	border-radius: 15px;
+	box-shadow: 0 0 10px 4px black;
+	border: 1px solid var(--SignInBlockBackground);
+}
+
+.sfxGroupContainer h1 {
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+		sans-serif;
+	color: var(--textGolden);
+	padding-left: 15px;
+	border-radius: 15px;
+	background-color: var(--SignInBlockBackground);
+	border: 1px solid black;
+}
+
+.sfxButtonsContainer {
+	display: flex;
+	flex-flow: wrap;
+	margin: 10px;
+	justify-content: center;
+}
+
+.sfxButtonsContainer button {
+	margin: 5px;
+	background-color: var(--SignInBlockBackground);
+	min-width: 226px;
+	min-height: 50px;
+	width: 220px;
+	height: 50px;
+	/* max-width: 445px; */
+	max-height: 100px;
+	border-radius: 7px;
+	overflow: hidden;
+	resize: both;
+}
+
+.sfxButtonsContainer button:hover {
+	color: var(--textGolden);
+	border-color: var(--textGolden);
+	box-shadow: 0 0 4px 1px var(--textGolden);
+}

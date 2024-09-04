@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>ControlControl</title>
+		<link rel="shortcut icon" href="/assets/GjallarhornCrop.ico" />
+		<link rel="stylesheet" href="./ControlPanel.css" />
+		<script src="./client.js">
+			defer
+		</script>
+	</head>
+	<body>
+		<div id="centralContainer">
+				<button
+					class="utilsButton"
+					id="pauseButton"
+					onclick="SocketSimpleCall('Pause')">
+					<img
+						src="/assets/CircularPlayPauseIcon.png"
+						alt="PauseButton" />
+				<button
+					class="utilsButton"
+					id="stopButton"
+					onclick="SocketSimpleCall('Stop')">
+					<img
+						src="/assets/CSHeads.png"
+						alt="StopButton" />
+				</button>
+		</div>
+		<script src="./SocketHandler.js"></script>
+	</body>
+</html>
