@@ -12,12 +12,15 @@
 	</head>
 	<body>
 		<div id="centralContainer">
+			<div id="notification">Done!</div>
 			<div id="utilsButtonsContainer">
 				<button
 					class="utilsButton"
-					id="loopButton"
-					onclick="SocketSimpleCall('Loop')">
-					<img src="/assets/CircularLoopIcon.png" alt="LoopButton" />
+					id="pauseButton"
+					onclick="SocketSimpleCall('Pause')">
+					<img
+						src="/assets/CircularPlayPauseIcon.png"
+						alt="PauseButton" />
 				</button>
 				<button
 					class="utilsButton"
@@ -29,19 +32,17 @@
 				</button>
 				<button
 					class="utilsButton"
-					id="pauseButton"
-					onclick="SocketSimpleCall('Pause')">
-					<img
-						src="/assets/CircularPlayPauseIcon.png"
-						alt="PauseButton" />
-				</button>
-				<button
-					class="utilsButton"
 					id="nextButton"
 					onclick="SocketSimpleCall('Next')">
 					<img
 						src="/assets/CircularNextTrackIcon.png"
 						alt="NextButton" />
+				</button>
+				<button
+					class="utilsButton"
+					id="loopButton"
+					onclick="SocketSimpleCall('Loop')">
+					<img src="/assets/CircularLoopIcon.png" alt="LoopButton" />
 				</button>
 				<button
 					class="utilsButton"
@@ -53,9 +54,17 @@
 				</button>
 				<button
 					class="utilsButton"
+					id="resetButton"
+					onclick="SocketSimpleCall('Reset')">
+					<img src="/assets/CircularResetIcon.png" alt="StopButton" />
+				</button>
+				<button
+					class="utilsButton"
 					id="stopButton"
 					onclick="SocketSimpleCall('Stop')">
-					<img src="/assets/CircularStopIcon.png" alt="StopButton" />
+					<img
+						src="/assets/CircularRemoveIcon.png"
+						alt="StopButton" />
 				</button>
 			</div>
 		</div>

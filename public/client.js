@@ -42,9 +42,12 @@ async function postTable() {
 document.addEventListener('DOMContentLoaded', async () => {
 	console.log("DOM Loaded");
 	try {
+		document.title = `${targetBot} ControlPanel`;
 		dbResponseContainer = document.getElementById("centralContainer");
 		const soundTable = await getSoundsTable();
 		await doButtons(soundTable.data.results);
+		if (targetBot == "Gjallarhorn")
+			await removeFutilButtons();
 	} catch (ex) {
 		console.error(`Handled Error: ${ex}`);
 	}
@@ -90,7 +93,7 @@ async function newButton(group, name, link, description) {
 	const button = document.createElement("button");
 	button.type = "button";
 	button.setAttribute("onclick", `SocketPlayCall('${link}')`);
-	button.textContent = name;
+	button.textContent = `「 ${name} 」`;
 	if (description != null)
 		button.title = description;
 	else
@@ -98,6 +101,16 @@ async function newButton(group, name, link, description) {
 	const container = await getButtonsContainer(group);
 	container.appendChild(button);
 	return (button);
+}
+async function removeFutilButtons() {
+	const previousButton = document.getElementById("previousButton");
+	const nextButton = document.getElementById("nextButton");
+	const shuffleButton = document.getElementById("shuffleButton");
+	const resetButton = document.getElementById("resetButton");
+	previousButton.remove();
+	nextButton.remove();
+	shuffleButton.remove();
+	resetButton.remove();
 }
 async function getNormalizedId(id) {
 	return (id.replace(/\s+/g, ''));

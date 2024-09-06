@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 // 3. Start Server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
 	console.log(`Main Server running at port: ${PORT}`);
 });
 
