@@ -7,7 +7,7 @@ if (queryParams["targetBot"] == "Gjallarhorn")
 	port = 11767;
 else
 	port = 11768;
-const socketUrl = `http://189.24.27.5:${port}/`;
+const socketUrl = `https://189.24.27.5:${port}/`;
 let socket;
 createWebSocket(socketUrl);
 
