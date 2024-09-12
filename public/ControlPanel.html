@@ -12,7 +12,27 @@
 	</head>
 	<body>
 		<div id="centralContainer">
-			<div id="notification">Done!</div>
+			<div id="searchBarContainer">
+				<label for="searchBar"></label>
+				<input
+					type="text"
+					id="searchBar"
+					name="searchBar"
+					placeholder="Search" />
+				<div id="searchBarButtons">
+					<span id="searchBarReset" onclick="resetSearchBar()"
+						><img
+							src="/assets/CircularRemoveIcon.png"
+							alt="Erase Search"
+					/></span>
+					<span id="searchBarPlay" onclick="playSearchBar()"
+						><img
+							src="/assets/CircularPlayIcon.png"
+							alt="Play Search"
+					/></span>
+				</div>
+			</div>
+			<div id="notification">Done</div>
 			<div id="utilsButtonsContainer">
 				<button
 					class="utilsButton"

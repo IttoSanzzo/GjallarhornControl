@@ -14,16 +14,43 @@ var runCount = 0;
 router.get("/databases", async function (request, response) {
 	console.log(`Trying to get from API for ${request.query.targetBot}: ${++runCount}`);
 	try {
+		let searchName = request.query.searchName;
+		console.log(`$API for query: ${searchName}`);
 		const receivedDb = await notion.databases.query({
 			database_id: pageId,
 			filter: {
-				property: "Bot",
-				multi_select: {
-					contains: request.query.targetBot
-				}
+				and: [
+					{
+						property: "Bot",
+						multi_select: {
+							contains: request.query.targetBot
+						}
+					},
+					{
+						property: "Name",
+						title: {
+							contains: searchName
+						}
+					}
+				]
 			}
 		});
 		response.json({ message: "success!", data: receivedDb });
+	} catch (error) {
+		response.json({ message: "error", error });
+	}
+});
+
+router.get("/socketip", async function (request, response) {
+	console.log(`Trying to get from IP Adress for GjallarhornSocketConnection`);
+	try {
+		let ipAdress = null;
+		fetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => {
+			ipAdress = data.ip;
+			response.json({ message: "success!", data: ipAdress });
+		}).catch(error => {
+			console.error('Error obtaining the IP Adress', error);
+		});
 	} catch (error) {
 		response.json({ message: "error", error });
 	}

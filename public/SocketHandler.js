@@ -7,9 +7,31 @@ if (queryParams["targetBot"] == "Gjallarhorn")
 	port = 11767;
 else
 	port = 11768;
-const socketUrl = `http://189.24.27.5:${port}/`;
+let ipAdress = null;
+let socketUrl;
 let socket;
-createWebSocket(socketUrl);
+
+async function initializeSocket() {
+	ipAdress = await getIpAdress();
+	if (ipAdress == null)
+		ipAdress = "189.24.27.5";
+	socketUrl = `http://${ipAdress}:${port}/`;
+	createWebSocket(socketUrl);
+}
+
+async function getIpAdress() {
+	try {
+		const endpoint = new URL("/api/socketip", window.location.origin);
+		const response = await fetch(endpoint, {
+			method: "GET",
+		});
+		const responseJson = await response.json();
+		console.log(`YAAAY ${responseJson.data}`);
+		return (responseJson.data);
+	} catch (ex) {
+		console.error(ex);
+	}
+}
 
 function createWebSocket(url) {
 	socket = new WebSocket(url);
@@ -87,7 +109,7 @@ function showNotification(duration, color, content) {
 	setTimeout(() => {
 		notification.style.opacity = '0';
 		notification.style.visibility = 'hidden';
-		notification.textContent = "Done";
+		notification.textContent = "None";
 	}, 1000 * duration);
 }
 
