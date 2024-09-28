@@ -12,7 +12,7 @@
 
 <p align="center">
 <img alt="Status" src="https://img.shields.io/badge/status-active-success.svg">
-<a href="./LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+<img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg">
 </p>
 
 <p align="center">A site to serve as fronted for Music and SFC in my <a>ChariotSanzzo</a> Discord Bot.</p>
