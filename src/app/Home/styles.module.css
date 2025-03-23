@@ -1,0 +1,23 @@
+.homeContainer {
+	background-color: var(--cl-gray-800);
+	border-radius: var(--rd-lg);
+	box-shadow: 0px 0px 30px 10px black;
+
+	width: 500px;
+	height: 400px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: var(--sp-4);
+	padding: var(--sp-8);
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.homeTitle {
+	color: var(--textGolden);
+}

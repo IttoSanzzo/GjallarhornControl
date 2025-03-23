@@ -1,0 +1,12 @@
+.controlPanelContainer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	background-color: var(--cl-gray-900);
+	width: 95vw;
+	height: 90vh;
+	border-radius: var(--rd-lg);
+	box-shadow: 0px 0px 2px 1px var(--textGolden);
+}
