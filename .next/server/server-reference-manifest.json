@@ -1,5 +1,1 @@
-{
-  "node": {},
-  "edge": {},
-  "encryptionKey": "OcsmtR4OjXMhE6xXJCfmBJSp9snxBYchd1U/Ydo7p/c="
-}
+{"node":{"40dc9f275a587c53eb1c55a6ad739bd55f2b242c4a":{"workers":{"app/api/[targetBot]/action/route":{"moduleId":"8000","async":true},"app/api/[targetBot]/play/route":{"moduleId":"8000","async":true}},"layer":{"app/api/[targetBot]/action/route":"rsc","app/api/[targetBot]/play/route":"rsc"}},"0027a3f3a4933538eaf33a61d34fc203ccdc282e25":{"workers":{"app/[targetBot]/control-panel/page":{"moduleId":"5291","async":false}},"layer":{"app/[targetBot]/control-panel/page":"rsc"}},"402db7eeb7a6cb6162b5dee3ffa24afb63789fdfd9":{"workers":{"app/[targetBot]/control-panel/page":{"moduleId":"5291","async":false}},"layer":{"app/[targetBot]/control-panel/page":"rsc"}}},"edge":{},"encryptionKey":"EsoWfis3KNEsH3q6gPi/O8TB2RTKizQdCu/sTywcPm0="}

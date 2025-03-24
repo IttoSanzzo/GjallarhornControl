@@ -1,5 +1,9 @@
 {
   "/_not-found/page": "/_not-found",
-  "/control-panel/page": "/control-panel",
-  "/page": "/"
+  "/api/[targetBot]/action/route": "/api/[targetBot]/action",
+  "/api/[targetBot]/play/route": "/api/[targetBot]/play",
+  "/api/[targetBot]/notion/route": "/api/[targetBot]/notion",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/[targetBot]/control-panel/page": "/[targetBot]/control-panel"
 }

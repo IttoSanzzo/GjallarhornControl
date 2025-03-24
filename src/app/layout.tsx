@@ -4,6 +4,7 @@ import "@/styles/global.css";
 
 export const metadata: Metadata = {
 	title: "Gjallarhorn Control",
+	icons: "favicon.ico",
 };
 
 export default function RootLayout({

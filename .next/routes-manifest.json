@@ -13,7 +13,40 @@
     }
   ],
   "headers": [],
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/api/[targetBot]/action",
+      "regex": "^/api/([^/]+?)/action(?:/)?$",
+      "routeKeys": {
+        "nxtPtargetBot": "nxtPtargetBot"
+      },
+      "namedRegex": "^/api/(?<nxtPtargetBot>[^/]+?)/action(?:/)?$"
+    },
+    {
+      "page": "/api/[targetBot]/notion",
+      "regex": "^/api/([^/]+?)/notion(?:/)?$",
+      "routeKeys": {
+        "nxtPtargetBot": "nxtPtargetBot"
+      },
+      "namedRegex": "^/api/(?<nxtPtargetBot>[^/]+?)/notion(?:/)?$"
+    },
+    {
+      "page": "/api/[targetBot]/play",
+      "regex": "^/api/([^/]+?)/play(?:/)?$",
+      "routeKeys": {
+        "nxtPtargetBot": "nxtPtargetBot"
+      },
+      "namedRegex": "^/api/(?<nxtPtargetBot>[^/]+?)/play(?:/)?$"
+    },
+    {
+      "page": "/[targetBot]/control-panel",
+      "regex": "^/([^/]+?)/control\\-panel(?:/)?$",
+      "routeKeys": {
+        "nxtPtargetBot": "nxtPtargetBot"
+      },
+      "namedRegex": "^/(?<nxtPtargetBot>[^/]+?)/control\\-panel(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
@@ -28,10 +61,10 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
-      "page": "/control-panel",
-      "regex": "^/control\\-panel(?:/)?$",
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/control\\-panel(?:/)?$"
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
     }
   ],
   "dataRoutes": [],

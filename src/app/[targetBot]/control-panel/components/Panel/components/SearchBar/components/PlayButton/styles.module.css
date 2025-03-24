@@ -1,0 +1,26 @@
+.playButtonContainer {
+	position: absolute;
+	top: -1;
+	right: -10;
+
+	color: var(--cl-white);
+	background-color: var(--cl-gray-700);
+	border: 2px solid var(--cl-gray-400);
+	box-shadow: 0 0 0 2px var(--textGolden);
+	border-radius: var(--rd-full);
+	width: var(--sp-12);
+	height: var(--sp-12);
+
+	& img {
+		height: 100%;
+		width: 100%;
+		font-size: 0;
+	}
+
+	&:hover {
+		background-color: var(--cl-gray-500);
+		border-color: var(--button-hover);
+	}
+
+	transition: 0.1s linear background, 0.5s linear border;
+}

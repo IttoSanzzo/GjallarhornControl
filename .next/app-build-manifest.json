@@ -1,3 +1,58 @@
 {
-  "pages": {}
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-545e419eb402a09c.js",
+      "static/chunks/4bd1b696-89f6a0bea192c840.js",
+      "static/chunks/684-6a932503337b99e5.js",
+      "static/chunks/main-app-8b705c66d0137bd3.js",
+      "static/chunks/app/_not-found/page-e1d96171fe53e076.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-545e419eb402a09c.js",
+      "static/chunks/4bd1b696-89f6a0bea192c840.js",
+      "static/chunks/684-6a932503337b99e5.js",
+      "static/chunks/main-app-8b705c66d0137bd3.js",
+      "static/css/45c8c847b5af85be.css",
+      "static/chunks/app/layout-eacd3f9fae516273.js"
+    ],
+    "/api/[targetBot]/action/route": [
+      "static/chunks/webpack-545e419eb402a09c.js",
+      "static/chunks/4bd1b696-89f6a0bea192c840.js",
+      "static/chunks/684-6a932503337b99e5.js",
+      "static/chunks/main-app-8b705c66d0137bd3.js",
+      "static/chunks/app/api/[targetBot]/action/route-447b8e43241130e9.js"
+    ],
+    "/api/[targetBot]/play/route": [
+      "static/chunks/webpack-545e419eb402a09c.js",
+      "static/chunks/4bd1b696-89f6a0bea192c840.js",
+      "static/chunks/684-6a932503337b99e5.js",
+      "static/chunks/main-app-8b705c66d0137bd3.js",
+      "static/chunks/app/api/[targetBot]/play/route-133032fdeba5c08e.js"
+    ],
+    "/api/[targetBot]/notion/route": [
+      "static/chunks/webpack-545e419eb402a09c.js",
+      "static/chunks/4bd1b696-89f6a0bea192c840.js",
+      "static/chunks/684-6a932503337b99e5.js",
+      "static/chunks/main-app-8b705c66d0137bd3.js",
+      "static/chunks/app/api/[targetBot]/notion/route-f86ca330a5463c40.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-545e419eb402a09c.js",
+      "static/chunks/4bd1b696-89f6a0bea192c840.js",
+      "static/chunks/684-6a932503337b99e5.js",
+      "static/chunks/main-app-8b705c66d0137bd3.js",
+      "static/css/82484f2e35e5e9fd.css",
+      "static/chunks/564-16c49adb86580829.js",
+      "static/chunks/app/page-e8246300484f68d4.js"
+    ],
+    "/[targetBot]/control-panel/page": [
+      "static/chunks/webpack-545e419eb402a09c.js",
+      "static/chunks/4bd1b696-89f6a0bea192c840.js",
+      "static/chunks/684-6a932503337b99e5.js",
+      "static/chunks/main-app-8b705c66d0137bd3.js",
+      "static/css/5f84e442e3c8ead3.css",
+      "static/chunks/659-d3687bbd1e45edb5.js",
+      "static/chunks/app/[targetBot]/control-panel/page-b5640695b2bf6adf.js"
+    ]
+  }
 }

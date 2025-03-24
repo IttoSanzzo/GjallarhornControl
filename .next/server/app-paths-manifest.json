@@ -1,1 +1,9 @@
-{}
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/[targetBot]/action/route": "app/api/[targetBot]/action/route.js",
+  "/api/[targetBot]/play/route": "app/api/[targetBot]/play/route.js",
+  "/api/[targetBot]/notion/route": "app/api/[targetBot]/notion/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/[targetBot]/control-panel/page": "app/[targetBot]/control-panel/page.js"
+}

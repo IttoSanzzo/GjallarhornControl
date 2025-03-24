@@ -38,7 +38,7 @@ export default function LoginForm() {
 
 	function handleLogin(data: LoginFormData) {
 		router.push(
-			`/control-panel?targetBot=${data.targetBot}&userId=${data.userId}&channelId=${data.channelId}`
+			`/${data.targetBot}/control-panel?userId=${data.userId}&channelId=${data.channelId}`
 		);
 	}
 
@@ -47,8 +47,8 @@ export default function LoginForm() {
 			<SelectorContainer>
 				<label>Target Bot</label>
 				<select {...register("targetBot")}>
-					<option value="Gjallarhorn">Gjallarhorn</option>
 					<option value="ChariotSanzzo">ChariotSanzzo</option>
+					<option value="Gjallarhorn">Gjallarhorn</option>
 				</select>
 			</SelectorContainer>
 			<TextInputContainer>
