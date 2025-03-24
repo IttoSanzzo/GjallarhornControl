@@ -12,6 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { QueryData } from "@/app/[targetBot]/control-panel/page";
 
 const LoginFormSchema = z.object({
 	targetBot: z.string(),
@@ -26,14 +27,27 @@ const LoginFormSchema = z.object({
 });
 type LoginFormData = z.infer<typeof LoginFormSchema>;
 
-export default function LoginForm() {
+interface LoginFormProps {
+	queryData: QueryData;
+}
+
+export default function LoginForm({ queryData }: LoginFormProps) {
 	const router = useRouter();
+	const queryUserId = queryData.userId;
+	const queryChannelId = queryData.channelId;
+	const queryTargetBot = queryData.targetBot;
+
 	const {
 		register,
 		handleSubmit,
 		formState: { isSubmitting, errors },
 	} = useForm({
 		resolver: zodResolver(LoginFormSchema),
+		defaultValues: {
+			userId: queryUserId ?? "",
+			channelId: queryChannelId ?? "",
+			targetBot: queryTargetBot ?? "ChariotSanzzo",
+		},
 	});
 
 	function handleLogin(data: LoginFormData) {

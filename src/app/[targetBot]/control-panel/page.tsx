@@ -4,7 +4,7 @@ import React from "react";
 import ControlBar from "./components/ControlBar";
 import { ControlPanelContainer } from "./styledComponents";
 import Panel from "./components/Panel";
-import { getControlPanelData, TrackCategory, TrackInfo } from "@/lib/notionAPI";
+import NavigationBar from "./components/NavigationBar";
 
 interface ControlPanelProps {
 	params: Promise<{ targetBot: string }>;
@@ -30,7 +30,7 @@ export default async function ControlPanel({
 	};
 
 	const response = await fetch(
-		`http://localhost:3000/api/${targetBot}/notion`,
+		`http://localhost:${process.env.PORT}/api/${targetBot}/notion`,
 		{
 			method: "GET",
 			next: {
@@ -43,6 +43,7 @@ export default async function ControlPanel({
 	return (
 		<ControlPanelContainer>
 			<ControlBar queryData={queryData} />
+			<NavigationBar queryData={queryData} />
 			<Panel
 				queryData={queryData}
 				refinedTracksData={refinedData}
@@ -52,5 +53,6 @@ export default async function ControlPanel({
 }
 
 export async function generateStaticParams() {
+	if (process.env.NODE_ENV === "development") return [];
 	return [{ targetBot: "ChariotSanzzo" }, { targetBot: "Gjallarhorn" }];
 }

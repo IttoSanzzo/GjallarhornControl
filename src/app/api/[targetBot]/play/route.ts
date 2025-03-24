@@ -19,5 +19,6 @@ export async function POST(
 }
 
 export async function generateStaticParams() {
+	if (process.env.NODE_ENV === "development") return [];
 	return [{ targetBot: "ChariotSanzzo" }, { targetBot: "Gjallarhorn" }];
 }

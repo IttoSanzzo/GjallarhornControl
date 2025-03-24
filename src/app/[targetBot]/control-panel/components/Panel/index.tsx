@@ -165,6 +165,7 @@ export default function Panel({ queryData, refinedTracksData }: PanelProps) {
 				queryData={queryData}
 				setSearchQuery={onSearchQueryChange}
 				value={searchQuery}
+				firstTrackLink={controlPanelData[0]?.tracks[0]?.link}
 			/>
 			<CategoriesGrid
 				queryData={queryData}

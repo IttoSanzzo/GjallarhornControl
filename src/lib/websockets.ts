@@ -55,6 +55,22 @@ const chariotWS = await chariotSocketManager.getSocket();
 const gjallarhornSocketManager = new BotWebSocket("Gjallarhorn");
 const gjallarhornWS = await gjallarhornSocketManager.getSocket();
 
+async function waitForSocket(
+	socket: WebSocket | null
+): Promise<WebSocket | null> {
+	if (!socket) return null;
+	return new Promise((resolve, reject) => {
+		if (socket.readyState === WebSocket.OPEN) {
+			resolve(socket);
+		} else {
+			socket.onopen = () => resolve(socket);
+			socket.onerror = (err) => reject(err);
+		}
+	});
+}
+
 export async function getBotSocket(targetBot: string) {
-	return targetBot === "ChariotSanzzo" ? chariotWS : gjallarhornWS;
+	return targetBot === "ChariotSanzzo"
+		? await waitForSocket(chariotWS)
+		: await waitForSocket(gjallarhornWS);
 }

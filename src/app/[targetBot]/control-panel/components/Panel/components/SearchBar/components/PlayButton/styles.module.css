@@ -22,5 +22,9 @@
 		border-color: var(--button-hover);
 	}
 
+	&:disabled {
+		display: none;
+	}
+
 	transition: 0.1s linear background, 0.5s linear border;
 }

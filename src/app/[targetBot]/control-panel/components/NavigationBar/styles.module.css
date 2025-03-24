@@ -1,15 +1,21 @@
-.resetButtonContainer {
+.navigationBarContainer {
 	position: absolute;
-	top: -1;
-	left: -10;
+	bottom: -15px;
 
+	display: flex;
+	flex-direction: column;
+	gap: var(--sp-2);
+	left: calc((var(--sp-5) * -1));
+}
+.buttonLink {
 	color: var(--cl-white);
 	background-color: var(--cl-gray-700);
 	border: 2px solid var(--cl-gray-400);
 	box-shadow: 0 0 0 2px var(--textGolden);
 	border-radius: var(--rd-full);
-	width: var(--sp-12);
-	height: var(--sp-12);
+	width: var(--sp-10);
+	height: var(--sp-10);
+	overflow: hidden;
 
 	& img {
 		height: 100%;
@@ -20,10 +26,6 @@
 	&:hover {
 		background-color: var(--cl-gray-500);
 		border-color: var(--button-hover);
-	}
-
-	&:disabled {
-		display: none;
 	}
 
 	transition: 0.1s linear background, 0.5s linear border;
