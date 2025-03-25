@@ -1,10 +1,12 @@
 "use client";
 
-import { FullTrackInfo, TrackCategory, TrackInfo } from "@/lib/notionAPI";
+import { TrackCategory } from "@/lib/notionAPI";
 import { useMemo, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import { CategoriesGrid } from "./components/CategoriesGrid";
 import { QueryData } from "../../page";
+import { Notification, NotificationData } from "@/components/Notification";
+import { newNotification } from "@/lib/utils";
 
 interface PanelProps {
 	queryData: QueryData;
@@ -139,6 +141,9 @@ const mockDataOld: TrackCategory[] = [
 ];
 
 export default function Panel({ queryData, refinedTracksData }: PanelProps) {
+	const [notificationData, setNotificationData] = useState<NotificationData>(
+		newNotification()
+	);
 	const [searchQuery, setSearchQuery] = useState<string>("");
 	const [controlPanelData, setControlPanelData] = useState<TrackCategory[]>([]);
 	function onSearchQueryChange(newQuery: string) {
@@ -159,17 +164,24 @@ export default function Panel({ queryData, refinedTracksData }: PanelProps) {
 		setControlPanelData(filteredData);
 	}, [searchQuery]);
 
+	function onNotification(message: string, hasErrors: boolean) {
+		setNotificationData(newNotification(message, hasErrors));
+	}
+
 	return (
 		<>
+			<Notification data={notificationData} />
 			<SearchBar
 				queryData={queryData}
 				setSearchQuery={onSearchQueryChange}
 				value={searchQuery}
 				firstTrackLink={controlPanelData[0]?.tracks[0]?.link}
+				setNotification={onNotification}
 			/>
 			<CategoriesGrid
 				queryData={queryData}
 				categoriesData={controlPanelData}
+				setNotification={setNotificationData}
 			/>
 		</>
 	);

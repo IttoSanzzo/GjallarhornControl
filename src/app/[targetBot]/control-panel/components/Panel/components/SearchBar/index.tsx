@@ -11,6 +11,7 @@ interface SearchBarProps {
 	setSearchQuery: (newQuery: string) => void;
 	value: string;
 	firstTrackLink: string | null;
+	setNotification: (message: string, hasErrors: boolean) => void;
 }
 
 export default function SearchBar({
@@ -18,6 +19,7 @@ export default function SearchBar({
 	setSearchQuery,
 	value,
 	firstTrackLink,
+	setNotification,
 }: SearchBarProps) {
 	const isLinkEmpty = value == "";
 	function resetSearchQuery() {
@@ -25,19 +27,21 @@ export default function SearchBar({
 	}
 
 	function handlePlay() {
-		if (!!firstTrackLink)
-			api.post(`/${targetBot}/play`, {
-				channelId,
-				userId,
-				link: firstTrackLink,
-			});
-		else
-			api.post(`/${targetBot}/play`, {
-				channelId,
-				userId,
-				link: value,
-			});
+		const link = !!firstTrackLink ? firstTrackLink : value;
+		const response = api.post(`/${targetBot}/play`, {
+			channelId,
+			userId,
+			link,
+		});
 		resetSearchQuery();
+		response.catch(() => {
+			setNotification(
+				`Failed playing. ( ${targetBot} is probably offline )`,
+				true
+			);
+			return;
+		});
+		setNotification(`Played successfully`, false);
 	}
 
 	return (

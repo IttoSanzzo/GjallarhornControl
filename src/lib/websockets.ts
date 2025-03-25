@@ -8,69 +8,61 @@ const socketUrlGjallarhorn = `ws://${connectionIp}:${gjallarhornPort}`;
 
 class BotWebSocket {
 	private webSocket: WebSocket | null = null;
+	private socketUrl: string;
 
 	constructor(targetBot: string) {
-		this.webSocket =
-			targetBot === "ChariotSanzzo"
-				? this.createWebSocket(socketUrlChariot)
-				: this.createWebSocket(socketUrlGjallarhorn);
+		this.socketUrl =
+			targetBot === "ChariotSanzzo" ? socketUrlChariot : socketUrlGjallarhorn;
+		this.createWebSocket();
 	}
-	private createWebSocket(url: string): WebSocket {
-		console.log(`CREATING NEW SOCKET for ${url}`);
-		const ws = new WebSocket(url);
+	private createWebSocket(): void {
+		console.log(`CREATING NEW SOCKET for ${this.socketUrl}`);
+		const ws = new WebSocket(this.socketUrl);
+		const timeoutInSeconds = 15;
 
-		ws.onopen = () => console.log(`✅ Conectado a ${url}`);
-		ws.onerror = (err) => console.error(`❌ Erro no WebSocket ${url}:`, err);
-		ws.onclose = () => {
-			console.warn(`⚠️ WebSocket fechado: ${url}`);
+		ws.onopen = () => console.log(`✅ Conectado a ${this.socketUrl}`);
+		ws.onerror = () => {
+			console.error(`❌ Erro no WebSocket ${this.socketUrl}:`);
+			console.log(
+				`🔄 Tentando reconectar a ${this.socketUrl} em ${timeoutInSeconds} segundos`
+			);
 			setTimeout(() => {
-				console.log(`🔄 Tentando reconectar em ${url}`);
-				this.createWebSocket(url);
-			}, 5000);
+				this.createWebSocket();
+			}, timeoutInSeconds * 1000);
 		};
-
-		return ws;
+		ws.onclose = () => {
+			console.warn(`⚠️ WebSocket fechado: ${this.socketUrl}`);
+			console.log(
+				`🔄 Tentando reconectar a ${this.socketUrl} em ${timeoutInSeconds} segundos`
+			);
+			setTimeout(() => {
+				this.createWebSocket();
+			}, timeoutInSeconds * 1000);
+		};
+		this.webSocket = ws;
 	}
-	public async waitForSocket(): Promise<WebSocket | null> {
+	private async getSafeSocket(): Promise<WebSocket | null> {
 		const socket = this.webSocket;
 		if (!socket) return null;
 
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			if (socket.readyState === WebSocket.OPEN) {
 				resolve(socket);
 			} else {
-				socket.onopen = () => resolve(socket);
-				socket.onerror = (err) => reject(err);
+				resolve(null);
 			}
 		});
 	}
 	public async getSocket(): Promise<WebSocket | null> {
-		return this.waitForSocket();
+		return this.getSafeSocket();
 	}
 }
 
 const chariotSocketManager = new BotWebSocket("ChariotSanzzo");
-const chariotWS = await chariotSocketManager.getSocket();
-
 const gjallarhornSocketManager = new BotWebSocket("Gjallarhorn");
-const gjallarhornWS = await gjallarhornSocketManager.getSocket();
-
-async function waitForSocket(
-	socket: WebSocket | null
-): Promise<WebSocket | null> {
-	if (!socket) return null;
-	return new Promise((resolve, reject) => {
-		if (socket.readyState === WebSocket.OPEN) {
-			resolve(socket);
-		} else {
-			socket.onopen = () => resolve(socket);
-			socket.onerror = (err) => reject(err);
-		}
-	});
-}
 
 export async function getBotSocket(targetBot: string) {
 	return targetBot === "ChariotSanzzo"
-		? await waitForSocket(chariotWS)
-		: await waitForSocket(gjallarhornWS);
+		? await chariotSocketManager.getSocket()
+		: await gjallarhornSocketManager.getSocket();
 }

@@ -7,7 +7,12 @@ export async function POST(
 ) {
 	const { action, channelId, userId } = await req.json();
 	const { targetBot } = await params;
+	console.log(`ACTN [${targetBot}] <- ${userId} -> [${action}]`);
 	const ws = await getBotSocket(targetBot);
+	if (!ws) {
+		console.log(`ACTION Socket Error`);
+		return new NextResponse(null, { status: 503 });
+	}
 
 	const bodyToSend = `<|Command|><|Value|>${action}\n${
 		channelId != "" && `<|ChatChannelId|><|Value|>${channelId}\n`

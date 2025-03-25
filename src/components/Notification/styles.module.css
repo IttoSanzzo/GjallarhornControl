@@ -1,0 +1,41 @@
+@keyframes notificationAppearence {
+	0% {
+		box-shadow: 0;
+		opacity: 0;
+	}
+	10% {
+		box-shadow: 0 0 20px 0.5px var(--notificationColor);
+		opacity: 1;
+	}
+	80% {
+		box-shadow: 0 0 20px 0.5px var(--notificationColor);
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+.notificationMessage {
+	z-index: 1;
+	animation: notificationAppearence 4s forwards;
+	background-color: var(--cl-gray-600);
+	border-radius: var(--rd-md);
+	padding: var(--sp-1) var(--sp-3);
+	font-weight: var(--fw-bold);
+	display: inline;
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 40px;
+
+	&.hasErrorFalse {
+		--notificationColor: green;
+	}
+	&.hasErrorTrue {
+		--notificationColor: red;
+	}
+	color: var(--notificationColor);
+	border: 3px solid var(--notificationColor);
+}

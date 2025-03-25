@@ -7,7 +7,12 @@ export async function POST(
 ) {
 	const { link, channelId, userId } = await req.json();
 	const { targetBot } = await params;
+	console.log(`PLAY [${targetBot}] <- ${userId} -> ${link}`);
 	const ws = await getBotSocket(targetBot);
+	if (!ws) {
+		console.log(`PLAY Socket Error`);
+		return new NextResponse(null, { status: 503 });
+	}
 
 	const bodyToSend = `<|Command|><|Value|>Play\n<|Color|><|Value|>#FF0000\n<|Link|><|Value|>${link}\n${
 		channelId != "" && `<|ChatChannelId|><|Value|>${channelId}\n`

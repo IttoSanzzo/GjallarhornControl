@@ -1,7 +1,7 @@
 .resetButtonContainer {
 	position: absolute;
-	top: -1;
-	left: -10;
+	top: -1px;
+	left: -10px;
 
 	color: var(--cl-white);
 	background-color: var(--cl-gray-700);

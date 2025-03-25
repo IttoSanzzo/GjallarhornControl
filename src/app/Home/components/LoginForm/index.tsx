@@ -46,7 +46,7 @@ export default function LoginForm({ queryData }: LoginFormProps) {
 		defaultValues: {
 			userId: queryUserId ?? "",
 			channelId: queryChannelId ?? "",
-			targetBot: queryTargetBot ?? "ChariotSanzzo",
+			targetBot: queryTargetBot === "" ? "ChariotSanzzo" : queryTargetBot,
 		},
 	});
 
