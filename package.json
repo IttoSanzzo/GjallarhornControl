@@ -7,7 +7,8 @@
 		"build": "next build",
 		"start": "next start -p 11760",
 		"lint": "next lint",
-		"test": "next build && next start -p 11760"
+		"test": "next build && next start -p 11760",
+		"experimental": "next dev -p 11760 --experimental-https"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^4.1.3",

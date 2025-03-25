@@ -5,7 +5,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: var(--sp-2);
-	left: calc((var(--sp-5) * -1));
+	right: calc((var(--sp-5) * -1));
 
 	& a {
 		color: var(--cl-white);
