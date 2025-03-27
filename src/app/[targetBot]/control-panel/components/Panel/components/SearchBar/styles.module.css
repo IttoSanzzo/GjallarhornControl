@@ -22,7 +22,8 @@
 	}
 	margin-top: -20px;
 }
-@media (max-height: 500px) {
+
+@media (max-width: 900px) {
 	.searchBarContainer {
 		margin-top: 0px;
 	}
