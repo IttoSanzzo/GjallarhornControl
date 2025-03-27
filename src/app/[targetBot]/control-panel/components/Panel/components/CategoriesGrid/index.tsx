@@ -51,8 +51,9 @@ export const CategoriesGrid = React.memo(
 						<EntriesContainer>
 							{category.tracks.map((track, index) => (
 								<EntryButton
+									key={index}
 									onClick={() => handlePlayEntryCall(track)}
-									key={index}>
+									title={track.description}>
 									{track.name}
 								</EntryButton>
 							))}
