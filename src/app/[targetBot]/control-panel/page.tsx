@@ -30,7 +30,7 @@ export default async function ControlPanel({
 	};
 
 	const response = await fetch(
-		`http://localhost:${process.env.PORT}/api/${targetBot}/notion`,
+		`http://localhost:${process.env.PORT}/api/${targetBot}/soundtracks`,
 		{
 			method: "GET",
 			next: {

@@ -6,7 +6,7 @@ import {
 } from "./styledComponents";
 import { api } from "@/lib/axios";
 import React from "react";
-import { TrackCategory, TrackInfo } from "@/lib/notionAPI";
+import { TrackCategory, TrackInfo } from "@/lib/TrackData";
 import { QueryData } from "@/app/[targetBot]/control-panel/page";
 import { newNotification } from "@/lib/utils";
 import { NotificationData } from "@/components/Notification";

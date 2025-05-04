@@ -1,4 +1,3 @@
-import { getBotSocket } from "@/lib/websockets";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
@@ -8,19 +7,27 @@ export async function POST(
 	const { link, channelId, userId } = await req.json();
 	const { targetBot } = await params;
 	console.log(`PLAY [${targetBot}] <- ${userId} -> ${link}`);
-	const ws = await getBotSocket(targetBot);
-	if (!ws) {
-		console.log(`PLAY Socket Error`);
-		return new NextResponse(null, { status: 503 });
-	}
 
-	const bodyToSend = `<|Command|><|Value|>Play\n<|Color|><|Value|>#FF0000\n<|Link|><|Value|>${link}\n${
-		channelId != "" && `<|ChatChannelId|><|Value|>${channelId}\n`
-	}<|UserId|><|Value|>${userId}`;
-
-	ws?.send(bodyToSend);
-
-	return new NextResponse(null, { status: 201 });
+	const response = await fetch(
+		`http://${process.env.CHARIOT_API}/player/${targetBot}`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				command: "Play",
+				channelId: channelId,
+				userId: userId,
+				trackUrl: link,
+			}),
+		}
+	);
+	const responseBody: {
+		success: boolean;
+	} = await response.json();
+	if (responseBody.success) return new NextResponse(null, { status: 201 });
+	return new NextResponse(null, { status: 503 });
 }
 
 export async function generateStaticParams() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { TrackCategory } from "@/lib/notionAPI";
+import { TrackCategory } from "@/lib/TrackData";
 import { useMemo, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import { CategoriesGrid } from "./components/CategoriesGrid";

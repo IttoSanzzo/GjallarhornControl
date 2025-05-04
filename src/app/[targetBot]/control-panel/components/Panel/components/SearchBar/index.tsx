@@ -4,7 +4,7 @@ import ResetButton from "./components/ResetButton";
 import { SearchBarContainer } from "./styledComponents";
 import { QueryData } from "@/app/[targetBot]/control-panel/page";
 import { api } from "@/lib/axios";
-import { TrackInfo } from "@/lib/notionAPI";
+import { TrackInfo } from "@/lib/TrackData";
 
 interface SearchBarProps {
 	queryData: QueryData;

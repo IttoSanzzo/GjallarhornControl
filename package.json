@@ -3,12 +3,12 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --turbopack -p 11760",
+		"dev": "next dev --turbopack -p 11769",
 		"build": "next build",
-		"start": "next start -p 11760",
+		"start": "next start -p 11769",
 		"lint": "next lint",
-		"test": "next build && next start -p 11760",
-		"experimental": "next dev -p 11760 --experimental-https"
+		"test": "next build && next start -p 11769",
+		"experimental": "next dev -p 11769 --experimental-https"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^4.1.3",
