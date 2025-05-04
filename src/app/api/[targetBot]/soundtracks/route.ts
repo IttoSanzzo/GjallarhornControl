@@ -67,7 +67,7 @@ export async function GET(
 		console.error("ENV Error");
 		return NextResponse.json({ message: "ENV Error" }, { status: 500 });
 	} else if (response.hasErrors) {
-		console.error(response.error);
+		// console.error(response.error);
 		return NextResponse.json({ message: response.error }, { status: 500 });
 	} else if (!response.data) {
 		console.error("ChariotAPI Unknown Error");

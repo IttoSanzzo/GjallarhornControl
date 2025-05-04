@@ -46,7 +46,8 @@ export default async function ControlPanel({
 			<NavigationBar queryData={queryData} />
 			<Panel
 				queryData={queryData}
-				refinedTracksData={refinedData}
+				refinedTracksData={refinedData || []}
+				isOffline={refinedData === undefined}
 			/>
 		</ControlPanelContainer>
 	);

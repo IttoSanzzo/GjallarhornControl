@@ -1,7 +1,7 @@
 "use client";
 
 import { TrackCategory } from "@/lib/TrackData";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import { CategoriesGrid } from "./components/CategoriesGrid";
 import { QueryData } from "../../page";
@@ -11,136 +11,14 @@ import { newNotification } from "@/lib/utils";
 interface PanelProps {
 	queryData: QueryData;
 	refinedTracksData: TrackCategory[];
+	isOffline: boolean;
 }
 
-const mockDataOld: TrackCategory[] = [
-	{
-		title: "Magic SFX",
-		tracks: [
-			{
-				name: "Magic Sound Effects",
-				description: "",
-				link: "https://www.youtube.com/watch?v=PtOzGiNKSUA&list=RDGMEMhCgTQvcskbGUxqI4Sn2QYw&start_radio=1&rv=yvmegySOZIM",
-			},
-			{ name: "Japanese RPG Magic SFXs", description: "", link: "" },
-		],
-	},
-	{
-		title: "Misc SFX",
-		tracks: [
-			{ name: "Big Heavy Door", description: "", link: "" },
-			{ name: "Door Opening Sound Effect", description: "", link: "" },
-			{ name: "3D Rocks Falling SFX", description: "", link: "" },
-		],
-	},
-	{
-		title: "Magic SFX",
-		tracks: [
-			{ name: "Magic Sound Effects", description: "", link: "" },
-			{ name: "Japanese RPG Magic SFXs", description: "", link: "" },
-		],
-	},
-	{
-		title: "Misc SFX",
-		tracks: [
-			{ name: "Big Heavy Door", description: "", link: "" },
-			{ name: "Door Opening Sound Effect", description: "", link: "" },
-			{ name: "3D Rocks Falling SFX", description: "", link: "" },
-		],
-	},
-	{
-		title: "Magic SFX",
-		tracks: [
-			{ name: "Magic Sound Effects", description: "", link: "" },
-			{ name: "Japanese RPG Magic SFXs", description: "", link: "" },
-		],
-	},
-	{
-		title: "Misc SFX",
-		tracks: [
-			{ name: "Big Heavy Door", description: "", link: "" },
-			{ name: "Door Opening Sound Effect", description: "", link: "" },
-			{ name: "3D Rocks Falling SFX", description: "", link: "" },
-		],
-	},
-	{
-		title: "Magic SFX",
-		tracks: [
-			{ name: "Magic Sound Effects", description: "", link: "" },
-			{ name: "Japanese RPG Magic SFXs", description: "", link: "" },
-		],
-	},
-	{
-		title: "Misc SFX",
-		tracks: [
-			{ name: "Big Heavy Door", description: "", link: "" },
-			{ name: "Door Opening Sound Effect", description: "", link: "" },
-			{ name: "3D Rocks Falling SFX", description: "", link: "" },
-		],
-	},
-	{
-		title: "Magic SFX",
-		tracks: [
-			{ name: "Magic Sound Effects", description: "", link: "" },
-			{ name: "Japanese RPG Magic SFXs", description: "", link: "" },
-		],
-	},
-	{
-		title: "Misc SFX",
-		tracks: [
-			{ name: "Big Heavy Door", description: "", link: "" },
-			{ name: "Door Opening Sound Effect", description: "", link: "" },
-			{ name: "3D Rocks Falling SFX", description: "", link: "" },
-		],
-	},
-	{
-		title: "Magic SFX",
-		tracks: [
-			{ name: "Magic Sound Effects", description: "", link: "" },
-			{ name: "Japanese RPG Magic SFXs", description: "", link: "" },
-		],
-	},
-	{
-		title: "Misc SFX",
-		tracks: [
-			{ name: "Big Heavy Door", description: "", link: "" },
-			{ name: "Door Opening Sound Effect", description: "", link: "" },
-			{ name: "3D Rocks Falling SFX", description: "", link: "" },
-		],
-	},
-	{
-		title: "Magic SFX",
-		tracks: [
-			{ name: "Magic Sound Effects", description: "", link: "" },
-			{ name: "Japanese RPG Magic SFXs", description: "", link: "" },
-		],
-	},
-	{
-		title: "Misc SFX",
-		tracks: [
-			{ name: "Big Heavy Door", description: "", link: "" },
-			{ name: "Door Opening Sound Effect", description: "", link: "" },
-			{ name: "3D Rocks Falling SFX", description: "", link: "" },
-		],
-	},
-	{
-		title: "Magic SFX",
-		tracks: [
-			{ name: "Magic Sound Effects", description: "", link: "" },
-			{ name: "Japanese RPG Magic SFXs", description: "", link: "" },
-		],
-	},
-	{
-		title: "Misc SFX",
-		tracks: [
-			{ name: "Big Heavy Door", description: "", link: "" },
-			{ name: "Door Opening Sound Effect", description: "", link: "" },
-			{ name: "3D Rocks Falling SFX", description: "", link: "" },
-		],
-	},
-];
-
-export default function Panel({ queryData, refinedTracksData }: PanelProps) {
+export default function Panel({
+	queryData,
+	refinedTracksData,
+	isOffline,
+}: PanelProps) {
 	const [notificationData, setNotificationData] = useState<NotificationData>(
 		newNotification()
 	);
@@ -167,6 +45,10 @@ export default function Panel({ queryData, refinedTracksData }: PanelProps) {
 	function onNotification(message: string, hasErrors: boolean) {
 		setNotificationData(newNotification(message, hasErrors));
 	}
+
+	useEffect(() => {
+		if (isOffline) alert("ChariotAPI is Offline");
+	}, []);
 
 	return (
 		<>
