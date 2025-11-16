@@ -33,7 +33,6 @@ export default function ControlBar({
 			userId,
 			action,
 		});
-		console.log("teste");
 		response.catch(() => {
 			setNotificationData(
 				newNotification(
