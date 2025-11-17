@@ -2,11 +2,6 @@ import type { Metadata, Viewport } from "next";
 import App from "@/app/_app";
 import "@/styles/global.css";
 
-export const metadata: Metadata = {
-	title: "Gjallarhorn Control",
-	icons: "favicon.ico",
-};
-
 export const viewport: Viewport = {
 	initialScale: 1,
 	width: "device-width",
