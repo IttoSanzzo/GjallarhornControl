@@ -1,4 +1,5 @@
-import type { Metadata, Viewport } from "next";
+/* eslint-disable @next/next/no-page-custom-font */
+import type { Viewport } from "next";
 import App from "@/app/_app";
 import "@/styles/global.css";
 

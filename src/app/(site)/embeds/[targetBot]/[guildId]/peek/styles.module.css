@@ -1,0 +1,20 @@
+.peekContainer {
+	position: relative;
+
+	background-color: var(--cl-gray-800);
+	padding: var(--sp-3);
+	border-radius: var(--rd-lg);
+	overflow: hidden;
+
+	width: 100%;
+	aspect-ratio: 16/9;
+	height: fit-content;
+
+	transition: 0.25s linear opacity;
+	opacity: 0.25;
+
+	&:hover {
+		cursor: pointer;
+		opacity: 1;
+	}
+}

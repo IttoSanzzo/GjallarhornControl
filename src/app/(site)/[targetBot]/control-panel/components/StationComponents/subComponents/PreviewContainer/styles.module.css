@@ -1,0 +1,71 @@
+.peekContainer {
+	position: fixed;
+	bottom: 40px;
+	width: 140px;
+	height: 78.75px;
+}
+.peekTrackContainer {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	bottom: 0;
+	opacity: 1;
+
+	--fade-duration: 1s;
+}
+
+.current {
+	&.next {
+		animation: fade-in-from-right var(--fade-duration) ease;
+	}
+	&.previous {
+		animation: fade-in-from-left var(--fade-duration) ease;
+	}
+}
+
+.old {
+	pointer-events: none;
+	&.next {
+		animation: fade-out-to-left var(--fade-duration) ease;
+	}
+	&.previous {
+		animation: fade-out-to-right var(--fade-duration) ease;
+	}
+}
+
+.previewJumpButton {
+	width: 100%;
+	border: unset;
+	background: unset;
+}
+
+@keyframes fade-out-to-left {
+	to {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+}
+@keyframes fade-out-to-right {
+	to {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+}
+@keyframes fade-in-from-left {
+	from {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	to {
+		transform: unset;
+	}
+}
+@keyframes fade-in-from-right {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: unset;
+	}
+}

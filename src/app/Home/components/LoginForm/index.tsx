@@ -12,7 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { QueryData } from "@/app/[targetBot]/control-panel/page";
+import { QueryData } from "@/app/(site)/[targetBot]/control-panel/page";
 
 const LoginFormSchema = z.object({
 	targetBot: z.string(),

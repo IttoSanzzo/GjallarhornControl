@@ -6,11 +6,11 @@ import {
 	SoundTrack,
 } from "@/lib/TrackData";
 
-const ChariotApi = process.env.CHARIOT_API;
+const ChariotApi = process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS;
 
 async function fetchSoundTracks(targetBot: string) {
 	try {
-		var response = await fetch(`http://${ChariotApi}/soundtracks`, {
+		const response = await fetch(`${ChariotApi}/soundtracks`, {
 			method: "GET",
 		});
 		const allSoundtracks: SoundTrack[] = await response.json();
@@ -59,7 +59,7 @@ export async function GET(
 	req: NextRequest,
 	{ params }: { params: Promise<{ targetBot: string }> }
 ) {
-	console.log("API ReValidando");
+	console.log("ReValidating API");
 	const { targetBot } = await params;
 
 	const response = await fetchSoundTracks(targetBot);

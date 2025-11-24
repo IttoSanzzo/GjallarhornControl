@@ -1,7 +1,7 @@
 import { HomeContainer, HomeTitle } from "./styledComponents";
 import LoginForm from "./components/LoginForm";
 import InternalBox from "@/components/InternalBox";
-import { QueryData } from "../[targetBot]/control-panel/page";
+import { QueryData } from "../(site)/[targetBot]/control-panel/page";
 import { Metadata } from "next";
 
 interface HomeProps {

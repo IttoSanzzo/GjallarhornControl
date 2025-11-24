@@ -1,0 +1,87 @@
+.currentTrackContainer {
+	left: 50%;
+	transform: translateX(-50%);
+	width: 50vw;
+	position: fixed;
+	bottom: 2px;
+	border-top: 3px solid var(--textGolden);
+	border-radius: var(--rd-lg);
+	transition: margin-bottom 2s linear;
+
+	&:hover {
+		& .trackInfoDisplay {
+			& > div {
+				margin: unset;
+				pointer-events: all;
+			}
+		}
+	}
+}
+
+.seekbarContainer {
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: -25px;
+	width: 90vw;
+	border-radius: var(--rd-lg);
+	box-shadow: 0 0 0 2px var(--textGolden);
+}
+
+.trackInfoDisplay {
+	position: fixed;
+	bottom: 36.5px;
+
+	width: 42vw;
+	max-width: 600px;
+	height: calc((42vw * 9 / 16) + var(--sp-10));
+	max-height: calc((600px * 9 / 16) + var(--sp-10));
+
+	padding: 0 var(--sp-1);
+
+	border-top-left-radius: var(--rd-lg);
+	border-top-right-radius: var(--rd-lg);
+	left: 50%;
+	transform: translateX(-50%);
+	overflow: hidden;
+	pointer-events: none;
+
+	--hide-offset: min(
+		calc((42vw * 9 / 16) + var(--sp-10)),
+		calc((600px * 9 / 16) + var(--sp-10))
+	);
+	/* --hide-offset: min(calc((42vw * 9 / 16)), calc((600px * 9 / 16))); */
+
+	& > div {
+		transition: margin 1s ease;
+		margin-top: var(--hide-offset);
+		&:hover {
+			margin: unset;
+		}
+	}
+}
+
+.displayIn {
+	animation: fade-in 0.5s linear;
+}
+.displayOut {
+	opacity: 0;
+	animation: fade-out 1.5s linear;
+	pointer-events: none;
+}
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes fade-out {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}

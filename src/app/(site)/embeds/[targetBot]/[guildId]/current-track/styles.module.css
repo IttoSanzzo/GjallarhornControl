@@ -1,0 +1,62 @@
+.currentTrackContainer {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	bottom: 12px;
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+	border: inherit;
+
+	width: 100%;
+	background-color: transparent;
+}
+
+.baseBar {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 25px;
+	background-color: var(--cl-gray-800);
+	border-radius: var(--rd-lg);
+}
+
+.marqueeContainer {
+	width: 100%;
+	min-width: 100%;
+	overflow: clip;
+}
+
+.currentTitleTrack {
+	color: var(--cl-gray-200);
+	display: flex;
+	flex-direction: row;
+	width: max-content;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	font-weight: 600;
+
+	animation: marquee-move-text 4s linear infinite;
+
+	& p {
+		display: flex;
+		display: inline-block;
+		padding-right: var(--sp-40);
+	}
+}
+
+.fadeout-horizontal {
+	mask-image: linear-gradient(
+		to right,
+		transparent,
+		black 15rem,
+		black calc(100% - 15rem),
+		transparent
+	);
+}
+@keyframes marquee-move-text {
+	to {
+		transform: translateX(-50%);
+	}
+}
