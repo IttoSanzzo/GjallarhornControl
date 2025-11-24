@@ -16,7 +16,7 @@ const PeekTrackContainer = newStyledElement.div(styles.peekTrackContainer);
 
 interface PeekContainerProps extends PeekProps {
 	userId: string;
-	preview: PeekPreviewData;
+	preview?: PeekPreviewData;
 	lastCommand: PlayerCommandResult;
 	fromLog?: boolean;
 }
@@ -28,7 +28,9 @@ export default function PeekContainer({
 	...props
 }: PeekContainerProps) {
 	const { postActionCommand } = useContext(ApiCommandsHandler);
-	const [current, setCurrent] = useState(props.preview);
+	const [current, setCurrent] = useState<PeekPreviewData | null>(
+		props.preview ? props.preview : null
+	);
 	const [previous, setPrevious] = useState<PeekPreviewData | null>(null);
 	const [moveDirection, setMoveDirection] = useState<"previous" | "next" | "">(
 		""
@@ -42,12 +44,15 @@ export default function PeekContainer({
 	}
 
 	useEffect(() => {
-		if (
+		if (lastCommand.command == "Play" && lastCommand.wasSuccess && !fromLog) {
+			setCurrent(props.preview ? props.preview : null);
+		} else if (
 			(lastCommand.command == "Next" || lastCommand.command == "Previous") &&
+			lastCommand.wasSuccess &&
 			!fromLog
 		) {
 			setPrevious(current);
-			setCurrent(props.preview);
+			setCurrent(props.preview ? props.preview : null);
 			setMoveDirection(lastCommand.command == "Next" ? "next" : "previous");
 		}
 	}, [lastCommand, props.preview]);
@@ -67,17 +72,19 @@ export default function PeekContainer({
 					/>
 				</PeekTrackContainer>
 			)}
-			<PeekTrackContainer
-				className={clsx(styles.current, styles[moveDirection])}>
-				<PreviewJumpButton
-					onClick={() => handleActionButton(capitalize(type ?? "next"))}>
-					<Peek
-						{...props}
-						targetBot={targetBot}
-						type={type}
-					/>
-				</PreviewJumpButton>
-			</PeekTrackContainer>
+			{current && (
+				<PeekTrackContainer
+					className={clsx(styles.current, styles[moveDirection])}>
+					<PreviewJumpButton
+						onClick={() => handleActionButton(capitalize(type ?? "next"))}>
+						<Peek
+							{...props}
+							targetBot={targetBot}
+							type={type}
+						/>
+					</PreviewJumpButton>
+				</PeekTrackContainer>
+			)}
 		</PeekPreviewContainer>
 	);
 }

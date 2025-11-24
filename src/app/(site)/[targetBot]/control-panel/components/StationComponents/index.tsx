@@ -49,36 +49,36 @@ export default function StationComponents() {
 			}>
 			<ControlBar queryData={userSessionData} />
 
-			{previousTrack && (
-				<PreviewContainer
-					userId={userSessionData.userId}
-					guildId={userSessionData.presenceState.voice.guildId}
-					targetBot={userSessionData.targetBot}
-					lastCommand={playerStationData.lastCommandResult}
-					type="previous"
-					keepOpaque={false}
-					preview={{
+			<PreviewContainer
+				userId={userSessionData.userId}
+				guildId={userSessionData.presenceState.voice.guildId}
+				targetBot={userSessionData.targetBot}
+				lastCommand={playerStationData.lastCommandResult}
+				type="previous"
+				keepOpaque={false}
+				preview={
+					previousTrack && {
 						artwork: previousTrack.artwork,
 						title: previousTrack.title,
-					}}
-					fromLog={playerStationData.fromLog}
-				/>
-			)}
-			{nextTrack && (
-				<PreviewContainer
-					userId={userSessionData.userId}
-					guildId={userSessionData.presenceState.voice.guildId}
-					targetBot={userSessionData.targetBot}
-					lastCommand={playerStationData.lastCommandResult}
-					type="next"
-					keepOpaque={false}
-					preview={{
+					}
+				}
+				fromLog={playerStationData.fromLog}
+			/>
+			<PreviewContainer
+				userId={userSessionData.userId}
+				guildId={userSessionData.presenceState.voice.guildId}
+				targetBot={userSessionData.targetBot}
+				lastCommand={playerStationData.lastCommandResult}
+				type="next"
+				keepOpaque={false}
+				preview={
+					nextTrack && {
 						artwork: nextTrack.artwork,
 						title: nextTrack.title,
-					}}
-					fromLog={playerStationData.fromLog}
-				/>
-			)}
+					}
+				}
+				fromLog={playerStationData.fromLog}
+			/>
 
 			{playerStationData.currentTrack && (
 				<CurrentTrackContainer>
