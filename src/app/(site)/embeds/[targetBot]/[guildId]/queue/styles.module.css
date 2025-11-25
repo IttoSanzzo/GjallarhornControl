@@ -1,0 +1,133 @@
+.queueContainer {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	min-height: 200px;
+
+	padding: var(--sp-1);
+	padding-top: var(--sp-8);
+	background-color: var(--cl-gray-800);
+	border-radius: var(--rd-lg);
+	overflow: hidden;
+}
+
+.queueTitle {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--cl-gray-100);
+	width: 100%;
+	top: 0;
+	height: var(--sp-8);
+	padding-bottom: var(--sp-1);
+	border-bottom: 1px solid var(--cl-gray-300);
+	margin-bottom: var(--sp-1);
+}
+
+.noTracksMessage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	color: var(--cl-gray-300);
+}
+
+.tracksList {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	width: 100%;
+	height: 100%;
+	padding: var(--sp-1);
+	overflow: scroll;
+
+	border-radius: var(--rd-lg);
+	background-color: var(--cl-gray-900);
+}
+
+.trackEntry {
+	position: relative;
+	color: var(--cl-gray-100);
+	background-color: var(--cl-gray-700);
+	border: 1px solid var(--cl-gray-600);
+	border-radius: var(--rd-md);
+	padding: var(--sp-2) var(--sp-8);
+	transition: background 0.5s ease;
+	height: 60px;
+
+	animation: sliding-fade-in 1s ease;
+
+	&:hover {
+		cursor: pointer;
+		background-color: var(--cl-gray-600);
+	}
+
+	&.current {
+		background-color: var(--cl-gray-800);
+		border: 2px solid var(--cl-blue-700);
+
+		&:hover {
+			background-color: var(--cl-gray-600);
+		}
+	}
+}
+
+.queueEnd {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--cl-gray-500);
+	width: 100%;
+	top: 0;
+	height: var(--sp-8);
+	padding-top: var(--sp-1);
+	border-top: 1px solid var(--cl-gray-300);
+	margin-bottom: var(--sp-1);
+}
+
+.artworkPreview {
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 1;
+	opacity: 0.25;
+
+	width: 60px;
+	aspect-ratio: 16 /9;
+
+	& img {
+		border-top-right-radius: var(--fs-xxs);
+		border-bottom-right-radius: var(--fs-xxs);
+		object-fit: contain;
+	}
+}
+
+.indexIcon {
+	position: absolute;
+	left: var(--sp-3);
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--cl-blue-300);
+	font-weight: 600;
+
+	&.current {
+		color: var(--cl-blue-600);
+	}
+}
+
+.title {
+	position: relative;
+	z-index: 2;
+	font-size: var(--fs-sm);
+}
+
+@keyframes sliding-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+}

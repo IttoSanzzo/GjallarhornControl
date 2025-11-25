@@ -88,7 +88,7 @@ export default function StationComponents() {
 							guildId={userSessionData.presenceState.voice.guildId}
 							targetBot={userSessionData.targetBot}
 							isPaused={playerStationData.isPaused}
-							totalLength={playerStationData.currentTrack.totalLength}
+							totalLength={playerStationData.currentTrack.durationInSeconds}
 							currentPosition={playerStationData.currentTrack.currentPosition}
 							lastUpdate={playerStationData.currentTrack.lastUpdate}
 							unixTimestamp={playerStationData.unixTimestamp}

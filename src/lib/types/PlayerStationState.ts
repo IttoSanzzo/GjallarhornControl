@@ -12,7 +12,7 @@ export type TrackInfo = {
 	originalUserAvatarUrl: string;
 };
 export type CurrentTrackInfo = {
-	totalLength: number;
+	durationInSeconds: number;
 	currentPosition: number;
 	lastUpdate: number;
 } & TrackInfo;
