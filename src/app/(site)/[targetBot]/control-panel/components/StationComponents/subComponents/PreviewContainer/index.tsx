@@ -59,7 +59,10 @@ export default function PeekContainer({
 
 	return (
 		<PeekPreviewContainer
-			style={type == "previous" ? { left: `${6}%` } : { right: `${6}%` }}>
+			style={{
+				...(type == "previous" ? { left: `${6}%` } : { right: `${6}%` }),
+				...(current == null && { pointerEvents: "none" }),
+			}}>
 			{previous && (
 				<PeekTrackContainer
 					className={clsx(styles.old, styles[moveDirection])}
@@ -74,7 +77,8 @@ export default function PeekContainer({
 			)}
 			{current && (
 				<PeekTrackContainer
-					className={clsx(styles.current, styles[moveDirection])}>
+					className={clsx(styles.current, styles[moveDirection])}
+					title={current.title}>
 					<PreviewJumpButton
 						onClick={() => handleActionButton(capitalize(type ?? "next"))}>
 						<Peek
