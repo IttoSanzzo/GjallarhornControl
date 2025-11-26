@@ -34,7 +34,7 @@ export async function POST(
 	return new NextResponse(null, { status: 503 });
 }
 
-export async function generateStaticParams() {
-	if (process.env.NODE_ENV === "development") return [];
-	return [{ targetBot: "ChariotSanzzo" }, { targetBot: "Gjallarhorn" }];
-}
+// export async function generateStaticParams() {
+// 	if (process.env.NODE_ENV === "development") return [];
+// 	return [{ targetBot: "ChariotSanzzo" }, { targetBot: "Gjallarhorn" }];
+// }

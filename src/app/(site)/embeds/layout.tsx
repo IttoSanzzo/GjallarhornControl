@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import "./styles.module.css";
+import "./styles.css";
 
 interface EmbedsLayoutProps {
 	children: ReactNode;

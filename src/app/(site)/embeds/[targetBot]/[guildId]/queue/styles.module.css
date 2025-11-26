@@ -121,7 +121,7 @@
 .queueEnd {
 	position: relative;
 	display: flex;
-	align-items: start;
+	align-items: flex-start;
 	justify-content: center;
 	color: var(--cl-gray-500);
 	background-color: var(--cl-gray-900);
