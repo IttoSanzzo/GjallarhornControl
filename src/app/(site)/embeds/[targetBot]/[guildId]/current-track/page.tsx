@@ -1,4 +1,5 @@
-import CurrentTrack from "./pageContent";
+import { PlayerStationContextProvider } from "@/components/PlayerStationContextProvider";
+import { CurrentTrackWrapper } from "./subComponents/CurrentTrackWrapper/CurrentTrackWrapper";
 
 interface PageServerShellProps {
 	params: Promise<{
@@ -12,10 +13,13 @@ export default async function PageServerShell({
 	const { guildId, targetBot } = await params;
 
 	return (
-		<CurrentTrack
-			guildId={guildId}
+		<PlayerStationContextProvider
 			targetBot={targetBot}
-			title={"Default"}
-		/>
+			guildId={guildId}>
+			<CurrentTrackWrapper
+				guildId={guildId}
+				targetBot={targetBot}
+			/>
+		</PlayerStationContextProvider>
 	);
 }

@@ -18,6 +18,10 @@
 			}
 		}
 	}
+
+	& > :nth-child(2) {
+		bottom: 12px;
+	}
 }
 
 .seekbarContainer {
