@@ -19,7 +19,7 @@ type FormData = z.infer<typeof schema>;
 interface ProgressBarProps {
 	targetBot: string;
 	guildId: string;
-	userId: string;
+	userId?: string;
 	currentPositionInSeconds: number;
 	totalLengthInSeconds: number;
 	lastUpdate: number;
@@ -86,6 +86,7 @@ export default function ProgressBar({
 	]);
 
 	async function handleSeekAction(position: number) {
+		if (userId == null) return;
 		fetch(`/api/${targetBot}/${guildId}/action`, {
 			method: "POST",
 			body: JSON.stringify({
@@ -97,6 +98,10 @@ export default function ProgressBar({
 				contentType: "application/json",
 			},
 		});
+	}
+
+	function handlePointerDown() {
+		if (userId != null) setIsInteracting(true);
 	}
 
 	return (
@@ -117,11 +122,10 @@ export default function ProgressBar({
 							className={styles.Root}
 							max={totalLengthInSeconds}
 							step={1}
+							disabled={!userId}
 							onValueChange={(value) => field.onChange(value[0])}
 							value={[field.value]}
-							onPointerDown={() => {
-								setIsInteracting(true);
-							}}
+							onPointerDown={() => handlePointerDown()}
 							onValueCommit={async (value) => {
 								await handleSeekAction(value[0]);
 								setIsInteracting(false);

@@ -7,7 +7,7 @@ const SeekbarContainer = newStyledElement.div(styles.seekbarContainer);
 interface PageContentProps {
 	targetBot: string;
 	guildId: string;
-	userId: string;
+	userId?: string;
 	width?: number;
 	isPaused?: boolean;
 	isFinished: boolean;

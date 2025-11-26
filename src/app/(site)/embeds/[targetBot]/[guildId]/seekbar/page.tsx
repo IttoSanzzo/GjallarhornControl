@@ -1,4 +1,5 @@
-import Seekbar from "./pageContent";
+import { PlayerStationContextProvider } from "@/components/PlayerStationContextProvider";
+import { SeekbarWrapper } from "./subComponents/SeekbarWrapper/SeekbarWrapper";
 
 interface PageServerShellProps {
 	params: Promise<{
@@ -17,10 +18,15 @@ export default async function PageServerShell({
 	const { width } = await searchParams;
 
 	return (
-		<Seekbar
-			guildId={guildId}
+		<PlayerStationContextProvider
 			targetBot={targetBot}
-			width={width}
-		/>
+			guildId={guildId}>
+			<SeekbarWrapper
+				targetBot={targetBot}
+				guildId={guildId}
+				width={width}
+				userId={undefined}
+			/>
+		</PlayerStationContextProvider>
 	);
 }
