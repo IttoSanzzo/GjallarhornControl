@@ -1,5 +1,5 @@
 import Queue from "./pageContent";
-import { PlayerQueueContextProvider } from "./subComponents/PlayerQueueContextProvider";
+import { PlayerQueueContextProvider } from "../../../../../../components/PlayerQueueContextProvider";
 
 interface PageServerShellProps {
 	params: Promise<{

@@ -14,11 +14,11 @@ import { Notification, NotificationData } from "@/components/Notification";
 import { newNotification } from "@/lib/utils";
 import {
 	ApiCommandsHandler,
-	PlayerStationDataContext,
 	UserSessionData,
 } from "../../../ControlPanelContextProvider";
 import styles from "./styles.module.css";
 import { newStyledElement } from "@setsu-tp/styled-components";
+import { PlayerStationContext } from "@/components/PlayerStationContextProvider";
 
 const ControlBarContainer = newStyledElement.div(styles.controlBarContainer);
 const ActionButton = newStyledElement.button(styles.actionButton);
@@ -31,7 +31,7 @@ export default function ControlBar({
 	queryData: { targetBot },
 }: ControlBarProps) {
 	const { postActionCommand } = useContext(ApiCommandsHandler);
-	const playerState = useContext(PlayerStationDataContext);
+	const playerState = useContext(PlayerStationContext);
 	const [notificationData] = useState<NotificationData>(newNotification());
 	const isBotChariot = targetBot == "ChariotSanzzo";
 

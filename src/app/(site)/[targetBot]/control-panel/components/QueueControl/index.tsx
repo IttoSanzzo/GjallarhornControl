@@ -4,7 +4,7 @@ import { newStyledElement } from "@setsu-tp/styled-components";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import QueueIcon from "@/assets/CircularQueueIcon.png";
-import { PlayerQueueContextProvider } from "@/app/(site)/embeds/[targetBot]/[guildId]/queue/subComponents/PlayerQueueContextProvider";
+import { PlayerQueueContextProvider } from "@/components/PlayerQueueContextProvider";
 import { useContext, useLayoutEffect, useState } from "react";
 import { UserSessionDataContext } from "../ControlPanelContextProvider";
 import Queue from "@/app/(site)/embeds/[targetBot]/[guildId]/queue/pageContent";

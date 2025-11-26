@@ -3,7 +3,7 @@
 import { newStyledElement } from "@setsu-tp/styled-components";
 import styles from "./styles.module.css";
 import { useContext, useEffect, useRef } from "react";
-import { PlayerQueueContext } from "./subComponents/PlayerQueueContextProvider";
+import { PlayerQueueContext } from "../../../../../../components/PlayerQueueContextProvider";
 import { api } from "@/lib/axios";
 import Image from "next/image";
 import YoutubeIcon from "@/assets/YoutubeIcon.png";
@@ -81,7 +81,6 @@ export default function Queue({
 				<TracksList>
 					{queue.tracks.map((track, index) => {
 						const plataformName = getPlataformName(track.link);
-						console.log(plataformName);
 
 						return (
 							<TrackEntry

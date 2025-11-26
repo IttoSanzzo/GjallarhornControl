@@ -1,4 +1,5 @@
-import Peek from "./pageContent";
+import { PlayerStationContextProvider } from "@/components/PlayerStationContextProvider";
+import { PeekWrapper } from "./subComponents/PeekWrapper/PeekWrapper";
 
 interface PageServerShellProps {
 	params: Promise<{
@@ -18,11 +19,15 @@ export default async function PageServerShell({
 	const { size, type } = await searchParams;
 
 	return (
-		<Peek
-			guildId={guildId}
+		<PlayerStationContextProvider
 			targetBot={targetBot}
-			size={size}
-			type={type}
-		/>
+			guildId={guildId}>
+			<PeekWrapper
+				targetBot={targetBot}
+				guildId={guildId}
+				size={size}
+				type={type}
+			/>
+		</PlayerStationContextProvider>
 	);
 }

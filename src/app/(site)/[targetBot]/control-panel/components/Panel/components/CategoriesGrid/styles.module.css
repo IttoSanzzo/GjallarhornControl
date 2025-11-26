@@ -10,16 +10,26 @@
 	grid-auto-flow: dense;
 	gap: var(--sp-3);
 }
+
 .categoryContainer {
 	background-color: var(--cl-gray-700);
 	border-radius: var(--rd-lg);
 	padding: var(--sp-3);
+
+	animation: fade-in 1s ease;
 
 	& h2 {
 		color: var(--textGolden);
 		margin-left: 10px;
 	}
 }
+@keyframes fade-in {
+	from {
+		margin-top: 20px;
+		opacity: 0;
+	}
+}
+
 .entriesContainer {
 	display: grid;
 	grid-template-columns: 1fr 1fr;

@@ -8,10 +8,8 @@ import PreviewContainer from "./subComponents/PreviewContainer";
 import CurrentTrack from "@/app/(site)/embeds/[targetBot]/[guildId]/current-track/pageContent";
 import CurrentTrackPeekContainer from "./subComponents/CurrentTrackPeekContainer";
 import ControlBar from "./subComponents/ControlBar";
-import {
-	PlayerStationDataContext,
-	UserSessionDataContext,
-} from "../ControlPanelContextProvider";
+import { UserSessionDataContext } from "../ControlPanelContextProvider";
+import { PlayerStationContext } from "@/components/PlayerStationContextProvider";
 
 const SeekbarContainer = newStyledElement.div(styles.seekbarContainer);
 const CurrentTrackContainer = newStyledElement.div(
@@ -21,7 +19,7 @@ const TrackInfoDisplay = newStyledElement.div(styles.trackInfoDisplay);
 
 export default function StationComponents() {
 	const userSessionData = useContext(UserSessionDataContext);
-	const playerStationData = useContext(PlayerStationDataContext);
+	const playerStationData = useContext(PlayerStationContext);
 
 	if (
 		userSessionData.presenceState == null ||

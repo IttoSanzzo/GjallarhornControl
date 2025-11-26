@@ -1,5 +1,5 @@
+import { PlayerStationContextProvider } from "@/components/PlayerStationContextProvider";
 import { api } from "@/lib/axios";
-import { PlayerStationState } from "@/lib/types/PlayerStationState";
 import { UserPresenceState } from "@/lib/types/UserPresenceState";
 import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 
@@ -14,8 +14,6 @@ type ApiCommands = {
 };
 
 export const UserSessionDataContext = createContext<UserSessionData>(null!);
-export const PlayerStationDataContext =
-	createContext<PlayerStationState | null>(null);
 export const ApiCommandsHandler = createContext<ApiCommands>(null!);
 
 interface ControlPanelContextProviderProps {
@@ -33,11 +31,7 @@ export default function ControlPanelContextProvider({
 		userId: userId,
 		presenceState: null,
 	});
-	const [playerState, setPlayerState] = useState<PlayerStationState | null>(
-		null
-	);
 	const userSessionDataRef = useRef<UserSessionData>(userSessionData);
-	const playerStateRef = useRef<PlayerStationState | null>(playerState);
 
 	async function postActionCommand(command: string): Promise<void> {
 		const userSessionData = userSessionDataRef.current;
@@ -145,71 +139,16 @@ export default function ControlPanelContextProvider({
 			}
 		};
 	}, [userId]);
-	useEffect(() => {
-		if (
-			userSessionData.presenceState == null ||
-			userSessionData.presenceState.voice.guildId == "0"
-		)
-			return;
-		let socket: WebSocket | null = null;
-		let safeClose: boolean = false;
-		let retryDelaySeconds = 0;
-		let timeout: NodeJS.Timeout | null = null;
-
-		function connect() {
-			try {
-				socket = new WebSocket(
-					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/${targetBot}/${userSessionData.presenceState?.voice.guildId}/player-update-socket`
-				);
-				socket.onopen = () => {
-					console.log("PlayerUpdate Socket Connected");
-					retryDelaySeconds = 0;
-				};
-				socket.onmessage = (event) => {
-					console.log("PlayerUpdate Message Received: ", event.data);
-					const data: PlayerStationState = JSON.parse(event.data);
-					const newState =
-						data.lastCommandResult.command == "Stop" &&
-						data.lastCommandResult.wasSuccess == true
-							? null
-							: data;
-					setPlayerState(newState);
-					playerStateRef.current = newState;
-				};
-				socket.onclose = () => {
-					setPlayerState(null);
-					playerStateRef.current = null;
-					retryDelaySeconds += 5;
-					if (safeClose == false) {
-						console.log("PlayerUpdate Socket Closed... trying to reconnect.");
-						timeout = setTimeout(connect, retryDelaySeconds * 1000);
-					} else console.log("PlayerUpdate Socket Closed.");
-				};
-				socket.onerror = () => {
-					socket?.close();
-				};
-			} catch (ex) {
-				console.error(ex);
-			}
-		}
-		connect();
-		return () => {
-			safeClose = true;
-			socket?.close();
-			if (timeout != null) {
-				clearTimeout(timeout);
-				timeout = null;
-			}
-		};
-	}, [userSessionData.presenceState]);
 
 	return (
 		<UserSessionDataContext.Provider value={userSessionData}>
-			<PlayerStationDataContext.Provider value={playerState}>
+			<PlayerStationContextProvider
+				targetBot={userSessionData.targetBot}
+				guildId={userSessionData.presenceState?.voice.guildId}>
 				<ApiCommandsHandler.Provider value={apiCommands}>
 					{children}
 				</ApiCommandsHandler.Provider>
-			</PlayerStationDataContext.Provider>
+			</PlayerStationContextProvider>
 		</UserSessionDataContext.Provider>
 	);
 }
