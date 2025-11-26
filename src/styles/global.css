@@ -75,6 +75,16 @@
 	--cl-mauve-800: #6b21a8;
 	--cl-mauve-900: #581c87;
 
+	--cl-yellow-100: #fff7cc;
+	--cl-yellow-200: #ffef99;
+	--cl-yellow-300: #ffd84d;
+	--cl-yellow-400: #ffcb1f;
+	--cl-yellow-500: #e6b100;
+	--cl-yellow-600: #b58c00;
+	--cl-yellow-700: #8c6d00;
+	--cl-yellow-800: #594500;
+	--cl-yellow-900: #332600;
+
 	/* Spaces */
 	--sp-1: 0.25rem;
 	--sp-2: 0.5rem;
@@ -86,6 +96,8 @@
 	--sp-8: 2rem;
 	--sp-10: 2.5rem;
 	--sp-12: 3rem;
+	--sp-13: 3.25rem;
+	--sp-14: 3.5rem;
 	--sp-15: 3.75rem;
 	--sp-16: 4rem;
 	--sp-17: 4.25rem;
@@ -170,4 +182,5 @@ body {
 	height: 100vh;
 	min-height: -webkit-fill-available;
 	min-width: -webkit-fill-available;
+	overflow: hidden;
 }

@@ -8,6 +8,8 @@
 	border-radius: var(--rd-lg);
 	transition: margin-bottom 2s linear;
 
+	z-index: 2;
+
 	&:hover {
 		& .trackInfoDisplay {
 			& > div {

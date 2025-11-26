@@ -13,7 +13,7 @@ type ApiCommands = {
 	postPlayCommand: (trackLink: string) => Promise<void>;
 };
 
-export const UserSessionData = createContext<UserSessionData>(null!);
+export const UserSessionDataContext = createContext<UserSessionData>(null!);
 export const PlayerStationDataContext =
 	createContext<PlayerStationState | null>(null);
 export const ApiCommandsHandler = createContext<ApiCommands>(null!);
@@ -204,12 +204,12 @@ export default function ControlPanelContextProvider({
 	}, [userSessionData.presenceState]);
 
 	return (
-		<UserSessionData.Provider value={userSessionData}>
+		<UserSessionDataContext.Provider value={userSessionData}>
 			<PlayerStationDataContext.Provider value={playerState}>
 				<ApiCommandsHandler.Provider value={apiCommands}>
 					{children}
 				</ApiCommandsHandler.Provider>
 			</PlayerStationDataContext.Provider>
-		</UserSessionData.Provider>
+		</UserSessionDataContext.Provider>
 	);
 }

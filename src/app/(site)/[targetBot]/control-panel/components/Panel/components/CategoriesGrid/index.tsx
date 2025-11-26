@@ -22,7 +22,7 @@ export const CategoriesGrid = React.memo(
 		}
 
 		return (
-			<CategoriesGridContainer>
+			<CategoriesGridContainer id="categoriesGridContainer">
 				{categoriesData.map((category, index) => (
 					<CategoryContainer key={index}>
 						<h2>{category.title}</h2>

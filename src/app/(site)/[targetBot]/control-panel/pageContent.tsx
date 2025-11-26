@@ -5,10 +5,11 @@ import StationComponents from "./components/StationComponents";
 import styles from "./styles.module.css";
 import createComponent from "../../../../../libs/createComponents/createComponent";
 import Panel from "./components/Panel";
-import NavigationBar from "./components/NavigationBar";
 import ControlPanelContextProvider from "./components/ControlPanelContextProvider";
+import { QueueControl } from "./components/QueueControl";
 
 const ControlPanelContainer = createComponent.div(styles.controlPanelContainer);
+const InteriorContainer = createComponent.div(styles.interiorContainer);
 
 interface ControlPanelProps {
 	targetBot: string;
@@ -20,13 +21,15 @@ export default function ControlPanel({ targetBot, userId }: ControlPanelProps) {
 			targetBot={targetBot}
 			userId={userId}>
 			<ControlPanelContainer>
-				<NavigationBar
+				<InteriorContainer>
+					<Panel />
+					<QueueControl />
+				</InteriorContainer>
+				<StationComponents />
+				{/* <NavigationBar
 					targetBot={targetBot}
 					userId={userId}
-				/>
-
-				<Panel />
-				<StationComponents />
+				/> */}
 			</ControlPanelContainer>
 		</ControlPanelContextProvider>
 	);

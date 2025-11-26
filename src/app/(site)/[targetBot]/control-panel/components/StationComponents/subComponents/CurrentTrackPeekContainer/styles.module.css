@@ -58,6 +58,21 @@
 	}
 }
 
+.plataformIcon {
+	position: absolute;
+	width: var(--sp-6);
+	aspect-ratio: 1;
+	left: var(--sp-2);
+	top: 50%;
+	transform: translateY(-50%);
+	margin-top: 2px;
+
+	& > img {
+		object-fit: contain;
+		transition: opacity 0.75s ease;
+	}
+}
+
 .originalUser {
 	color: var(--cl-gray-200);
 	display: flex;

@@ -22,7 +22,6 @@ export default async function PageServerShell({
 			targetBot={targetBot}
 			guildId={guildId}>
 			<Queue
-				guildId={guildId}
 				targetBot={targetBot}
 				withQueueTitle={!withoutTitleBar}
 			/>

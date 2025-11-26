@@ -9,6 +9,7 @@
 	border-radius: var(--rd-lg);
 	border: 2px solid var(--cl-gray-400);
 	box-shadow: 0 0 0 2px var(--textGolden);
+	transition: margin-top 0.5s ease;
 
 	& input {
 		background: var(--cl-gray-700);

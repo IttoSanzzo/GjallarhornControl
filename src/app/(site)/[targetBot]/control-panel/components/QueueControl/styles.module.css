@@ -1,0 +1,92 @@
+.queueControlButton {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+
+	top: 0;
+	margin-top: calc(var(--sp-4) * -1);
+	right: calc((var(--sp-5) * -1));
+	color: var(--cl-white);
+	background-color: var(--cl-gray-700);
+	border: 2px solid var(--cl-gray-400);
+	box-shadow: 0 0 0 2px var(--textGolden);
+	border-radius: var(--rd-full);
+	width: var(--sp-10);
+	height: var(--sp-10);
+	overflow: hidden;
+
+	transition: margin 0.5s ease;
+
+	& > img {
+		object-fit: contain;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.queueContainer {
+	border: unset;
+	min-width: 280px;
+	width: 25%;
+	max-width: 400px;
+	height: 100%;
+	padding: var(--sp-8) 0 var(--sp-12) 0;
+	background-color: transparent;
+	transition: padding 0.5s ease;
+	display: none;
+
+	--close-offset: min(max(280px, 25%), 400px);
+}
+.open {
+	display: unset;
+	animation: slide-in 0.75s ease;
+}
+.closed {
+	display: unset;
+	margin-right: calc(-1 * var(--close-offset));
+	opacity: 0;
+	animation: slide-out 0.75s ease;
+}
+
+@media (max-width: 900px) {
+	.queueControlButton {
+		margin-top: var(--sp-1);
+	}
+	.queueContainer {
+		padding-top: var(--sp-13);
+	}
+}
+@media (max-width: 680px) {
+	.queueContainer {
+		position: absolute;
+		left: 50%;
+		border: unset;
+		transform: translateX(-50%);
+		width: 90vw;
+		padding-bottom: var(--sp-7);
+
+		max-width: unset;
+		min-width: unset;
+		animation-duration: 0.4s;
+		margin-right: 0;
+
+		&.closed {
+			pointer-events: none;
+		}
+	}
+}
+
+@keyframes slide-in {
+	from {
+		opacity: 0;
+		margin-right: calc(-1 * var(--close-offset));
+	}
+}
+@keyframes slide-out {
+	from {
+		opacity: 1;
+		margin-right: 0;
+	}
+}

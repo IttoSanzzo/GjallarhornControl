@@ -6,7 +6,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 export const PlayerQueueContext = createContext<PlayerQueueState | null>(null);
 
 interface PlayerQueueContextProviderProps {
-	children: ReactNode;
+	children?: ReactNode;
 	targetBot: string;
 	guildId?: string;
 }
@@ -37,11 +37,6 @@ export function PlayerQueueContextProvider({
 				socket.onmessage = (event) => {
 					console.log("QueueUpdate Message Received: ", event.data);
 					const data: PlayerQueueState = JSON.parse(event.data);
-					// const newState =
-					// data.lastCommandResult.command == "Stop" &&
-					// data.lastCommandResult.wasSuccess == true
-					// ? null
-					// : data;
 					setPlayerQueueState(data);
 				};
 				socket.onclose = () => {
@@ -70,7 +65,6 @@ export function PlayerQueueContextProvider({
 		};
 	}, [guildId]);
 
-	console.log(playerQueueState);
 	return (
 		<PlayerQueueContext.Provider
 			value={playerQueueState}

@@ -36,6 +36,7 @@ export default function Peek({
 				}
 				alt={`Preview to ${type} track's artwork`}
 				style={{ objectFit: "contain" }}
+				sizes=""
 				fill
 			/>
 		</PeekContainer>

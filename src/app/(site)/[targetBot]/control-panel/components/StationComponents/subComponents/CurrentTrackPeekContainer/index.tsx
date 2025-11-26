@@ -6,12 +6,23 @@ import Peek, {
 import Image from "next/image";
 import PinIcon from "@/assets/PinIcon.png";
 import UnpinIcon from "@/assets/UnpinIcon.png";
+import YoutubeIcon from "@/assets/YoutubeIcon.png";
+import SpotifyIcon from "@/assets/SpotifyIcon.png";
+import SoundcloudIcon from "@/assets/SoundCloudIcon.png";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { getPlataformName } from "@/lib/utils";
 
 const PeekContainer = newStyledElement.div(styles.peekContainer);
 const TrackInfo = newStyledElement.div(styles.trackInfo);
 const OriginalUser = newStyledElement.div(styles.originalUser);
 const AlwaysOpenButton = newStyledElement.button(styles.alwaysOpenButton);
+const PlataformIcon = newStyledElement.span(styles.plataformIcon);
+
+const plataformIcons = {
+	youtube: YoutubeIcon,
+	spotify: SpotifyIcon,
+	soundcloud: SoundcloudIcon,
+};
 
 function getAlwaysOpenStorage(): boolean {
 	return localStorage.getItem("alwaysShowCurrentTrackPeek") == "true";
@@ -48,6 +59,8 @@ export default function CurrentTrackPeekContainer({
 		const peekParent = peekReference.current.parentElement;
 		peekParent.style.pointerEvents = alwaysOpen ? "unset" : "none";
 	}, [alwaysOpen, peekReference]);
+
+	const plataformName = getPlataformName(currentTrackData.trackUrl);
 
 	return (
 		<PeekContainer
@@ -90,6 +103,15 @@ export default function CurrentTrackPeekContainer({
 						fill
 					/>
 				</AlwaysOpenButton>
+				{plataformName && (
+					<PlataformIcon>
+						<Image
+							src={plataformIcons[plataformName]}
+							alt={"Current track plataform icon"}
+							fill
+						/>
+					</PlataformIcon>
+				)}
 			</TrackInfo>
 		</PeekContainer>
 	);

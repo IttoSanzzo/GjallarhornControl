@@ -5,11 +5,15 @@ import { useContext, useEffect, useState } from "react";
 import { CategoriesGrid } from "./components/CategoriesGrid";
 import { Notification, NotificationData } from "@/components/Notification";
 import { newNotification } from "@/lib/utils";
-import { UserSessionData } from "../ControlPanelContextProvider";
+import { UserSessionDataContext } from "../ControlPanelContextProvider";
 import SearchBar from "./components/SearchBar";
+import styles from "./styles.module.css";
+import { newStyledElement } from "@setsu-tp/styled-components";
+
+const PanelContainer = newStyledElement.div(styles.panelContainer);
 
 export default function Panel() {
-	const userSessionData = useContext(UserSessionData);
+	const userSessionData = useContext(UserSessionDataContext);
 	const [trackCategories, setTrackCategories] = useState<TrackCategory[]>([]);
 	const [refinedTrackCategories, setRefinedTrackCategories] = useState<
 		TrackCategory[]
@@ -56,7 +60,7 @@ export default function Panel() {
 	}, [trackCategories, searchQuery]);
 
 	return (
-		<>
+		<PanelContainer>
 			<SearchBar
 				setSearchQuery={onSearchQueryChange}
 				value={searchQuery}
@@ -64,6 +68,6 @@ export default function Panel() {
 			/>
 			<Notification data={notificationData} />
 			<CategoriesGrid categoriesData={refinedTrackCategories} />
-		</>
+		</PanelContainer>
 	);
 }

@@ -3,6 +3,7 @@
 	bottom: 40px;
 	width: 140px;
 	height: 78.75px;
+	z-index: 2;
 }
 .peekTrackContainer {
 	position: absolute;

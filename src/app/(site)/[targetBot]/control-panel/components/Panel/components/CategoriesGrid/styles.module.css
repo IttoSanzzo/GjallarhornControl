@@ -1,7 +1,8 @@
 .categoriesGridContainer {
 	height: 100%;
 	overflow: scroll;
-	padding: var(--sp-12) var(--sp-8);
+	padding: var(--sp-12) var(--sp-8) var(--sp-16);
+	transition: padding 0.75s ease;
 
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

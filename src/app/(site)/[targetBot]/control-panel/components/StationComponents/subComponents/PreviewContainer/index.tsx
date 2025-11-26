@@ -44,9 +44,7 @@ export default function PeekContainer({
 	}
 
 	useEffect(() => {
-		if (lastCommand.command == "Play" && lastCommand.wasSuccess && !fromLog) {
-			setCurrent(props.preview ? props.preview : null);
-		} else if (
+		if (
 			(lastCommand.command == "Next" || lastCommand.command == "Previous") &&
 			lastCommand.wasSuccess &&
 			!fromLog
@@ -54,7 +52,9 @@ export default function PeekContainer({
 			setPrevious(current);
 			setCurrent(props.preview ? props.preview : null);
 			setMoveDirection(lastCommand.command == "Next" ? "next" : "previous");
+			return;
 		}
+		setCurrent(props.preview ? props.preview : null);
 	}, [lastCommand, props.preview]);
 
 	return (

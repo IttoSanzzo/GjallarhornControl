@@ -10,7 +10,7 @@ import CurrentTrackPeekContainer from "./subComponents/CurrentTrackPeekContainer
 import ControlBar from "./subComponents/ControlBar";
 import {
 	PlayerStationDataContext,
-	UserSessionData,
+	UserSessionDataContext,
 } from "../ControlPanelContextProvider";
 
 const SeekbarContainer = newStyledElement.div(styles.seekbarContainer);
@@ -20,7 +20,7 @@ const CurrentTrackContainer = newStyledElement.div(
 const TrackInfoDisplay = newStyledElement.div(styles.trackInfoDisplay);
 
 export default function StationComponents() {
-	const userSessionData = useContext(UserSessionData);
+	const userSessionData = useContext(UserSessionDataContext);
 	const playerStationData = useContext(PlayerStationDataContext);
 
 	if (
