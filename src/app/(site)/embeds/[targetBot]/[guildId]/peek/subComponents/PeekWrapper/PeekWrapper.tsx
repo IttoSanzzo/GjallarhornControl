@@ -9,12 +9,16 @@ interface PeekWrapperProps {
 	guildId: string;
 	size?: number;
 	type: "previous" | "current" | "next";
+	inBox?: boolean;
+	boxSide?: "left" | "right";
 }
 export function PeekWrapper({
 	guildId,
 	targetBot,
 	type,
 	size,
+	inBox,
+	boxSide,
 }: PeekWrapperProps) {
 	const playerStation = useContext(PlayerStationContext);
 
@@ -25,6 +29,8 @@ export function PeekWrapper({
 			size={size}
 			type={type}
 			preview={playerStation?.currentTrack}
+			inBox={inBox}
+			boxSide={boxSide}
 		/>
 	);
 }

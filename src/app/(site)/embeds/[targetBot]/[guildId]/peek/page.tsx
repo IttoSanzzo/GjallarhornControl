@@ -8,7 +8,9 @@ interface PageServerShellProps {
 	}>;
 	searchParams: Promise<{
 		size?: number;
-		type: "previous" | "current" | "next";
+		type?: "previous" | "current" | "next";
+		inBox?: boolean;
+		boxSide?: "left" | "right";
 	}>;
 }
 export default async function PageServerShell({
@@ -16,7 +18,7 @@ export default async function PageServerShell({
 	searchParams,
 }: PageServerShellProps) {
 	const { guildId, targetBot } = await params;
-	const { size, type } = await searchParams;
+	const { size, type = "current", inBox = false, boxSide } = await searchParams;
 
 	return (
 		<PlayerStationContextProvider
@@ -27,6 +29,8 @@ export default async function PageServerShell({
 				guildId={guildId}
 				size={size}
 				type={type}
+				inBox={inBox}
+				boxSide={boxSide}
 			/>
 		</PlayerStationContextProvider>
 	);

@@ -18,3 +18,22 @@
 		opacity: 1;
 	}
 }
+
+.peekBox {
+	padding: var(--sp-10);
+	background-color: var(--cl-gray-800);
+	border-radius: var(--rd-lg);
+
+	&.boxLeft {
+		border-radius: unset;
+		border-top-right-radius: var(--rd-3xl);
+		border-bottom-right-radius: var(--rd-3xl);
+		padding-left: 0;
+	}
+	&.boxRight {
+		border-radius: unset;
+		border-top-left-radius: var(--rd-3xl);
+		border-bottom-left-radius: var(--rd-3xl);
+		padding-right: 0;
+	}
+}
