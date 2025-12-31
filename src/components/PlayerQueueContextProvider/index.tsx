@@ -28,7 +28,10 @@ export function PlayerQueueContextProvider({
 		function connect() {
 			try {
 				socket = new WebSocket(
-					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/${targetBot}/${guildId}/queue-update-socket`
+					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/${targetBot}/${guildId}/queue-update-socket`.replace(
+						"https://",
+						"wss://"
+					)
 				);
 				socket.onopen = () => {
 					console.log("QueueUpdate Socket Connected");

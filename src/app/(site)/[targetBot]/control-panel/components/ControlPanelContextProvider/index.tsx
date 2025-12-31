@@ -91,7 +91,10 @@ export default function ControlPanelContextProvider({
 		function connect() {
 			try {
 				socket = new WebSocket(
-					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/users/${userId}/presence-sentinel-socket`
+					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/users/${userId}/presence-sentinel-socket`.replace(
+						"https://",
+						"wss://"
+					)
 				);
 				socket.onopen = () => {
 					console.log("PresenceSentinel Socket Connected");

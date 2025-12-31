@@ -31,7 +31,10 @@ export function PlayerStationContextProvider({
 		function connect() {
 			try {
 				socket = new WebSocket(
-					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/${targetBot}/${guildId}/player-update-socket`
+					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/${targetBot}/${guildId}/player-update-socket`.replace(
+						"https://",
+						"wss://"
+					)
 				);
 				socket.onopen = () => {
 					console.log("PlayerUpdate Socket Connected");
