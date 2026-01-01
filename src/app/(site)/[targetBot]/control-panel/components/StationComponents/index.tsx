@@ -45,7 +45,7 @@ export default function StationComponents() {
 					? styles.displayIn
 					: styles.displayOut
 			}>
-			<ControlBar queryData={userSessionData} />
+			<ControlBar />
 
 			<PreviewContainer
 				userId={userSessionData.userId}

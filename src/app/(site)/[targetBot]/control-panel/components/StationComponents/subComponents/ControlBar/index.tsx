@@ -12,10 +12,7 @@ import IconStop from "@/assets/CircularRemoveIcon.png";
 import { useContext, useState } from "react";
 import { Notification, NotificationData } from "@/components/Notification";
 import { newNotification } from "@/lib/utils";
-import {
-	ApiCommandsHandler,
-	UserSessionData,
-} from "../../../ControlPanelContextProvider";
+import { ApiCommandsHandler } from "../../../ControlPanelContextProvider";
 import styles from "./styles.module.css";
 import { newStyledElement } from "@setsu-tp/styled-components";
 import { PlayerStationContext } from "@/components/PlayerStationContextProvider";
@@ -23,13 +20,7 @@ import { PlayerStationContext } from "@/components/PlayerStationContextProvider"
 const ControlBarContainer = newStyledElement.div(styles.controlBarContainer);
 const ActionButton = newStyledElement.button(styles.actionButton);
 
-interface ControlBarProps {
-	queryData: UserSessionData;
-}
-
-export default function ControlBar({
-	queryData: { targetBot },
-}: ControlBarProps) {
+export default function ControlBar() {
 	const { postActionCommand } = useContext(ApiCommandsHandler);
 	const playerState = useContext(PlayerStationContext);
 	const [notificationData] = useState<NotificationData>(newNotification());
