@@ -33,7 +33,6 @@ export default function ControlBar({
 	const { postActionCommand } = useContext(ApiCommandsHandler);
 	const playerState = useContext(PlayerStationContext);
 	const [notificationData] = useState<NotificationData>(newNotification());
-	const isBotChariot = targetBot == "ChariotSanzzo";
 
 	return (
 		<>

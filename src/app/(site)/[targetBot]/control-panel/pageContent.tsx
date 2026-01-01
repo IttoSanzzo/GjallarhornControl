@@ -8,6 +8,7 @@ import Panel from "./components/Panel";
 import ControlPanelContextProvider from "./components/ControlPanelContextProvider";
 import { QueueControl } from "./components/QueueControl";
 import { UserConnection } from "./components/UserConnection";
+import { BotConnection } from "./components/BotConnection";
 
 const ControlPanelContainer = createComponent.div(styles.controlPanelContainer);
 const InteriorContainer = createComponent.div(styles.interiorContainer);
@@ -26,6 +27,10 @@ export default function ControlPanel({ targetBot, userId }: ControlPanelProps) {
 					<Panel />
 					<QueueControl targetBot={targetBot} />
 					<UserConnection />
+					<BotConnection
+						targetBot={targetBot}
+						userId={userId}
+					/>
 				</InteriorContainer>
 				<StationComponents />
 
