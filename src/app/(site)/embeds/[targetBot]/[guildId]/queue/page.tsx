@@ -1,5 +1,6 @@
 import Queue from "./pageContent";
 import { PlayerQueueContextProvider } from "../../../../../../components/PlayerQueueContextProvider";
+import { CSSProperties } from "react";
 
 interface PageServerShellProps {
 	params: Promise<{
@@ -8,6 +9,8 @@ interface PageServerShellProps {
 	}>;
 	searchParams: Promise<{
 		withoutTitleBar?: boolean;
+		position?: "center";
+		backgroundColor?: keyof CSSProperties["backgroundColor"] | "default";
 	}>;
 }
 export default async function PageServerShell({
@@ -15,16 +18,32 @@ export default async function PageServerShell({
 	searchParams,
 }: PageServerShellProps) {
 	const { guildId, targetBot } = await params;
-	const { withoutTitleBar } = await searchParams;
+	const { withoutTitleBar, backgroundColor, position } = await searchParams;
+
+	const pageWrapperStyle: CSSProperties = {
+		width: "100vw",
+		height: "100vh",
+		...(backgroundColor != undefined && {
+			backgroundColor:
+				backgroundColor == "default" ? "var(--cl-gray-800)" : backgroundColor,
+		}),
+		...(position == "center" && {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+		}),
+	};
 
 	return (
-		<PlayerQueueContextProvider
-			targetBot={targetBot}
-			guildId={guildId}>
-			<Queue
+		<div style={pageWrapperStyle}>
+			<PlayerQueueContextProvider
 				targetBot={targetBot}
-				withQueueTitle={!withoutTitleBar}
-			/>
-		</PlayerQueueContextProvider>
+				guildId={guildId}>
+				<Queue
+					targetBot={targetBot}
+					withQueueTitle={!withoutTitleBar}
+				/>
+			</PlayerQueueContextProvider>
+		</div>
 	);
 }

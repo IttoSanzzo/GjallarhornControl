@@ -1,5 +1,6 @@
 import { PlayerStationContextProvider } from "@/components/PlayerStationContextProvider";
 import { SeekbarWrapper } from "./subComponents/SeekbarWrapper/SeekbarWrapper";
+import { CSSProperties } from "react";
 
 interface PageServerShellProps {
 	params: Promise<{
@@ -8,6 +9,8 @@ interface PageServerShellProps {
 	}>;
 	searchParams: Promise<{
 		width?: number;
+		position?: "center";
+		backgroundColor?: keyof CSSProperties["backgroundColor"] | "default";
 	}>;
 }
 export default async function PageServerShell({
@@ -15,18 +18,34 @@ export default async function PageServerShell({
 	searchParams,
 }: PageServerShellProps) {
 	const { guildId, targetBot } = await params;
-	const { width } = await searchParams;
+	const { width, backgroundColor, position } = await searchParams;
+
+	const pageWrapperStyle: CSSProperties = {
+		width: "100vw",
+		height: "100vh",
+		...(backgroundColor != undefined && {
+			backgroundColor:
+				backgroundColor == "default" ? "var(--cl-gray-800)" : backgroundColor,
+		}),
+		...(position == "center" && {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+		}),
+	};
 
 	return (
-		<PlayerStationContextProvider
-			targetBot={targetBot}
-			guildId={guildId}>
-			<SeekbarWrapper
+		<div style={pageWrapperStyle}>
+			<PlayerStationContextProvider
 				targetBot={targetBot}
-				guildId={guildId}
-				width={width}
-				userId={undefined}
-			/>
-		</PlayerStationContextProvider>
+				guildId={guildId}>
+				<SeekbarWrapper
+					targetBot={targetBot}
+					guildId={guildId}
+					width={width}
+					userId={undefined}
+				/>
+			</PlayerStationContextProvider>
+		</div>
 	);
 }

@@ -15,8 +15,9 @@ export interface CurrentTrackProps {
 	targetBot: string;
 	guildId: string;
 	title: string;
+	fontSize?: number;
 }
-export default function CurrentTrack({ title }: CurrentTrackProps) {
+export default function CurrentTrack({ title, fontSize }: CurrentTrackProps) {
 	const [trackData, setTrackData] = useState<{
 		count: number;
 		duration: number;
@@ -26,6 +27,8 @@ export default function CurrentTrack({ title }: CurrentTrackProps) {
 	});
 	const trackElementRef = useRef<HTMLSpanElement>(null);
 	const titleElementRef = useRef<HTMLParagraphElement>(null);
+
+	const fontSizeStyle = fontSize ? { fontSize: Number(fontSize) } : {};
 
 	useLayoutEffect(() => {
 		function updateTrackData() {
@@ -51,7 +54,7 @@ export default function CurrentTrack({ title }: CurrentTrackProps) {
 		if (titleElementRef.current) observer.observe(titleElementRef.current);
 		if (trackElementRef.current) observer.observe(trackElementRef.current);
 		return () => observer.disconnect();
-	}, [title]);
+	}, [title, fontSize]);
 
 	return (
 		<CurrentTrackContainer>
@@ -76,14 +79,15 @@ export default function CurrentTrack({ title }: CurrentTrackProps) {
 							ref={titleElementRef}
 							style={{
 								...(trackData.count == 0 && { padding: "unset" }),
+								...fontSizeStyle,
 							}}>
 							{title}
 						</p>
-
 						{Array.from({ length: trackData.count }, (_, index) => (
 							<p
 								aria-disabled
-								key={index}>
+								key={index}
+								style={fontSizeStyle}>
 								{title}
 							</p>
 						))}
