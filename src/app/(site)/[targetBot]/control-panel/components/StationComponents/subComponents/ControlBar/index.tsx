@@ -50,22 +50,20 @@ export default function ControlBar({
 						priority
 					/>
 				</ActionButton>
-				{isBotChariot && (
-					<>
-						<ActionButton onClick={() => postActionCommand("Previous")}>
-							<Image
-								src={IconPrevious}
-								alt="Previous track button"
-							/>
-						</ActionButton>
-						<ActionButton onClick={() => postActionCommand("Next")}>
-							<Image
-								src={IconNext}
-								alt="Next track button"
-							/>
-						</ActionButton>
-					</>
-				)}
+
+				<ActionButton onClick={() => postActionCommand("Previous")}>
+					<Image
+						src={IconPrevious}
+						alt="Previous track button"
+					/>
+				</ActionButton>
+				<ActionButton onClick={() => postActionCommand("Next")}>
+					<Image
+						src={IconNext}
+						alt="Next track button"
+					/>
+				</ActionButton>
+
 				<ActionButton
 					onClick={() => postActionCommand("Loop")}
 					style={{
@@ -77,22 +75,18 @@ export default function ControlBar({
 						alt="Loop queue button"
 					/>
 				</ActionButton>
-				{isBotChariot && (
-					<>
-						<ActionButton onClick={() => postActionCommand("Shuffle")}>
-							<Image
-								src={IconShuffle}
-								alt="Shuffle queue button"
-							/>
-						</ActionButton>
-						<ActionButton onClick={() => postActionCommand("Reset")}>
-							<Image
-								src={IconReset}
-								alt="Reset queue button"
-							/>
-						</ActionButton>
-					</>
-				)}
+				<ActionButton onClick={() => postActionCommand("Shuffle")}>
+					<Image
+						src={IconShuffle}
+						alt="Shuffle queue button"
+					/>
+				</ActionButton>
+				<ActionButton onClick={() => postActionCommand("Reset")}>
+					<Image
+						src={IconReset}
+						alt="Reset queue button"
+					/>
+				</ActionButton>
 				<ActionButton onClick={() => postActionCommand("Stop")}>
 					<Image
 						src={IconStop}
