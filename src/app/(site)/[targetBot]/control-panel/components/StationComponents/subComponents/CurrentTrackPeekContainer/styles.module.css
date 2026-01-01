@@ -9,7 +9,7 @@
 
 	& > a > div > img {
 		width: fit-content !important;
-		justify-self: center;
+		margin: auto;
 
 		mask-image: linear-gradient(
 				to right,
