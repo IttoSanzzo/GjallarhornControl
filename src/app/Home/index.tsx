@@ -1,14 +1,5 @@
-import { HomeContainer, HomeTitle } from "./styledComponents";
-import InternalBox from "@/components/InternalBox";
 import { Metadata } from "next";
-
-// interface HomeProps {
-// 	searchParams: Promise<{
-// 		targetBot?: string;
-// 		userId?: string;
-// 		channelId?: string;
-// 	}>;
-// }
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
 	metadataBase: new URL("https://gjallarhorncontrol.setsu.party"),
@@ -40,23 +31,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	// export default async function Home({ searchParams }: HomeProps) {
-	// const queryParams = await searchParams;
-	// const { targetBot, userId, channelId } = queryParams;
-	// const queryData: QueryData = {
-	// channelId: channelId ?? "",
-	// targetBot: targetBot ?? "",
-	// userId: userId ?? "",
-	// };
-
-	return (
-		<HomeContainer>
-			<InternalBox>
-				<HomeTitle>Gjallarhorn Control</HomeTitle>
-			</InternalBox>
-			{/* <InternalBox> */}
-			{/* <LoginForm queryData={queryData} /> */}
-			{/* </InternalBox> */}
-		</HomeContainer>
-	);
+	redirect("/ChariotSanzzo/control-panel");
 }

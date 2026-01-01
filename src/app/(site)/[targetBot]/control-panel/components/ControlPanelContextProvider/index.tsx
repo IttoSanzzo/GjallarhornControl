@@ -103,7 +103,7 @@ export default function ControlPanelContextProvider({
 				socket.onmessage = (event) => {
 					console.log("PresenceSentinel Message Received: ", event.data);
 					const data: UserPresenceState = JSON.parse(event.data);
-					const newState = {
+					const newState: UserSessionData = {
 						targetBot: targetBot,
 						userId: userId,
 						presenceState: data,
