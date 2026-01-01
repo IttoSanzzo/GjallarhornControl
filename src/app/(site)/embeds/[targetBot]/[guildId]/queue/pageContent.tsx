@@ -51,7 +51,25 @@ export default function Queue({
 			currentTrackRef.current.parentElement,
 			currentTrackRef.current
 		);
+		scrollChildIntoParentCenter(
+			currentTrackRef.current.parentElement,
+			currentTrackRef.current
+		);
 	}, [currentTrackRef.current]);
+	useEffect(() => {
+		setTimeout(() => {
+			if (!currentTrackRef.current || !currentTrackRef.current.parentElement)
+				return;
+			scrollChildIntoParentCenter(
+				currentTrackRef.current.parentElement,
+				currentTrackRef.current
+			);
+			scrollChildIntoParentCenter(
+				currentTrackRef.current.parentElement,
+				currentTrackRef.current
+			);
+		}, 1500);
+	}, []);
 
 	async function handleClick(link: string) {
 		if (!queue) return;
