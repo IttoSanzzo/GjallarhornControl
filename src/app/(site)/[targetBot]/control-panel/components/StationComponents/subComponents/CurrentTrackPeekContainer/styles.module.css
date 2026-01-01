@@ -21,6 +21,7 @@
 			linear-gradient(to top, transparent, black 3%, black 97%, transparent),
 			radial-gradient(black 90%, transparent);
 		mask-composite: intersect;
+		-webkit-mask-composite: source-in;
 	}
 	&:hover .alwaysOpenButton {
 		opacity: 1;
@@ -29,9 +30,9 @@
 
 .trackInfo {
 	position: absolute;
-	bottom: 3;
+	bottom: 3px;
 	width: 100%;
-	padding: 0 var(--sp-3) 0 var(--sp-1);
+	padding: 0px var(--sp-3) 0px var(--sp-1);
 }
 .alwaysOpenButton {
 	position: absolute;
