@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import type { Viewport } from "next";
 import App from "@/app/_app";
-import "@/styles/global.css";
+import "@/styles";
 
 export const viewport: Viewport = {
 	initialScale: 1,
