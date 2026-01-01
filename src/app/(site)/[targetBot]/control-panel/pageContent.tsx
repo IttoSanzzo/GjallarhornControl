@@ -13,7 +13,7 @@ const ControlPanelContainer = createComponent.div(styles.controlPanelContainer);
 const InteriorContainer = createComponent.div(styles.interiorContainer);
 
 interface ControlPanelProps {
-	targetBot: string;
+	targetBot: "ChariotSanzzo" | "Gjallarhorn";
 	userId: string;
 }
 export default function ControlPanel({ targetBot, userId }: ControlPanelProps) {
@@ -24,10 +24,11 @@ export default function ControlPanel({ targetBot, userId }: ControlPanelProps) {
 			<ControlPanelContainer>
 				<InteriorContainer>
 					<Panel />
-					<QueueControl />
+					<QueueControl targetBot={targetBot} />
 					<UserConnection />
 				</InteriorContainer>
 				<StationComponents />
+
 				{/* <NavigationBar
 					targetBot={targetBot}
 					userId={userId}

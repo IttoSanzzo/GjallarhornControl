@@ -12,19 +12,30 @@ import Queue from "@/app/(site)/embeds/[targetBot]/[guildId]/queue/pageContent";
 const QueueControlButton = newStyledElement.button(styles.queueControlButton);
 const QueueContainer = newStyledElement.div(styles.queueContainer);
 
-function getOpenStateInStorage(): boolean {
-	return localStorage.getItem("queueBarOpenState") == "true";
+function getOpenStateInStorage(
+	targetBot: "ChariotSanzzo" | "Gjallarhorn"
+): boolean {
+	return localStorage.getItem(`${targetBot}-queueBarOpenState`) == "true";
 }
-function setOpenStateInStorage(state: boolean): void {
-	localStorage.setItem("queueBarOpenState", state ? "true" : "false");
+function setOpenStateInStorage(
+	state: boolean,
+	targetBot: "ChariotSanzzo" | "Gjallarhorn"
+): void {
+	localStorage.setItem(
+		`${targetBot}-queueBarOpenState`,
+		state ? "true" : "false"
+	);
 }
 
-export function QueueControl() {
+interface QueueControlProps {
+	targetBot: "ChariotSanzzo" | "Gjallarhorn";
+}
+export function QueueControl({ targetBot }: QueueControlProps) {
 	const userSessionData = useContext(UserSessionDataContext);
 	const [openState, setOpenState] = useState<boolean | null>(null);
 
 	useLayoutEffect(() => {
-		const storageState = getOpenStateInStorage();
+		const storageState = getOpenStateInStorage(targetBot);
 		if (storageState) setOpenState(true);
 	}, []);
 	useLayoutEffect(() => {
@@ -59,7 +70,7 @@ export function QueueControl() {
 			</QueueContainer>
 			<QueueControlButton
 				onClick={() => {
-					setOpenStateInStorage(!openState);
+					setOpenStateInStorage(!openState, targetBot);
 					setOpenState(!openState);
 				}}>
 				<Image

@@ -3,9 +3,10 @@
 import React from "react";
 import { Metadata } from "next";
 import ControlPanel from "./pageContent";
+import { notFound } from "next/navigation";
 
 interface ControlPanelServerShellProps {
-	params: Promise<{ targetBot: string }>;
+	params: Promise<{ targetBot: "ChariotSanzzo" | "Gjallarhorn" }>;
 	searchParams: Promise<{ userId?: string }>;
 }
 export async function generateMetadata({
@@ -52,7 +53,12 @@ export default async function ControlPanelServerShell({
 	const { targetBot } = await params;
 	const { userId } = await searchParams;
 
-	if (userId == null) return null;
+	if (
+		userId == null ||
+		userId == "" ||
+		(targetBot != "ChariotSanzzo" && targetBot != "Gjallarhorn")
+	)
+		notFound();
 
 	return (
 		<ControlPanel
