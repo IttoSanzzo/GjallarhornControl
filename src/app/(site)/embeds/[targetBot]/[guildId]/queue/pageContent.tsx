@@ -49,11 +49,11 @@ export default function Queue({
 			return;
 		scrollChildIntoParentCenter(
 			currentTrackRef.current.parentElement,
-			currentTrackRef.current
+			currentTrackRef.current,
 		);
 		scrollChildIntoParentCenter(
 			currentTrackRef.current.parentElement,
-			currentTrackRef.current
+			currentTrackRef.current,
 		);
 	}, [currentTrackRef.current]);
 	useEffect(() => {
@@ -62,21 +62,22 @@ export default function Queue({
 				return;
 			scrollChildIntoParentCenter(
 				currentTrackRef.current.parentElement,
-				currentTrackRef.current
+				currentTrackRef.current,
 			);
 			scrollChildIntoParentCenter(
 				currentTrackRef.current.parentElement,
-				currentTrackRef.current
+				currentTrackRef.current,
 			);
 		}, 1500);
 	}, []);
 
-	async function handleClick(link: string) {
+	async function handleClick(position: number) {
 		if (!queue) return;
 		try {
-			api.post(`/${targetBot}/${queue.guildId}/play`, {
+			api.post(`/${targetBot}/${queue.guildId}/action`, {
 				userId,
-				trackLink: link,
+				action: "Index",
+				trackPosition: position,
 			});
 		} catch {
 			console.error("Exception");
@@ -102,19 +103,21 @@ export default function Queue({
 
 						return (
 							<TrackEntry
-								onClick={userId ? () => handleClick(track.link) : undefined}
+								onClick={userId ? () => handleClick(index + 1) : undefined}
 								key={`${index}:${track.link}`}
 								className={
-									index == queue.currentIndex
+									index + 1 == queue.currentIndex
 										? clsx(
 												styles.current,
 												queue.isPaused ? styles.paused : undefined,
 												queue.loopState == 1 ? styles.trackLoop : undefined,
-												queue.loopState == 2 ? styles.queueLoop : undefined
-										  )
+												queue.loopState == 2 ? styles.queueLoop : undefined,
+											)
 										: undefined
 								}
-								ref={index == queue.currentIndex ? currentTrackRef : undefined}
+								ref={
+									index + 1 == queue.currentIndex ? currentTrackRef : undefined
+								}
 								title={track.link}>
 								<ArtworkPreview>
 									<Image

@@ -4,7 +4,7 @@ import { PlayerStationState } from "@/lib/types/PlayerStationState";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 export const PlayerStationContext = createContext<PlayerStationState | null>(
-	null
+	null,
 );
 
 interface PlayerStationContextProviderProps {
@@ -18,7 +18,7 @@ export function PlayerStationContextProvider({
 	children,
 }: PlayerStationContextProviderProps) {
 	const [playerState, setPlayerState] = useState<PlayerStationState | null>(
-		null
+		null,
 	);
 
 	useEffect(() => {
@@ -33,15 +33,17 @@ export function PlayerStationContextProvider({
 				socket = new WebSocket(
 					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/${targetBot}/${guildId}/player-update-socket`.replace(
 						"https://",
-						"wss://"
-					)
+						"wss://",
+					),
 				);
 				socket.onopen = () => {
-					console.log("PlayerUpdate Socket Connected");
+					if (process.env.NODE_ENV == "development")
+						console.log("PlayerUpdate Socket Connected");
 					retryDelaySeconds = 0;
 				};
 				socket.onmessage = (event) => {
-					console.log("PlayerUpdate Message Received: ", event.data);
+					if (process.env.NODE_ENV == "development")
+						console.log("PlayerUpdate Message Received: ", event.data);
 					const data: PlayerStationState = JSON.parse(event.data);
 					const newState =
 						data.lastCommandResult.command == "Stop" &&
@@ -54,9 +56,11 @@ export function PlayerStationContextProvider({
 					setPlayerState(null);
 					retryDelaySeconds += 5;
 					if (safeClose == false) {
-						console.log("PlayerUpdate Socket Closed... trying to reconnect.");
+						if (process.env.NODE_ENV == "development")
+							console.log("PlayerUpdate Socket Closed... trying to reconnect.");
 						timeout = setTimeout(connect, retryDelaySeconds * 1000);
-					} else console.log("PlayerUpdate Socket Closed.");
+					} else if (process.env.NODE_ENV == "development")
+						console.log("PlayerUpdate Socket Closed.");
 				};
 				socket.onerror = () => {
 					socket?.close();

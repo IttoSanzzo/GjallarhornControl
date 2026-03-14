@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
 	req: NextRequest,
-	{ params }: { params: Promise<{ targetBot: string; guildId: string }> }
+	{ params }: { params: Promise<{ targetBot: string; guildId: string }> },
 ) {
 	try {
-		const { action, channelId, userId, position } = await req.json();
+		const { action, channelId, userId, seekSeconds, trackPosition } =
+			await req.json();
 		const { targetBot, guildId } = await params;
 		console.log(`ACTN [${targetBot}:${guildId}] <- ${userId} -> [${action}]`);
 
@@ -19,10 +20,11 @@ export async function POST(
 				body: JSON.stringify({
 					command: action,
 					userId: userId,
-					position: position,
+					trackPosition: trackPosition,
+					seekSeconds: seekSeconds,
 					channelId: channelId,
 				}),
-			}
+			},
 		);
 		const responseBody: {
 			success: boolean;

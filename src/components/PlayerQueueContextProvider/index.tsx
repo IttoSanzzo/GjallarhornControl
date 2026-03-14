@@ -30,15 +30,17 @@ export function PlayerQueueContextProvider({
 				socket = new WebSocket(
 					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/${targetBot}/${guildId}/queue-update-socket`.replace(
 						"https://",
-						"wss://"
-					)
+						"wss://",
+					),
 				);
 				socket.onopen = () => {
-					console.log("QueueUpdate Socket Connected");
+					if (process.env.NODE_ENV == "development")
+						console.log("QueueUpdate Socket Connected");
 					retryDelaySeconds = 0;
 				};
 				socket.onmessage = (event) => {
-					console.log("QueueUpdate Message Received: ", event.data);
+					if (process.env.NODE_ENV == "development")
+						console.log("QueueUpdate Message Received: ", event.data);
 					const data: PlayerQueueState = JSON.parse(event.data);
 					setPlayerQueueState(data);
 				};
@@ -46,9 +48,11 @@ export function PlayerQueueContextProvider({
 					setPlayerQueueState(null);
 					retryDelaySeconds += 5;
 					if (safeClose == false) {
-						console.log("QueueUpdate Socket Closed... trying to reconnect.");
+						if (process.env.NODE_ENV == "development")
+							console.log("QueueUpdate Socket Closed... trying to reconnect.");
 						timeout = setTimeout(connect, retryDelaySeconds * 1000);
-					} else console.log("QueueUpdate Socket Closed.");
+					} else if (process.env.NODE_ENV == "development")
+						console.log("QueueUpdate Socket Closed.");
 				};
 				socket.onerror = () => {
 					socket?.close();

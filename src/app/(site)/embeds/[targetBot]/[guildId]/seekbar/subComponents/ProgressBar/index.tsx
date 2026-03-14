@@ -69,7 +69,7 @@ export default function ProgressBar({
 					clearInterval(interval);
 					return;
 				}
-				form.setValue("currentPosition", newPosition, {
+				form.setValue("currentPosition", newPosition - 2, {
 					shouldValidate: false,
 				});
 			}
@@ -92,7 +92,7 @@ export default function ProgressBar({
 			body: JSON.stringify({
 				userId,
 				action: "Seek",
-				position: position,
+				seekSeconds: position,
 			}),
 			headers: {
 				contentType: "application/json",
