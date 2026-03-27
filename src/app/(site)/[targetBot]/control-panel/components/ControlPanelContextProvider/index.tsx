@@ -48,7 +48,7 @@ export default function ControlPanelContextProvider({
 					userId,
 					action: command,
 					channelId: userSessionData.presenceState.chat?.channelId,
-				}
+				},
 			);
 		} catch {
 			console.error("Exception");
@@ -69,7 +69,7 @@ export default function ControlPanelContextProvider({
 					userId,
 					trackLink,
 					channelId: userSessionData.presenceState.chat?.channelId,
-				}
+				},
 			);
 		} catch {
 			console.error("Exception");
@@ -93,15 +93,17 @@ export default function ControlPanelContextProvider({
 				socket = new WebSocket(
 					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/live/users/${userId}/presence-sentinel-socket`.replace(
 						"https://",
-						"wss://"
-					)
+						"wss://",
+					),
 				);
 				socket.onopen = () => {
-					console.log("PresenceSentinel Socket Connected");
+					if (process.env.NODE_ENV == "development")
+						console.log("PresenceSentinel Socket Connected");
 					retryDelaySeconds = 0;
 				};
 				socket.onmessage = (event) => {
-					console.log("PresenceSentinel Message Received: ", event.data);
+					if (process.env.NODE_ENV == "development")
+						console.log("PresenceSentinel Message Received: ", event.data);
 					const data: UserPresenceState = JSON.parse(event.data);
 					const newState: UserSessionData = {
 						targetBot: targetBot,
@@ -121,11 +123,13 @@ export default function ControlPanelContextProvider({
 					userSessionDataRef.current = newState;
 					retryDelaySeconds += 5;
 					if (safeClose == false) {
-						console.log(
-							"PresenceSentinel Socket Closed... trying to reconnect."
-						);
+						if (process.env.NODE_ENV == "development")
+							console.log(
+								"PresenceSentinel Socket Closed... trying to reconnect.",
+							);
 						timeout = setTimeout(connect, retryDelaySeconds * 1000);
-					} else console.log("PresenceSentinel Socket Closed.");
+					} else if (process.env.NODE_ENV == "development")
+						console.log("PresenceSentinel Socket Closed.");
 				};
 				socket.onerror = () => socket?.close();
 			} catch (ex) {

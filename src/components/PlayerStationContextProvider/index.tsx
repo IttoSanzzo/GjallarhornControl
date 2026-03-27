@@ -46,7 +46,8 @@ export function PlayerStationContextProvider({
 						console.log("PlayerUpdate Message Received: ", event.data);
 					const data: PlayerStationState = JSON.parse(event.data);
 					const newState =
-						data.lastCommandResult.command == "Stop" &&
+						(data.lastCommandResult.command == "Stop" ||
+							data.lastCommandResult.command == "Disconnect") &&
 						data.lastCommandResult.wasSuccess == true
 							? null
 							: data;
