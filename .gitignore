@@ -2,3 +2,5 @@
 .env
 node_modules
 certificates
+DockerDevRunner.sh
+DockerProdRunner.sh
