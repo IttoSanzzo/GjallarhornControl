@@ -49,7 +49,7 @@ export function PlayerQueueContextProvider({
 				};
 				socket.onclose = () => {
 					setPlayerQueueState(null);
-					retryDelaySeconds += 5;
+					if (retryDelaySeconds <= 60) retryDelaySeconds += 5;
 					if (safeClose == false) {
 						if (process.env.NODE_ENV == "development")
 							console.log("QueueUpdate Socket Closed... trying to reconnect.");
@@ -57,9 +57,7 @@ export function PlayerQueueContextProvider({
 					} else if (process.env.NODE_ENV == "development")
 						console.log("QueueUpdate Socket Closed.");
 				};
-				socket.onerror = () => {
-					socket?.close();
-				};
+				socket.onerror = () => socket?.close();
 			} catch (ex) {
 				console.error(ex);
 			}
@@ -73,7 +71,7 @@ export function PlayerQueueContextProvider({
 				timeout = null;
 			}
 		};
-	}, [guildId]);
+	}, [guildId, setPlayerQueueState]);
 
 	return (
 		<PlayerQueueContext.Provider

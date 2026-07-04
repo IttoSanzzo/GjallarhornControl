@@ -25,11 +25,14 @@ export default function ControlPanelContextProvider({
 	targetBot,
 	userId,
 }: ControlPanelContextProviderProps) {
-	const [userSessionData, setUserSessionData] = useState<UserSessionData>({
+	const userSessionWithoutPresenceState = {
 		targetBot: targetBot,
 		userId: userId,
 		presenceState: null,
-	});
+	};
+	const [userSessionData, setUserSessionData] = useState<UserSessionData>(
+		userSessionWithoutPresenceState,
+	);
 	const userSessionDataRef = useRef<UserSessionData>(userSessionData);
 
 	async function postActionCommand(command: string): Promise<void> {
@@ -96,7 +99,7 @@ export default function ControlPanelContextProvider({
 		if (userId == null) return;
 		let socket: WebSocket | null = null;
 		let safeClose: boolean = false;
-		let retryDelaySeconds = 0;
+		const retryDelaySeconds = 5;
 		let timeout: NodeJS.Timeout | null = null;
 
 		function connect() {
@@ -110,29 +113,27 @@ export default function ControlPanelContextProvider({
 				socket.onopen = () => {
 					if (process.env.NODE_ENV == "development")
 						console.log("PresenceSentinel Socket Connected");
-					retryDelaySeconds = 0;
 				};
 				socket.onmessage = (event) => {
 					if (process.env.NODE_ENV == "development")
 						console.log("PresenceSentinel Message Received: ", event.data);
-					const data: UserPresenceState = JSON.parse(event.data);
-					const newState: UserSessionData = {
-						targetBot: targetBot,
-						userId: userId,
-						presenceState: data,
-					};
-					setUserSessionData(newState);
-					userSessionDataRef.current = newState;
+					if (!event.data) {
+						setUserSessionData(userSessionWithoutPresenceState);
+						userSessionDataRef.current = userSessionWithoutPresenceState;
+					} else {
+						const data: UserPresenceState = JSON.parse(event.data);
+						const newState: UserSessionData = {
+							targetBot: targetBot,
+							userId: userId,
+							presenceState: data,
+						};
+						setUserSessionData(newState);
+						userSessionDataRef.current = newState;
+					}
 				};
 				socket.onclose = () => {
-					const newState = {
-						targetBot: targetBot,
-						userId: userId,
-						presenceState: null,
-					};
-					setUserSessionData(newState);
-					userSessionDataRef.current = newState;
-					if (retryDelaySeconds <= 60) retryDelaySeconds += 5;
+					setUserSessionData(userSessionWithoutPresenceState);
+					userSessionDataRef.current = userSessionWithoutPresenceState;
 					if (safeClose == false) {
 						if (process.env.NODE_ENV == "development")
 							console.log(

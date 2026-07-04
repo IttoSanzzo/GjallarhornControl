@@ -66,9 +66,7 @@ export function PlayerStationContextProvider({
 					} else if (process.env.NODE_ENV == "development")
 						console.log("PlayerUpdate Socket Closed.");
 				};
-				socket.onerror = () => {
-					socket?.close();
-				};
+				socket.onerror = () => socket?.close();
 			} catch (ex) {
 				console.error(ex);
 			}
