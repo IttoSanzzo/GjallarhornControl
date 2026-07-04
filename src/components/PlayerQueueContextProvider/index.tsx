@@ -41,8 +41,11 @@ export function PlayerQueueContextProvider({
 				socket.onmessage = (event) => {
 					if (process.env.NODE_ENV == "development")
 						console.log("QueueUpdate Message Received: ", event.data);
-					const data: PlayerQueueState = JSON.parse(event.data);
-					setPlayerQueueState(data);
+					if (!event.data) setPlayerQueueState(null);
+					else {
+						const data: PlayerQueueState = JSON.parse(event.data);
+						setPlayerQueueState(data);
+					}
 				};
 				socket.onclose = () => {
 					setPlayerQueueState(null);

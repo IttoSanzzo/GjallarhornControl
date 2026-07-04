@@ -44,14 +44,17 @@ export function PlayerStationContextProvider({
 				socket.onmessage = (event) => {
 					if (process.env.NODE_ENV == "development")
 						console.log("PlayerUpdate Message Received: ", event.data);
-					const data: PlayerStationState = JSON.parse(event.data);
-					const newState =
-						(data.lastCommandResult.command == "Stop" ||
-							data.lastCommandResult.command == "Disconnect") &&
-						data.lastCommandResult.wasSuccess == true
-							? null
-							: data;
-					setPlayerState(newState);
+					if (!event.data) setPlayerState(null);
+					else {
+						const data: PlayerStationState = JSON.parse(event.data);
+						setPlayerState(
+							(data.lastCommandResult.command == "Stop" ||
+								data.lastCommandResult.command == "Disconnect") &&
+								data.lastCommandResult.wasSuccess == true
+								? null
+								: data,
+						);
+					}
 				};
 				socket.onclose = () => {
 					setPlayerState(null);
