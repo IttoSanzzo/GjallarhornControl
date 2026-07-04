@@ -4,7 +4,6 @@ import { newStyledElement } from "@setsu-tp/styled-components";
 import styles from "./styles.module.css";
 import { useContext, useEffect, useRef } from "react";
 import { PlayerQueueContext } from "../../../../../../components/PlayerQueueContextProvider";
-import { api } from "@/lib/axios";
 import Image from "next/image";
 import YoutubeIcon from "@/assets/YoutubeIcon.png";
 import SpotifyIcon from "@/assets/SpotifyIcon.png";
@@ -74,10 +73,16 @@ export default function Queue({
 	async function handleClick(position: number) {
 		if (!queue) return;
 		try {
-			api.post(`/${targetBot}/${queue.guildId}/action`, {
-				userId,
-				action: "Index",
-				trackPosition: position,
+			await fetch(`/api/${targetBot}/${queue.guildId}/action`, {
+				method: "POST",
+				body: JSON.stringify({
+					userId,
+					action: "Index",
+					trackPosition: position,
+				}),
+				headers: {
+					"Content-Type": "application/json",
+				},
 			});
 		} catch {
 			console.error("Exception");

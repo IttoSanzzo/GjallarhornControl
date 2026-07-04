@@ -1,5 +1,4 @@
 import { PlayerStationContextProvider } from "@/components/PlayerStationContextProvider";
-import { api } from "@/lib/axios";
 import { UserPresenceState } from "@/lib/types/UserPresenceState";
 import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 
@@ -42,12 +41,18 @@ export default function ControlPanelContextProvider({
 			return;
 		}
 		try {
-			api.post(
-				`/${targetBot}/${userSessionData.presenceState.voice.guildId}/action`,
+			await fetch(
+				`/api/${targetBot}/${userSessionData.presenceState.voice.guildId}/action`,
 				{
-					userId,
-					action: command,
-					channelId: userSessionData.presenceState.chat?.channelId,
+					method: "POST",
+					body: JSON.stringify({
+						userId,
+						action: command,
+						channelId: userSessionData.presenceState.chat?.channelId,
+					}),
+					headers: {
+						"Content-Type": "application/json",
+					},
 				},
 			);
 		} catch {
@@ -63,12 +68,18 @@ export default function ControlPanelContextProvider({
 			return;
 		}
 		try {
-			api.post(
-				`/${targetBot}/${userSessionData.presenceState.voice.guildId}/play`,
+			await fetch(
+				`/api/${targetBot}/${userSessionData.presenceState.voice.guildId}/play`,
 				{
-					userId,
-					trackLink,
-					channelId: userSessionData.presenceState.chat?.channelId,
+					method: "POST",
+					body: JSON.stringify({
+						userId,
+						trackLink,
+						channelId: userSessionData.presenceState.chat?.channelId,
+					}),
+					headers: {
+						"Content-Type": "application/json",
+					},
 				},
 			);
 		} catch {
