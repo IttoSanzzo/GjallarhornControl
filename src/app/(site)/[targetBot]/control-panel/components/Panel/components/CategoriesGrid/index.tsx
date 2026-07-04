@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { TrackCategory, TrackInfo } from "@/lib/TrackData";
-import { ApiCommandsHandler } from "../../../ControlPanelContextProvider";
+import { ApiCommandsHandlerContext } from "../../../ControlPanelContextProvider";
 import styles from "./styles.module.css";
 import { newStyledElement } from "@setsu-tp/styled-components";
 
 const CategoriesGridContainer = newStyledElement.div(
-	styles.categoriesGridContainer
+	styles.categoriesGridContainer,
 );
 const CategoryContainer = newStyledElement.main(styles.categoryContainer);
 const EntriesContainer = newStyledElement.div(styles.entriesContainer);
@@ -16,7 +16,7 @@ interface CategoriesGridProps {
 }
 export const CategoriesGrid = React.memo(
 	({ categoriesData }: CategoriesGridProps) => {
-		const { postPlayCommand } = useContext(ApiCommandsHandler);
+		const { postPlayCommand } = useContext(ApiCommandsHandlerContext);
 		async function handlePlay(track: TrackInfo) {
 			await postPlayCommand(track.link);
 		}
@@ -40,5 +40,5 @@ export const CategoriesGrid = React.memo(
 				))}
 			</CategoriesGridContainer>
 		);
-	}
+	},
 );

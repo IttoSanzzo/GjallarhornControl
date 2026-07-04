@@ -6,7 +6,7 @@ import Peek, {
 } from "@/app/(site)/embeds/[targetBot]/[guildId]/peek/pageContent";
 import { capitalize } from "@/lib/utils";
 import { useContext, useEffect, useState } from "react";
-import { ApiCommandsHandler } from "../../../ControlPanelContextProvider";
+import { ApiCommandsHandlerContext } from "../../../ControlPanelContextProvider";
 import { PlayerCommandResult } from "@/lib/types/PlayerStationState";
 import clsx from "clsx";
 
@@ -27,13 +27,13 @@ export default function PeekContainer({
 	fromLog,
 	...props
 }: PeekContainerProps) {
-	const { postActionCommand } = useContext(ApiCommandsHandler);
+	const { postActionCommand } = useContext(ApiCommandsHandlerContext);
 	const [current, setCurrent] = useState<PeekPreviewData | null>(
-		props.preview ? props.preview : null
+		props.preview ? props.preview : null,
 	);
 	const [previous, setPrevious] = useState<PeekPreviewData | null>(null);
 	const [moveDirection, setMoveDirection] = useState<"previous" | "next" | "">(
-		""
+		"",
 	);
 	async function handleActionButton(action: string) {
 		await postActionCommand(action);

@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import PlayButton from "./components/PlayButton";
 import ResetButton from "./components/ResetButton";
-import { ApiCommandsHandler } from "../../../ControlPanelContextProvider";
+import { ApiCommandsHandlerContext } from "../../../ControlPanelContextProvider";
 import styles from "./styles.module.css";
 import { newStyledElement } from "@setsu-tp/styled-components";
 
 export const SearchBarContainer = newStyledElement.div(
-	styles.searchBarContainer
+	styles.searchBarContainer,
 );
 
 interface SearchBarProps {
@@ -19,7 +19,7 @@ export default function SearchBar({
 	value,
 	firstTrackLink,
 }: SearchBarProps) {
-	const { postPlayCommand } = useContext(ApiCommandsHandler);
+	const { postPlayCommand } = useContext(ApiCommandsHandlerContext);
 	const isLinkEmpty = value == "";
 	function resetSearchQuery() {
 		setSearchQuery("");

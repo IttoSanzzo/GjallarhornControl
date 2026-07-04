@@ -55,7 +55,7 @@ export function PlayerStationContextProvider({
 				};
 				socket.onclose = () => {
 					setPlayerState(null);
-					retryDelaySeconds += 5;
+					if (retryDelaySeconds <= 60) retryDelaySeconds += 5;
 					if (safeClose == false) {
 						if (process.env.NODE_ENV == "development")
 							console.log("PlayerUpdate Socket Closed... trying to reconnect.");
@@ -79,7 +79,7 @@ export function PlayerStationContextProvider({
 				timeout = null;
 			}
 		};
-	}, [targetBot, guildId]);
+	}, [targetBot, guildId, setPlayerState]);
 
 	return (
 		<PlayerStationContext.Provider

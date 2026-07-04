@@ -14,7 +14,7 @@ type ApiCommands = {
 };
 
 export const UserSessionDataContext = createContext<UserSessionData>(null!);
-export const ApiCommandsHandler = createContext<ApiCommands>(null!);
+export const ApiCommandsHandlerContext = createContext<ApiCommands>(null!);
 
 interface ControlPanelContextProviderProps {
 	children: ReactNode;
@@ -121,7 +121,7 @@ export default function ControlPanelContextProvider({
 					};
 					setUserSessionData(newState);
 					userSessionDataRef.current = newState;
-					retryDelaySeconds += 5;
+					if (retryDelaySeconds <= 60) retryDelaySeconds += 5;
 					if (safeClose == false) {
 						if (process.env.NODE_ENV == "development")
 							console.log(
@@ -145,16 +145,16 @@ export default function ControlPanelContextProvider({
 				timeout = null;
 			}
 		};
-	}, [userId]);
+	}, [userId, setUserSessionData]);
 
 	return (
 		<UserSessionDataContext.Provider value={userSessionData}>
 			<PlayerStationContextProvider
 				targetBot={userSessionData.targetBot}
 				guildId={userSessionData.presenceState?.voice.guildId}>
-				<ApiCommandsHandler.Provider value={apiCommands}>
+				<ApiCommandsHandlerContext.Provider value={apiCommands}>
 					{children}
-				</ApiCommandsHandler.Provider>
+				</ApiCommandsHandlerContext.Provider>
 			</PlayerStationContextProvider>
 		</UserSessionDataContext.Provider>
 	);
