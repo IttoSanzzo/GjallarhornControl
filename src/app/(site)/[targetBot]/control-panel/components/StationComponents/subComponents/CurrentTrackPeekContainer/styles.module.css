@@ -11,13 +11,8 @@
 		width: fit-content !important;
 		margin: auto;
 
-		mask-image: linear-gradient(
-				to right,
-				transparent,
-				black 3%,
-				black 97%,
-				transparent
-			),
+		mask-image:
+			linear-gradient(to right, transparent, black 3%, black 97%, transparent),
 			linear-gradient(to top, transparent, black 3%, black 97%, transparent),
 			radial-gradient(black 90%, transparent);
 		mask-composite: intersect;
@@ -26,6 +21,21 @@
 	&:hover .alwaysOpenButton {
 		opacity: 1;
 	}
+
+	&.alwaysOpen {
+		transition: 0.25s linear opacity;
+		& a {
+			pointer-events: none;
+		}
+
+		&:hover {
+			transition: 0.25s linear opacity;
+			opacity: 0.1;
+		}
+	}
+}
+
+.linkContainer {
 }
 
 .trackInfo {
@@ -47,7 +57,9 @@
 
 	top: 50%;
 	transform: translateY(-50%);
-	transition: background-color 0.3s linear, border-color 0.3s linear,
+	transition:
+		background-color 0.3s linear,
+		border-color 0.3s linear,
 		opacity 0.6s ease;
 	opacity: 0;
 

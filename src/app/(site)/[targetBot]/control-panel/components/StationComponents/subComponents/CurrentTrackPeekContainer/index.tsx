@@ -13,6 +13,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getPlataformName } from "@/lib/utils";
 
 const PeekContainer = newStyledElement.div(styles.peekContainer);
+const LinkContainer = newStyledElement.a(styles.linkContainer);
 const TrackInfo = newStyledElement.div(styles.trackInfo);
 const OriginalUser = newStyledElement.div(styles.originalUser);
 const AlwaysOpenButton = newStyledElement.button(styles.alwaysOpenButton);
@@ -67,8 +68,9 @@ export default function CurrentTrackPeekContainer({
 			ref={peekReference}
 			style={{
 				...(alwaysOpen && { margin: "unset" }),
-			}}>
-			<a
+			}}
+			className={alwaysOpen ? styles.alwaysOpen : undefined}>
+			<LinkContainer
 				href={currentTrackData.trackUrl}
 				target="_blank">
 				<Peek
@@ -80,7 +82,7 @@ export default function CurrentTrackPeekContainer({
 						title: currentTrackData.title,
 					}}
 				/>
-			</a>
+			</LinkContainer>
 			<TrackInfo>
 				<span />
 				<OriginalUser>
