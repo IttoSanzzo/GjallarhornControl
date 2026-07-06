@@ -59,8 +59,12 @@
 	border-radius: var(--rd-md);
 	padding: var(--sp-2) var(--sp-8);
 	height: 60px;
+	overflow: hidden;
 
-	transition: background 0.5s ease, border 0.5s ease, color 0.5s ease,
+	transition:
+		background 0.5s ease,
+		border 0.5s ease,
+		color 0.5s ease,
 		outline 0.75s ease;
 
 	animation: sliding-fade-in 1s ease;
