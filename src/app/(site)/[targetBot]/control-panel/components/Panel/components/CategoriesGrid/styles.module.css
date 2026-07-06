@@ -36,21 +36,3 @@
 	grid-auto-rows: auto;
 	gap: var(--sp-1);
 }
-.entryButton {
-	background-color: var(--cl-gray-800);
-	color: teal;
-	padding: var(--sp-1);
-	border-radius: var(--rd-md);
-	border: 2px solid var(--cl-gray-800);
-	border-left: 2.5px solid teal;
-	border-right: 2.5px solid teal;
-	transition: 0.15s linear background, 0.4s ease-in border;
-
-	&:hover {
-		background-color: var(--cl-gray-600);
-		cursor: pointer;
-		transition: 0.25s linear background;
-		border-top: 2px solid teal;
-		border-bottom: 2px solid teal;
-	}
-}

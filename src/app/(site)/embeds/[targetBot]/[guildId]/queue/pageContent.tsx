@@ -123,7 +123,7 @@ export default function Queue({
 								ref={
 									index + 1 == queue.currentIndex ? currentTrackRef : undefined
 								}
-								title={`${track.title}\n${track.link}`}>
+								title={`${track.title}\n\n${track.link}`}>
 								<ArtworkPreview>
 									<Image
 										src={track.artwork}

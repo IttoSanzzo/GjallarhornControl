@@ -4,6 +4,7 @@ export interface TrackInfo {
 	name: string;
 	description: string;
 	link: string;
+	artworkUrl?: string;
 }
 export interface TrackCategory {
 	title: string;
