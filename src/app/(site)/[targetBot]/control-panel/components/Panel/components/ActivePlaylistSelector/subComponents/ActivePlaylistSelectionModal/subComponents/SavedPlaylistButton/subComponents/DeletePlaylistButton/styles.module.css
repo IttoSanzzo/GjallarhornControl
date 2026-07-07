@@ -1,0 +1,16 @@
+.deletePlaylistButtonButton {
+	position: absolute;
+	right: 10px;
+	width: 15px;
+	height: 15px;
+	border: none;
+	background-color: var(--cl-red-900);
+	margin: auto;
+	border-radius: var(--rd-xs);
+	transition: 0.25s linear background-color;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--cl-red-800);
+	}
+}

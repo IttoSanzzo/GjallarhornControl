@@ -1,0 +1,41 @@
+.modalOverlay {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--cl-gray-900);
+	opacity: 0.5;
+}
+.modalContent {
+	position: absolute;
+	width: 600px;
+	height: 750px;
+	max-width: 90vw;
+	max-height: 90vh;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--cl-gray-800);
+	border-radius: var(--rd-md);
+	box-shadow: 0 0 15px 0 var(--cl-black-3);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+	padding: var(--sp-5);
+
+	& > h1 {
+		color: var(--cl-gray-200);
+	}
+}
+
+.playlistListContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	border-radius: var(--rd-md);
+	gap: var(--sp-1);
+	margin-top: var(--sp-5);
+	margin-bottom: var(--sp-5);
+}

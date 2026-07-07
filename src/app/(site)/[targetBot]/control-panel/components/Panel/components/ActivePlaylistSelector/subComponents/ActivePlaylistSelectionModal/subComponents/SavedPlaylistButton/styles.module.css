@@ -1,0 +1,25 @@
+.savedPlaylistButtonContainer {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.savedPlaylistButtonButton {
+	width: 100%;
+	background-color: var(--cl-gray-700);
+	border: 1px solid var(--cl-gray-800);
+	cursor: pointer;
+	color: var(--cl-gray-400);
+	font-weight: var(--fw-bold);
+	text-align: left;
+	padding: var(--sp-2);
+	transition: 0.25s linear background-color;
+
+	&:hover {
+		background-color: var(--cl-gray-600);
+	}
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}

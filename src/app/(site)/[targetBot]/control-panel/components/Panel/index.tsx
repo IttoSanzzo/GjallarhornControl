@@ -9,6 +9,9 @@ import { UserSessionDataContext } from "../ControlPanelContextProvider";
 import SearchBar from "./components/SearchBar";
 import styles from "./styles.module.css";
 import { newStyledElement } from "@setsu-tp/styled-components";
+import { TracksLoader } from "./components/TracksCategoriesLoader";
+import { ActivePlaylistSelector } from "./components/ActivePlaylistSelector";
+import { SavedPlaylist } from "@/lib/types/UserSavedPlaylist";
 
 const PanelContainer = newStyledElement.div(styles.panelContainer);
 
@@ -18,6 +21,12 @@ export default function Panel() {
 	const [refinedTrackCategories, setRefinedTrackCategories] = useState<
 		TrackCategory[]
 	>([]);
+	const activeSavedPlaylistState = useState<SavedPlaylist>({
+		id: "",
+		nickname: "",
+		targetLink: "",
+		targetType: "Default",
+	});
 	const [searchQuery, setSearchQuery] = useState<string>("");
 	const [notificationData] = useState<NotificationData>(newNotification());
 
@@ -26,32 +35,12 @@ export default function Panel() {
 	}
 
 	useEffect(() => {
-		try {
-			fetch(
-				`${process.env.NEXT_PUBLIC_GJALLARHORNCONTROL_FULL_ADDRESS}/api/${userSessionData.targetBot}/soundtracks`,
-				{
-					method: "GET",
-					next: {
-						revalidate: 60 * 60 * 24, // 24 hours,
-					},
-				}
-			).then(async (response) => {
-				const { refinedData } = await response.json();
-				setTrackCategories(refinedData);
-			});
-		} catch {
-			setTrackCategories([]);
-			alert("ChariotAPI is Offline");
-		}
-	}, []);
-
-	useEffect(() => {
 		if (searchQuery === "") setRefinedTrackCategories(trackCategories);
-		const filteredData: TrackCategory[] = trackCategories
+		const filteredData: TrackCategory[] = (trackCategories ?? [])
 			.map((category) => ({
 				...category,
 				tracks: category.tracks.filter((track) =>
-					track.name.toLowerCase().includes(searchQuery.toLowerCase())
+					track.name.toLowerCase().includes(searchQuery.toLowerCase()),
 				),
 			}))
 			.filter((category) => category.tracks.length > 0)
@@ -61,6 +50,15 @@ export default function Panel() {
 
 	return (
 		<PanelContainer>
+			<ActivePlaylistSelector
+				activeSavedPlaylistState={activeSavedPlaylistState}
+				discordId={userSessionData.userId}
+			/>
+			<TracksLoader
+				playslistMeta={activeSavedPlaylistState[0]}
+				targetBot={userSessionData.targetBot}
+				setTrackCategories={setTrackCategories}
+			/>
 			<SearchBar
 				setSearchQuery={onSearchQueryChange}
 				value={searchQuery}

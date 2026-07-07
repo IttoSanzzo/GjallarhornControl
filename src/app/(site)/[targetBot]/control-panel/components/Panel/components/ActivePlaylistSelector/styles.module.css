@@ -1,0 +1,32 @@
+.activePlaylistSelectorContainer {
+	position: absolute;
+	left: -17px;
+	top: 35px;
+	z-index: 2;
+	border-radius: var(--rd-full);
+	overflow: hidden;
+}
+
+.activePlaylistSelectorModalButton {
+	position: relative;
+	width: 34px;
+	height: 34px;
+	cursor: pointer;
+	background-color: var(--cl-gray-800);
+	border-radius: inherit;
+	border: 3px solid var(--cl-yellow-700);
+	animation: 0.5s linear fade-in;
+
+	& > p {
+		color: var(--cl-gray-200);
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
