@@ -28,17 +28,17 @@ interface ActivePlaylistSelectionModalProps {
 export function ActivePlaylistSelectionModal({
 	discordId,
 	activeSavedPlaylistState,
-	modalOpenState: [isOpen, setIsOpen],
+	modalOpenState,
 	userSavedPlaylistsState,
 }: ActivePlaylistSelectionModalProps) {
 	return (
 		<Dialog.Root
 			defaultOpen={false}
-			open={isOpen}>
+			open={modalOpenState[0]}>
 			<Dialog.Portal>
 				<Dialog.Overlay
 					className={styles.modalOverlay}
-					onClick={() => setIsOpen(false)}
+					onClick={() => modalOpenState[1](false)}
 				/>
 				<Dialog.Content className={styles.modalContent}>
 					<h1>User's Playlists</h1>
@@ -51,16 +51,22 @@ export function ActivePlaylistSelectionModal({
 								nickname: "Default",
 								targetType: "Default",
 							}}
+							position={0}
+							maxPosition={userSavedPlaylistsState[0]?.playlists.length ?? 0}
+							modalOpenState={modalOpenState}
 							activeSavedPlaylistState={activeSavedPlaylistState}
 							userSavedPlaylistsState={userSavedPlaylistsState}
 							discordUserId={discordId}
 						/>
-						{userSavedPlaylistsState[0]?.playlists.map((entry) => (
+						{userSavedPlaylistsState[0]?.playlists.map((entry, index) => (
 							<SavedPlaylistButton
 								key={entry.id}
 								savedPlaylist={entry}
 								activeSavedPlaylistState={activeSavedPlaylistState}
 								userSavedPlaylistsState={userSavedPlaylistsState}
+								modalOpenState={modalOpenState}
+								position={index + 1}
+								maxPosition={userSavedPlaylistsState[0]?.playlists.length ?? 0}
 								discordUserId={discordId}
 							/>
 						))}

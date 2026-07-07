@@ -6,6 +6,8 @@ import {
 } from "@/lib/types/UserSavedPlaylist";
 import { Dispatch, SetStateAction } from "react";
 import { DeletePlaylistButton } from "./subComponents/DeletePlaylistButton";
+import clsx from "clsx";
+import { ReorderPlaylistButtons } from "./subComponents/ReorderPlaylistButtons";
 
 const SavedPlaylistButtonContainer = newStyledElement.div(
 	styles.savedPlaylistButtonContainer,
@@ -24,7 +26,10 @@ interface SavedPlaylistButtonProps {
 		UserSavedPlaylists | null,
 		Dispatch<SetStateAction<UserSavedPlaylists | null>>,
 	];
+	modalOpenState: [boolean, Dispatch<SetStateAction<boolean>>];
 	discordUserId: string;
+	position: number;
+	maxPosition: number;
 	isDefault?: boolean;
 }
 export function SavedPlaylistButton({
@@ -32,33 +37,75 @@ export function SavedPlaylistButton({
 	activeSavedPlaylistState,
 	discordUserId,
 	userSavedPlaylistsState,
+	modalOpenState,
+	maxPosition,
+	position,
 	isDefault = false,
 }: SavedPlaylistButtonProps) {
+	function moveFocusToPreviousPlaylist() {
+		const previousPosition = position == 0 ? maxPosition : position - 1;
+		const previousElement = document.getElementById(
+			`SavedPlaylistButton-|${previousPosition}|`,
+		);
+		if (previousElement) previousElement.focus();
+	}
+	function moveFocusToNextPlaylist() {
+		const nextPosition = position == maxPosition ? 0 : position + 1;
+		const nextElement = document.getElementById(
+			`SavedPlaylistButton-|${nextPosition}|`,
+		);
+		if (nextElement) nextElement.focus();
+	}
+	function handleKeyDown(event: React.KeyboardEvent) {
+		switch (event.key) {
+			case "ArrowUp":
+				event.preventDefault();
+				moveFocusToPreviousPlaylist();
+				break;
+			case "ArrowDown":
+				event.preventDefault();
+				moveFocusToNextPlaylist();
+				break;
+		}
+	}
+
+	const isActive = activeSavedPlaylistState[0].id == savedPlaylist.id;
 	return (
 		<SavedPlaylistButtonContainer>
 			<SavedPlaylistButtonButton
-				style={
-					isDefault
-						? {
-								border: "1px solid var(--cl-gray-300)",
-								borderTopLeftRadius: "var(--rd-md)",
-								borderTopRightRadius: "var(--rd-md)",
+				id={`SavedPlaylistButton-|${position}|`}
+				autoFocus={isActive}
+				className={clsx(
+					isActive ? styles.isActive : undefined,
+					isDefault ? styles.defaultButton : undefined,
+				)}
+				onClick={
+					isActive
+						? undefined
+						: () => {
+								activeSavedPlaylistState[1](savedPlaylist);
+								modalOpenState[1](false);
 							}
-						: undefined
 				}
-				disabled={activeSavedPlaylistState[0].id == savedPlaylist.id}
-				onClick={() => {
-					activeSavedPlaylistState[1](savedPlaylist);
-				}}>
+				onKeyDown={handleKeyDown}>
 				{savedPlaylist.nickname}
 			</SavedPlaylistButtonButton>{" "}
 			{!isDefault && (
-				<DeletePlaylistButton
-					activeSavedPlaylistState={activeSavedPlaylistState}
-					discordUserId={discordUserId}
-					savedPlaylist={savedPlaylist}
-					userSavedPlaylistsState={userSavedPlaylistsState}
-				/>
+				<>
+					<DeletePlaylistButton
+						activeSavedPlaylistState={activeSavedPlaylistState}
+						discordUserId={discordUserId}
+						savedPlaylist={savedPlaylist}
+						userSavedPlaylistsState={userSavedPlaylistsState}
+					/>
+					<ReorderPlaylistButtons
+						savedPlaylist={savedPlaylist}
+						userSavedPlaylistsState={userSavedPlaylistsState}
+						position={position}
+						maxPosition={maxPosition}
+						discordId={discordUserId}
+					/>
+				</>
 			)}
 		</SavedPlaylistButtonContainer>
 	);

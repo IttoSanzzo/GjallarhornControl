@@ -1,0 +1,28 @@
+.reorderPlaylistButtonsContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+	height: 100%;
+	aspect-ratio: 1/1;
+	background-color: var(--cl-gray-900);
+	padding: var(--sp-1);
+}
+.reorderPlaylistGenericButton {
+	height: 100%;
+	cursor: pointer;
+	background-color: var(--cl-gray-800);
+	transition: 0.25s linear background-color;
+
+	&.toUp {
+		border-top-left-radius: var(--rd-full);
+		border-top-right-radius: var(--rd-full);
+	}
+	&.toDown {
+		border-bottom-left-radius: var(--rd-full);
+		border-bottom-right-radius: var(--rd-full);
+	}
+
+	&:hover {
+		background-color: var(--cl-gray-600);
+	}
+}

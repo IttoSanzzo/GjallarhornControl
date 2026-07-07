@@ -42,6 +42,15 @@ export function ActivePlaylistSelector({
 		loadSavedUserPlayslists();
 	}, [discordId]);
 
+	useEffect(() => {
+		function switchOpenState(event: KeyboardEvent) {
+			if (event.ctrlKey && event.shiftKey && event.key == "F")
+				modalOpenState[1](!modalOpenState[0]);
+		}
+		document.body.addEventListener("keydown", switchOpenState);
+		return () => document.body.removeEventListener("keydown", switchOpenState);
+	}, [modalOpenState[0], modalOpenState[1]]);
+
 	return (
 		<ActivePlaylistSelectorContainer>
 			<ActivePlaylistSelectorModalButton

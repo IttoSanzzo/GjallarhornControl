@@ -15,10 +15,19 @@
 	padding: var(--sp-2);
 	transition: 0.25s linear background-color;
 
+	&.defaultButton {
+		border: 1px solid var(--cl-gray-300);
+		border-top-left-radius: var(--rd-md);
+		border-top-right-radius: var(--rd-md);
+	}
+	&:focus {
+		background-color: var(--cl-gray-500);
+		outline: none;
+	}
 	&:hover {
 		background-color: var(--cl-gray-600);
 	}
-	&:disabled {
+	&.isActive {
 		opacity: 0.5;
 		cursor: not-allowed;
 	}

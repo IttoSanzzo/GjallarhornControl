@@ -18,12 +18,12 @@ export const CategoriesGrid = React.memo(
 		return (
 			<CategoriesGridContainer id="categoriesGridContainer">
 				{categoriesData.map((category, index) => (
-					<CategoryContainer key={index}>
+					<CategoryContainer key={`${category.title}${index}`}>
 						<h2>{category.title}</h2>
 						<EntriesContainer>
 							{category.tracks.map((track, index) => (
 								<EntryButton
-									key={index}
+									key={`${track.link}${index}`}
 									trackInfo={track}
 								/>
 							))}

@@ -49,6 +49,7 @@ export function AddUserPlaylist({
 		);
 		const newPlaylist = await response.json();
 		if (!response.ok) return;
+		form.reset();
 		userSavedPlaylistsState[1]((state) =>
 			state
 				? {
