@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TrackCategory, TrackInfo } from "@/lib/TrackData";
 import { Innertube } from "youtubei.js";
+import { LintIgnoredAny } from "@/lib/types/LintIgnoredAny";
 
 export async function GET(req: NextRequest) {
 	console.log("ReValidating API");
@@ -11,8 +12,8 @@ export async function GET(req: NextRequest) {
 	if (!playlistId) return;
 
 	const playlist = await youtube.getPlaylist(playlistId);
-	const tracks: TrackInfo[] = playlist.videos.map((video: any) => ({
-		name: video.metadata.title.text ?? "Error",
+	const tracks: TrackInfo[] = playlist.videos.map((video: LintIgnoredAny) => ({
+		name: video.metadata.title.text ?? "",
 		description: "",
 		link: video.content_id
 			? `https://www.youtube.com/watch?v=${video.content_id}`

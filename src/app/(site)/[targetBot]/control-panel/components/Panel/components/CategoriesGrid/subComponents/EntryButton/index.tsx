@@ -4,12 +4,12 @@ import { newStyledElement } from "@setsu-tp/styled-components";
 import { useContext } from "react";
 import { ApiCommandsHandlerContext } from "../../../../../ControlPanelContextProvider";
 import Image from "next/image";
-import CSHeads from "@/../public/station_assets/CSHeads.png";
+// import CSHeads from "@/../public/station_assets/CSHeads.png";
 
 const EntryButtonContainer = newStyledElement.div(styles.entryButtonContainer);
 const EntryButtonButton = newStyledElement.button(styles.entryButtonButton);
 const ArtworkContainer = newStyledElement.div(styles.artworkContainer);
-const EditNoteModal = newStyledElement.div(styles.editNoteModal);
+// const EditNoteModal = newStyledElement.div(styles.editNoteModal);
 
 interface EntryButtonProps {
 	trackInfo: TrackInfo;
@@ -22,7 +22,7 @@ export function EntryButton({ trackInfo }: EntryButtonProps) {
 
 	return (
 		<EntryButtonContainer>
-			{true && (
+			{/* {true && (
 				<EditNoteModal>
 					<Image
 						src={CSHeads}
@@ -30,7 +30,7 @@ export function EntryButton({ trackInfo }: EntryButtonProps) {
 						fill
 					/>
 				</EditNoteModal>
-			)}
+			)} */}
 			<EntryButtonButton
 				onClick={() => handlePlay(trackInfo)}
 				title={`${trackInfo.name}\n\n${trackInfo.description}`}>
