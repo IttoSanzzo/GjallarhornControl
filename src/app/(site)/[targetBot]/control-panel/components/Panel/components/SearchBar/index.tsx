@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import PlayButton from "./components/PlayButton";
 import ResetButton from "./components/ResetButton";
 import { ApiCommandsHandlerContext } from "../../../ControlPanelContextProvider";
@@ -21,6 +21,8 @@ export default function SearchBar({
 }: SearchBarProps) {
 	const { postPlayCommand } = useContext(ApiCommandsHandlerContext);
 	const isLinkEmpty = value == "";
+	const searchBarRef = useRef<HTMLInputElement | null>(null);
+
 	function resetSearchQuery() {
 		setSearchQuery("");
 	}
@@ -29,6 +31,17 @@ export default function SearchBar({
 		await postPlayCommand(firstTrackLink != null ? firstTrackLink : value);
 		resetSearchQuery();
 	}
+
+	useEffect(() => {
+		function focusIntoSearchBar(event: KeyboardEvent) {
+			if (!event.ctrlKey || event.key != "p" || !searchBarRef.current) return;
+			event.preventDefault();
+			searchBarRef.current.focus();
+		}
+		document.body.addEventListener("keydown", focusIntoSearchBar);
+		return () =>
+			document.body.removeEventListener("keydown", focusIntoSearchBar);
+	}, [searchBarRef.current]);
 
 	return (
 		<SearchBarContainer>
@@ -42,6 +55,7 @@ export default function SearchBar({
 					placeholder="Search"
 					value={value}
 					onChange={(event) => setSearchQuery(event.target.value)}
+					ref={searchBarRef}
 				/>
 			</form>
 			<ResetButton

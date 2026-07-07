@@ -41,7 +41,7 @@ export function ActivePlaylistSelectionModal({
 					onClick={() => modalOpenState[1](false)}
 				/>
 				<Dialog.Content className={styles.modalContent}>
-					<h1>User's Playlists</h1>
+					<h1 style={{ color: "var(--cl-yellow-600)" }}>User's Playlists</h1>
 					<PlaylistListContainer>
 						<SavedPlaylistButton
 							isDefault
