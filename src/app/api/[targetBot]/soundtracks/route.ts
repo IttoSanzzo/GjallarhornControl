@@ -15,7 +15,7 @@ async function fetchSoundTracks(targetBot: string) {
 		});
 		const allSoundtracks: SoundTrack[] = await response.json();
 		const thisBotSoundtracks = allSoundtracks.filter((soundtrack) =>
-			soundtrack.bots.includes(targetBot)
+			soundtrack.bots.includes(targetBot),
 		);
 		return { hasErrors: false, data: thisBotSoundtracks };
 	} catch (error) {
@@ -49,7 +49,7 @@ async function refineTrackCategoriesArray(allSoundTracks: SoundTrack[]) {
 		([title, tracks]) => ({
 			title,
 			tracks,
-		})
+		}),
 	);
 
 	return refinedData.sort((a, b) => b.tracks.length - a.tracks.length);
@@ -57,9 +57,9 @@ async function refineTrackCategoriesArray(allSoundTracks: SoundTrack[]) {
 
 export async function GET(
 	req: NextRequest,
-	{ params }: { params: Promise<{ targetBot: string }> }
+	{ params }: { params: Promise<{ targetBot: string }> },
 ) {
-	console.log("ReValidating API");
+	// console.log("ReValidating API");
 	const { targetBot } = await params;
 
 	const response = await fetchSoundTracks(targetBot);

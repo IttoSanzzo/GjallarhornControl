@@ -36,7 +36,12 @@ export function TracksLoader({
 	async function loadYoutubeCategories() {
 		const response = await fetch(
 			`/api/youtube/playlist/categories?playlistLink=${playslistMeta.targetLink}`,
-			{ method: "GET" },
+			{
+				method: "GET",
+				next: {
+					revalidate: 60 * 60 * 1, // 1 hours,
+				},
+			},
 		);
 		if (!response.ok) return;
 		setTrackCategories([await response.json()]);

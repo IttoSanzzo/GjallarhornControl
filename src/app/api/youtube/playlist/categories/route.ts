@@ -3,15 +3,15 @@ import { TrackCategory, TrackInfo } from "@/lib/TrackData";
 import { Innertube } from "youtubei.js";
 import { LintIgnoredAny } from "@/lib/types/LintIgnoredAny";
 
+const youtubeApi = await Innertube.create();
+
 export async function GET(req: NextRequest) {
-	console.log("ReValidating API");
 	const playlistLink = req.nextUrl.searchParams.get("playlistLink") ?? "";
 
-	const youtube = await Innertube.create();
 	const playlistId = new URL(playlistLink).searchParams.get("list");
 	if (!playlistId) return;
 
-	const playlist = await youtube.getPlaylist(playlistId);
+	const playlist = await youtubeApi.getPlaylist(playlistId);
 	const tracks: TrackInfo[] = playlist.videos.map((video: LintIgnoredAny) => ({
 		name: video.metadata.title.text ?? "",
 		description: "",
