@@ -11,6 +11,6 @@
 	cursor: pointer;
 
 	&:hover {
-		background-color: var(--cl-red-800);
+		background-color: var(--cl-red-700);
 	}
 }

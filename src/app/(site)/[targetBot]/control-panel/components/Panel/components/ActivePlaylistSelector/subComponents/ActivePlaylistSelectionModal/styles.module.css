@@ -21,6 +21,7 @@
 	justify-content: space-between;
 	flex-direction: column;
 	padding: var(--sp-5);
+	animation: 0.25s ease-in slide-fade-in;
 
 	& > h1 {
 		color: var(--cl-gray-200);
@@ -38,4 +39,15 @@
 	gap: var(--sp-1);
 	margin-top: var(--sp-5);
 	margin-bottom: var(--sp-5);
+}
+
+@keyframes slide-fade-in {
+	0% {
+		opacity: 0;
+		margin-top: var(--sp-5);
+	}
+	100% {
+		opacity: 1;
+		margin-top: 0;
+	}
 }

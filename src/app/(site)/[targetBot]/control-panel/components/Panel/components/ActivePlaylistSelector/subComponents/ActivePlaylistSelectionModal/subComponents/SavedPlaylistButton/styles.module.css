@@ -16,7 +16,6 @@
 	transition: 0.25s linear background-color;
 
 	&.defaultButton {
-		border: 1px solid var(--cl-gray-300);
 		border-top-left-radius: var(--rd-md);
 		border-top-right-radius: var(--rd-md);
 	}

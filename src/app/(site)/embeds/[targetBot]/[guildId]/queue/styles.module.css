@@ -58,7 +58,7 @@
 	outline: 1px solid transparent;
 	border-radius: var(--rd-md);
 	padding: var(--sp-2) var(--sp-8);
-	height: 60px;
+	min-height: 40px;
 	overflow: hidden;
 
 	transition:
@@ -80,7 +80,10 @@
 		border: 1px solid var(--cl-yellow-700);
 		outline: 1px solid var(--cl-yellow-700);
 
-		&.current > .indexIcon {
+		& p {
+			color: var(--textGolden);
+		}
+		& > .indexIcon {
 			color: var(--cl-yellow-600);
 		}
 
@@ -94,6 +97,9 @@
 		border-color: var(--cl-green-700);
 		outline-color: var(--cl-green-700);
 
+		&.current > p {
+			color: var(--cl-green-600) !important;
+		}
 		&.current > .indexIcon {
 			color: var(--cl-green-700) !important;
 		}
@@ -102,6 +108,10 @@
 		color: var(--cl-red-800) !important;
 		border-color: var(--cl-red-900);
 		outline-color: var(--cl-red-900);
+
+		&.current > p {
+			color: var(--cl-red-800) !important;
+		}
 
 		&.current > .indexIcon {
 			color: var(--cl-red-900) !important;
@@ -112,6 +122,9 @@
 		border-color: var(--cl-gray-600) !important;
 		outline-color: var(--cl-gray-600) !important;
 
+		&.current > p {
+			opacity: 0.5;
+		}
 		&.current > .indexIcon {
 			color: var(--cl-gray-600) !important;
 
@@ -158,6 +171,7 @@
 	width: 15px;
 	aspect-ratio: 1;
 	left: 0;
+	opacity: 0.25;
 
 	& > img {
 		margin-top: 1px;
@@ -176,7 +190,7 @@
 	opacity: 0.25;
 
 	width: 60px;
-	aspect-ratio: 16 /9;
+	aspect-ratio: 16 / 9;
 
 	& img {
 		border-top-right-radius: var(--fs-xxs);
@@ -189,6 +203,10 @@
 	position: relative;
 	z-index: 2;
 	font-size: var(--fs-sm);
+	color: var(--cl-gray-200);
+	transition:
+		0.5s linear color,
+		0.5s linear opacity;
 }
 
 @keyframes sliding-fade-in {

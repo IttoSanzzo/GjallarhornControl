@@ -8,6 +8,7 @@ import { Dispatch, SetStateAction } from "react";
 import { DeletePlaylistButton } from "./subComponents/DeletePlaylistButton";
 import clsx from "clsx";
 import { ReorderPlaylistButtons } from "./subComponents/ReorderPlaylistButtons";
+import { PlayPlaylistButton } from "./subComponents/PlayPlaylistButton";
 
 const SavedPlaylistButtonContainer = newStyledElement.div(
 	styles.savedPlaylistButtonContainer,
@@ -92,6 +93,10 @@ export function SavedPlaylistButton({
 			</SavedPlaylistButtonButton>{" "}
 			{!isDefault && (
 				<>
+					<PlayPlaylistButton
+						savedPlaylist={savedPlaylist}
+						setModalOpenState={modalOpenState[1]}
+					/>
 					<DeletePlaylistButton
 						activeSavedPlaylistState={activeSavedPlaylistState}
 						discordUserId={discordUserId}
