@@ -68,7 +68,7 @@ export default function ControlPanelContextProvider({
 					},
 				},
 			);
-			toast[response.ok ? "success" : "error"]("Play", {
+			toast[response.ok ? "success" : "error"](command, {
 				id: toastId,
 			});
 		} catch {
