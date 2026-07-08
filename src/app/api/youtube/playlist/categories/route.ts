@@ -8,7 +8,12 @@ const youtubeApi = await Innertube.create();
 export async function GET(req: NextRequest) {
 	const playlistLink = req.nextUrl.searchParams.get("playlistLink") ?? "";
 
-	const playlistId = new URL(playlistLink).searchParams.get("list");
+	let playlistId = null;
+	try {
+		playlistId = new URL(playlistLink).searchParams.get("list");
+	} catch {
+		return NextResponse.error();
+	}
 	if (!playlistId) return;
 
 	const playlist = await youtubeApi.getPlaylist(playlistId);

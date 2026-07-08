@@ -12,6 +12,7 @@ import {
 	UserSavedPlaylists,
 } from "@/lib/types/UserSavedPlaylist";
 import { ActivePlaylistSelectionModal } from "./subComponents/ActivePlaylistSelectionModal";
+import { userSavedPlaylistsCache } from "@/lib/cache/userSavedPlaylistsCache";
 
 const ActivePlaylistSelectorContainer = newStyledElement.div(
 	styles.activePlaylistSelectorContainer,
@@ -34,17 +35,24 @@ export function ActivePlaylistSelector({
 	const modalOpenState = useState<boolean>(false);
 	const userSavedPlaylistsState = useState<UserSavedPlaylists | null>(null);
 
-	async function loadSavedUserPlayslists() {
-		const response = await fetch(
-			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/playlists?discordUserId=${discordId}`,
-			{
-				method: "GET",
-			},
-		);
-		if (!response.ok) return;
-		userSavedPlaylistsState[1](await response.json());
-	}
 	useEffect(() => {
+		async function loadSavedUserPlayslists() {
+			userSavedPlaylistsState[1](
+				await userSavedPlaylistsCache.getOrLoad(
+					`core:${discordId}`,
+					async () => {
+						const response = await fetch(
+							`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/playlists?discordUserId=${discordId}`,
+							{
+								method: "GET",
+							},
+						);
+						if (!response.ok) return null;
+						return await response.json();
+					},
+				),
+			);
+		}
 		loadSavedUserPlayslists();
 	}, [discordId]);
 

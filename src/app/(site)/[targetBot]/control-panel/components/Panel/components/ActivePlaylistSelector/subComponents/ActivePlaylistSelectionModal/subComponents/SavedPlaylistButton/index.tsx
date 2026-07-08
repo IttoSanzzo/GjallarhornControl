@@ -76,7 +76,8 @@ export function SavedPlaylistButton({
 		}
 	}
 
-	const isActive = activeSavedPlaylistState[0].id == savedPlaylist.id;
+	const isActive =
+		(activeSavedPlaylistState[0]?.id ?? "ErrorId") == savedPlaylist.id;
 	return (
 		<SavedPlaylistButtonContainer>
 			<SavedPlaylistButtonButton

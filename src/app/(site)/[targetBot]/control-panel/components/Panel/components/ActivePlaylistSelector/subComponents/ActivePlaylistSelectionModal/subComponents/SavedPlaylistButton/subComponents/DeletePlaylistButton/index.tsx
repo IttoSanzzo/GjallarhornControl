@@ -1,3 +1,4 @@
+import { savedPlaylistCategoriesCache } from "@/lib/cache/savedPlaylistCategoriesCache";
 import styles from "./styles.module.css";
 import {
 	SavedPlaylist,
@@ -53,6 +54,17 @@ export function DeletePlaylistButton({
 				nickname: "",
 				targetLink: "",
 			});
+		switch (savedPlaylist.targetType) {
+			case "Unknown":
+			case "Default":
+			case "Gjallar":
+				return;
+			case "Soundcloud":
+			case "Spotify":
+			case "Youtube":
+				savedPlaylistCategoriesCache.invalidate(savedPlaylist.targetLink);
+				return;
+		}
 	}
 
 	return (
