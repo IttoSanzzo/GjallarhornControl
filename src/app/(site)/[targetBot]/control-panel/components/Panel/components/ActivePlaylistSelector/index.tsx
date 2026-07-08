@@ -1,5 +1,11 @@
 import styles from "./styles.module.css";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+	Dispatch,
+	SetStateAction,
+	useEffect,
+	useLayoutEffect,
+	useState,
+} from "react";
 import { newStyledElement } from "@setsu-tp/styled-components";
 import {
 	SavedPlaylist,
@@ -50,6 +56,31 @@ export function ActivePlaylistSelector({
 		document.body.addEventListener("keydown", switchOpenState);
 		return () => document.body.removeEventListener("keydown", switchOpenState);
 	}, [modalOpenState[0], modalOpenState[1]]);
+
+	useLayoutEffect(() => {
+		if (
+			activeSavedPlaylistState[0] != null &&
+			activeSavedPlaylistState[0].id != ""
+		)
+			return;
+		const memorySavedId = localStorage.getItem(`LastActivePlaylistId`);
+		if (!memorySavedId) return;
+		const playlistIndexToActivate =
+			userSavedPlaylistsState[0]?.playlists.findIndex(
+				(playlist) => playlist.id == memorySavedId,
+			);
+		if (playlistIndexToActivate == -1) return;
+		activeSavedPlaylistState[1](
+			(userSavedPlaylistsState[0]?.playlists ?? [])[
+				playlistIndexToActivate ?? 0
+			],
+		);
+	}, [
+		userSavedPlaylistsState[0],
+		userSavedPlaylistsState[1],
+		activeSavedPlaylistState[0],
+		activeSavedPlaylistState[1],
+	]);
 
 	return (
 		<ActivePlaylistSelectorContainer>

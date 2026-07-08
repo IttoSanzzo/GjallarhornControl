@@ -1,28 +1,30 @@
 import { newStyledElement } from "@setsu-tp/styled-components";
 import styles from "./styles.module.css";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { CSSProperties, Dispatch, SetStateAction, useContext } from "react";
 import { ApiCommandsHandlerContext } from "@/app/(site)/[targetBot]/control-panel/components/ControlPanelContextProvider";
-import { SavedPlaylist } from "@/lib/types/UserSavedPlaylist";
 
 const PlayPlaylistButtonButton = newStyledElement.button(
 	styles.playPlaylistButtonButton,
 );
 
 interface PlayPlaylistButtonProps {
-	savedPlaylist: SavedPlaylist;
-	setModalOpenState: Dispatch<SetStateAction<boolean>>;
+	playlistLink: string;
+	setModalOpenState?: Dispatch<SetStateAction<boolean>>;
+	position?: CSSProperties["position"];
 }
 export function PlayPlaylistButton({
-	savedPlaylist,
+	playlistLink,
 	setModalOpenState,
+	position,
 }: PlayPlaylistButtonProps) {
 	const { postPlayCommand } = useContext(ApiCommandsHandlerContext);
 
 	return (
 		<PlayPlaylistButtonButton
+			style={{ position }}
 			onClick={async () => {
-				await postPlayCommand(savedPlaylist.targetLink);
-				setModalOpenState(false);
+				await postPlayCommand(playlistLink);
+				if (setModalOpenState) setModalOpenState(false);
 			}}
 		/>
 	);

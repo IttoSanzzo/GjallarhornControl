@@ -1,5 +1,7 @@
 "use server";
 
+import { PlaylistPlataformType } from "./types/UserSavedPlaylist";
+
 export interface TrackInfo {
 	name: string;
 	description: string;
@@ -9,6 +11,8 @@ export interface TrackInfo {
 export interface TrackCategory {
 	title: string;
 	tracks: TrackInfo[];
+	targetType?: keyof typeof PlaylistPlataformType;
+	targetLink?: string;
 }
 export interface FullTrackInfo {
 	name: string;

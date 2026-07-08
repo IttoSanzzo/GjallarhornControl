@@ -39,6 +39,8 @@ export async function GET(req: NextRequest) {
 	const category: TrackCategory = {
 		title: playlist.info.title ?? "Playlist",
 		tracks,
+		targetType: "Youtube",
+		targetLink: playlistLink,
 	};
 
 	return NextResponse.json(category, { status: 200 });

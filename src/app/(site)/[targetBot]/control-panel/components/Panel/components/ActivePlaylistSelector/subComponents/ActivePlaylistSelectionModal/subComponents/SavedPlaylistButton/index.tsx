@@ -92,6 +92,7 @@ export function SavedPlaylistButton({
 						: () => {
 								activeSavedPlaylistState[1](savedPlaylist);
 								modalOpenState[1](false);
+								localStorage.setItem("LastActivePlaylistId", savedPlaylist.id);
 							}
 				}
 				onKeyDown={handleKeyDown}>
@@ -111,7 +112,7 @@ export function SavedPlaylistButton({
 						/>
 					</PlaylistListPlataformLinkAndIcon>
 					<PlayPlaylistButton
-						savedPlaylist={savedPlaylist}
+						playlistLink={savedPlaylist.targetLink}
 						setModalOpenState={modalOpenState[1]}
 					/>
 					<DeletePlaylistButton

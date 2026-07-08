@@ -49,6 +49,7 @@ export function TracksLoader({
 
 	useEffect(() => {
 		async function load() {
+			if (!playslistMeta) return;
 			if (
 				playslistMeta.targetType != "Default" &&
 				playslistMeta.targetLink == ""
