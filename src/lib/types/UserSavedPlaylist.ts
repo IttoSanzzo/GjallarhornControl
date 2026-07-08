@@ -1,7 +1,16 @@
+export enum PlaylistPlataformType {
+	"Unknown",
+	"Default",
+	"Youtube",
+	"Spotify",
+	"Soundcloud",
+	"Gjallar",
+}
+
 export interface SavedPlaylist {
 	id: string;
 	nickname: string | undefined;
-	targetType: "Default" | "Youtube" | "Cloudflare" | "Gjalallar" | "Unknown";
+	targetType: keyof typeof PlaylistPlataformType;
 	targetLink: string;
 }
 

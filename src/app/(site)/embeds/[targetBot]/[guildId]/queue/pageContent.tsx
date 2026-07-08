@@ -5,12 +5,10 @@ import styles from "./styles.module.css";
 import { useContext, useEffect, useRef } from "react";
 import { PlayerQueueContext } from "../../../../../../components/PlayerQueueContextProvider";
 import Image from "next/image";
-import YoutubeIcon from "@/assets/YoutubeIcon.png";
-import SpotifyIcon from "@/assets/SpotifyIcon.png";
-import SoundcloudIcon from "@/assets/SoundCloudIcon.png";
-import { getPlataformName, scrollChildIntoParentCenter } from "@/lib/utils";
+import { getPlataformType, scrollChildIntoParentCenter } from "@/lib/utils";
 import clsx from "clsx";
 import toast from "react-hot-toast";
+import { plataformIcons } from "@/lib/PlataformIcons";
 
 const QueueContainer = newStyledElement.div(styles.queueContainer);
 const QueueTitle = newStyledElement.div(styles.queueTitle);
@@ -22,12 +20,6 @@ const IndexIcon = newStyledElement.div(styles.indexIcon);
 const PlataformIcon = newStyledElement.div(styles.plataformIcon);
 const ArtworkPreview = newStyledElement.div(styles.artworkPreview);
 const Title = newStyledElement.p(styles.title);
-
-const plataformIcons = {
-	youtube: YoutubeIcon,
-	spotify: SpotifyIcon,
-	soundcloud: SoundcloudIcon,
-};
 
 export interface QueueProps {
 	withQueueTitle?: boolean;
@@ -115,7 +107,7 @@ export default function Queue({
 			) : (
 				<TracksList>
 					{queue.tracks.map((track, index) => {
-						const plataformName = getPlataformName(track.link);
+						const plataformType = getPlataformType(track.link);
 
 						return (
 							<TrackEntry
@@ -144,15 +136,13 @@ export default function Queue({
 								</ArtworkPreview>
 								<IndexIcon>
 									{index + 1}
-									{plataformName && (
-										<PlataformIcon>
-											<Image
-												src={plataformIcons[plataformName]}
-												alt={""}
-												fill
-											/>
-										</PlataformIcon>
-									)}
+									<PlataformIcon>
+										<Image
+											src={plataformIcons[plataformType]}
+											alt={""}
+											fill
+										/>
+									</PlataformIcon>
 								</IndexIcon>
 								<Title>{track.title}</Title>
 							</TrackEntry>

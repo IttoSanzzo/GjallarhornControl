@@ -31,3 +31,18 @@
 		cursor: not-allowed;
 	}
 }
+
+.playlistListPlataformLinkAndIcon {
+	position: absolute;
+	width: var(--sp-4);
+	aspect-ratio: 1;
+	right: 95px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+
+	& > img {
+		object-fit: contain;
+		transition: opacity 0.75s ease;
+	}
+}

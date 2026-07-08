@@ -1,6 +1,7 @@
 import { newStyledElement } from "@setsu-tp/styled-components";
 import styles from "./styles.module.css";
 import {
+	PlaylistPlataformType,
 	SavedPlaylist,
 	UserSavedPlaylists,
 } from "@/lib/types/UserSavedPlaylist";
@@ -9,12 +10,17 @@ import { DeletePlaylistButton } from "./subComponents/DeletePlaylistButton";
 import clsx from "clsx";
 import { ReorderPlaylistButtons } from "./subComponents/ReorderPlaylistButtons";
 import { PlayPlaylistButton } from "./subComponents/PlayPlaylistButton";
+import Image from "next/image";
+import { plataformIcons } from "@/lib/PlataformIcons";
 
 const SavedPlaylistButtonContainer = newStyledElement.div(
 	styles.savedPlaylistButtonContainer,
 );
 const SavedPlaylistButtonButton = newStyledElement.button(
 	styles.savedPlaylistButtonButton,
+);
+const PlaylistListPlataformLinkAndIcon = newStyledElement.a(
+	styles.playlistListPlataformLinkAndIcon,
 );
 
 interface SavedPlaylistButtonProps {
@@ -93,6 +99,17 @@ export function SavedPlaylistButton({
 			</SavedPlaylistButtonButton>{" "}
 			{!isDefault && (
 				<>
+					<PlaylistListPlataformLinkAndIcon
+						href={savedPlaylist.targetLink}
+						target="_blank">
+						<Image
+							src={
+								plataformIcons[PlaylistPlataformType[savedPlaylist.targetType]]
+							}
+							alt={"Current track plataform icon"}
+							fill
+						/>
+					</PlaylistListPlataformLinkAndIcon>
 					<PlayPlaylistButton
 						savedPlaylist={savedPlaylist}
 						setModalOpenState={modalOpenState[1]}

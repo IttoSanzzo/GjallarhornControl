@@ -1,8 +1,9 @@
 import { NotificationData } from "@/components/Notification";
+import { PlaylistPlataformType } from "./types/UserSavedPlaylist";
 
 export function newNotification(
 	message: string = "",
-	hasError: boolean = false
+	hasError: boolean = false,
 ): NotificationData {
 	return { message, hasError, timestamp: Date.now() };
 }
@@ -11,14 +12,19 @@ export function capitalize(src: string) {
 	return src.charAt(0).toUpperCase() + src.slice(1);
 }
 
-export function getPlataformName(
-	link: string
-): "youtube" | "spotify" | "soundcloud" | undefined {
+export function getPlataformType(link: string): PlaylistPlataformType {
 	if (link.includes("youtube.com") || link.includes("youtu.com"))
-		return "youtube";
-	if (link.includes("spotify.com")) return "spotify";
-	if (link.includes("soundcloud.com")) return "soundcloud";
-	return undefined;
+		return PlaylistPlataformType.Youtube;
+	if (link.includes("spotify.com")) return PlaylistPlataformType.Spotify;
+	if (link.includes("soundcloud.com")) return PlaylistPlataformType.Soundcloud;
+	return PlaylistPlataformType.Unknown;
+}
+export function getPlataformName(
+	link: string,
+): keyof typeof PlaylistPlataformType {
+	return PlaylistPlataformType[
+		getPlataformType(link)
+	] as keyof typeof PlaylistPlataformType;
 }
 
 type ScrollOptions = {
@@ -36,7 +42,7 @@ const activeAnimations = new WeakMap<
 export function scrollChildIntoParentCenter(
 	parent: HTMLElement,
 	child: HTMLElement,
-	opts: ScrollOptions = {}
+	opts: ScrollOptions = {},
 ): { cancel: () => void } {
 	const {
 		duration = 300,
