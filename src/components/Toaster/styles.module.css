@@ -1,0 +1,15 @@
+.toasterContainer {
+	& > div > div {
+		color: var(--cl-white) !important;
+		transition:
+			0.25s ease-in-out background-color,
+			0.25s ease-in-out border;
+	}
+}
+.toasterDefault,
+.toasterLoading,
+.toasterSuccess,
+.toasterError {
+	border: 2px solid var(--cl-yellow-700);
+	background-color: var(--cl-gray-800) !important;
+}

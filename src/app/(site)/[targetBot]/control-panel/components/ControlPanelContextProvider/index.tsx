@@ -1,6 +1,7 @@
 import { PlayerStationContextProvider } from "@/components/PlayerStationContextProvider";
 import { UserPresenceState } from "@/lib/types/UserPresenceState";
 import { createContext, ReactNode, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 export interface UserSessionData {
 	userId: string;
@@ -36,15 +37,24 @@ export default function ControlPanelContextProvider({
 	const userSessionDataRef = useRef<UserSessionData>(userSessionData);
 
 	async function postActionCommand(command: string): Promise<void> {
+		const toastId = toast.loading(`Using ${command}`);
 		const userSessionData = userSessionDataRef.current;
 		if (
 			userSessionData.presenceState == null ||
 			userSessionData.presenceState.voice.guildId == "0"
 		) {
+			toast.error(
+				userSessionData.presenceState == null
+					? "User is not tracked."
+					: "User is not in a voice channel.",
+				{
+					position: "top-center",
+				},
+			);
 			return;
 		}
 		try {
-			await fetch(
+			const response = await fetch(
 				`/api/${targetBot}/${userSessionData.presenceState.voice.guildId}/action`,
 				{
 					method: "POST",
@@ -58,20 +68,35 @@ export default function ControlPanelContextProvider({
 					},
 				},
 			);
+			toast[response.ok ? "success" : "error"]("Play", {
+				id: toastId,
+			});
 		} catch {
 			console.error("Exception");
+			toast.error(`${command} Command Exception`, {
+				id: toastId,
+			});
 		}
 	}
 	async function postPlayCommand(trackLink: string): Promise<void> {
+		const toastId = toast.loading(`Using Play`);
 		const userSessionData = userSessionDataRef.current;
 		if (
 			userSessionData.presenceState == null ||
 			userSessionData.presenceState.voice.guildId == "0"
 		) {
+			toast.error(
+				userSessionData.presenceState == null
+					? "User is not tracked."
+					: "User is not in a voice channel.",
+				{
+					position: "top-center",
+				},
+			);
 			return;
 		}
 		try {
-			await fetch(
+			const response = await fetch(
 				`/api/${targetBot}/${userSessionData.presenceState.voice.guildId}/play`,
 				{
 					method: "POST",
@@ -85,8 +110,14 @@ export default function ControlPanelContextProvider({
 					},
 				},
 			);
+			toast[response.ok ? "success" : "error"]("Play", {
+				id: toastId,
+			});
 		} catch {
 			console.error("Exception");
+			toast.error(`Play Command Exception`, {
+				id: toastId,
+			});
 		}
 	}
 

@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/Toaster";
 import { ReactNode } from "react";
 
 interface AppProps {
@@ -5,5 +6,10 @@ interface AppProps {
 }
 
 export default function App({ children }: AppProps) {
-	return <>{children}</>;
+	return (
+		<>
+			{children}
+			<Toaster />
+		</>
+	);
 }

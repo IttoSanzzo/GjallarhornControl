@@ -10,6 +10,7 @@ import SpotifyIcon from "@/assets/SpotifyIcon.png";
 import SoundcloudIcon from "@/assets/SoundCloudIcon.png";
 import { getPlataformName, scrollChildIntoParentCenter } from "@/lib/utils";
 import clsx from "clsx";
+import toast from "react-hot-toast";
 
 const QueueContainer = newStyledElement.div(styles.queueContainer);
 const QueueTitle = newStyledElement.div(styles.queueTitle);
@@ -72,20 +73,30 @@ export default function Queue({
 
 	async function handleClick(position: number) {
 		if (!queue) return;
+		const toastId = toast.loading("Play");
 		try {
-			await fetch(`/api/${targetBot}/${queue.guildId}/action`, {
-				method: "POST",
-				body: JSON.stringify({
-					userId,
-					action: "Index",
-					trackPosition: position,
-				}),
-				headers: {
-					"Content-Type": "application/json",
+			const response = await fetch(
+				`/api/${targetBot}/${queue.guildId}/action`,
+				{
+					method: "POST",
+					body: JSON.stringify({
+						userId,
+						action: "Index",
+						trackPosition: position,
+					}),
+					headers: {
+						"Content-Type": "application/json",
+					},
 				},
+			);
+			toast[response.ok ? "success" : "error"]("Play", {
+				id: toastId,
 			});
 		} catch {
 			console.error("Exception");
+			toast.error(`Play Command Exception`, {
+				id: toastId,
+			});
 		}
 	}
 
