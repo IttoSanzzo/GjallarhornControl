@@ -33,7 +33,7 @@ export function EntryButton({ trackInfo }: EntryButtonProps) {
 			)} */}
 			<EntryButtonButton
 				onClick={() => handlePlay(trackInfo)}
-				title={`${trackInfo.name}\n\n${trackInfo.description}`}>
+				title={`${trackInfo.name}${trackInfo.description != "" ? `\n\n${trackInfo.description}` : null}\n\n${trackInfo.link}`}>
 				{trackInfo.artworkUrl && (
 					<ArtworkContainer>
 						<Image
