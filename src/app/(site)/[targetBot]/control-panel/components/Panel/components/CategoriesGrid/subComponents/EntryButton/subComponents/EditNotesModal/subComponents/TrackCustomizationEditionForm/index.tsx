@@ -66,11 +66,13 @@ export function TrackCustomizationEditionForm({
 				source: getPlataformName(trackInfo.link),
 				notes: formData.notes,
 			};
+			const isDeletion: boolean =
+				newCustomization.nickname == "" && newCustomization.notes == "";
 			const trackId = encodeURIComponent(trackInfo.link);
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/track-customization/${trackId}?discordUserId=${discordId}`,
 				{
-					method: "PUT",
+					method: isDeletion ? "DELETE" : "PUT",
 					body: JSON.stringify(newCustomization),
 					headers: {
 						"Content-Type": "application/json",
@@ -83,7 +85,7 @@ export function TrackCustomizationEditionForm({
 			}
 			toast.success("Saved", { id: toastId });
 			form.reset(formData);
-			trackCustomizationState[1](await response.json());
+			trackCustomizationState[1](isDeletion ? null : await response.json());
 			trackCustomizationCache.invalidate(trackInfo.link);
 			setIsModalOpen(false);
 		} catch {
