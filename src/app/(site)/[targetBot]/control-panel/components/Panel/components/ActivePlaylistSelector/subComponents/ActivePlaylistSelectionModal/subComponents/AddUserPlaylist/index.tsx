@@ -38,7 +38,7 @@ export function AddUserPlaylist({
 
 	async function handleSubmit(formData: FormData) {
 		const response = await fetch(
-			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/playlists?discordUserId=${discordId}`,
+			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/${userSavedPlaylistsState[0]?.id}?discordUserId=${discordId}`,
 			{
 				method: "POST",
 				body: JSON.stringify(formData),

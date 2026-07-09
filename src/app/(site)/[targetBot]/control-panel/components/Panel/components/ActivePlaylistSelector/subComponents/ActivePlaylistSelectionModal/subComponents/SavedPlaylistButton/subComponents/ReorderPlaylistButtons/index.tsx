@@ -5,6 +5,7 @@ import {
 	UserSavedPlaylists,
 } from "@/lib/types/UserSavedPlaylist";
 import { Dispatch, SetStateAction } from "react";
+import { userSavedPlaylistsCache } from "@/lib/cache/userSavedPlaylistsCache";
 
 const ReorderPlaylistButtonsContainer = newStyledElement.div(
 	styles.reorderPlaylistButtonsContainer,
@@ -32,7 +33,7 @@ export function ReorderPlaylistButtons({
 }: ReorderPlaylistButtonsProps) {
 	async function postReorder(newPosition: number): Promise<boolean> {
 		const response = await fetch(
-			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/playlists/${savedPlaylist.id}?discordUserId=${discordId}`,
+			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/${userSavedPlaylistsState[0]?.id}/${savedPlaylist.id}/reorder?discordUserId=${discordId}`,
 			{
 				method: "PATCH",
 				body: JSON.stringify({
@@ -43,6 +44,10 @@ export function ReorderPlaylistButtons({
 				},
 			},
 		);
+		if (response.ok)
+			userSavedPlaylistsCache.invalidate(
+				`/gjallar/lists/user-root?discordUserId=${discordId}`,
+			);
 		return response.ok;
 	}
 

@@ -6,7 +6,7 @@ export interface SessionCacheOptions {
 
 interface CacheEntry<T> {
 	expiresAt: number;
-	value: T;
+	value: T | null;
 }
 
 export class SessionCache<TKey, TValue> {
@@ -45,7 +45,7 @@ export class SessionCache<TKey, TValue> {
 		}
 	}
 
-	public set(key: TKey, value: TValue): void {
+	public set(key: TKey, value: TValue | null): void {
 		const storageKey = this.buildKey(key);
 
 		const entry: CacheEntry<TValue> = {
@@ -93,6 +93,7 @@ export class SessionCache<TKey, TValue> {
 				return value;
 			})
 			.catch((err) => {
+				this.set(key, null);
 				this.pending.delete(storageKey);
 				throw err;
 			});

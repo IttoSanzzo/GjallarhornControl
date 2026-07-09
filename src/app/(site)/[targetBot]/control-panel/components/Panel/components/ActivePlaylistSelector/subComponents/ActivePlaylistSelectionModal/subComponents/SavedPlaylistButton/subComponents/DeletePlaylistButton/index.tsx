@@ -6,6 +6,7 @@ import {
 } from "@/lib/types/UserSavedPlaylist";
 import { newStyledElement } from "@setsu-tp/styled-components";
 import { Dispatch, SetStateAction } from "react";
+import { userSavedPlaylistsCache } from "@/lib/cache/userSavedPlaylistsCache";
 
 const DeletePlaylistButtonButton = newStyledElement.button(
 	styles.deletePlaylistButtonButton,
@@ -31,12 +32,15 @@ export function DeletePlaylistButton({
 }: DeletePlaylistButtonProps) {
 	async function deletePlaylist() {
 		const response = await fetch(
-			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/playlists/${savedPlaylist.id}?discordUserId=${discordUserId}`,
+			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/${userSavedPlaylistsState[0]?.id}/${savedPlaylist.id}?discordUserId=${discordUserId}`,
 			{
 				method: "DELETE",
 			},
 		);
 		if (!response.ok) return;
+		userSavedPlaylistsCache.invalidate(
+			`/gjallar/lists/user-root?discordUserId=${discordUserId}`,
+		);
 		userSavedPlaylistsState[1]((state) =>
 			state
 				? {

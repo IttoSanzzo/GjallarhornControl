@@ -39,10 +39,10 @@ export function ActivePlaylistSelector({
 		async function loadSavedUserPlayslists() {
 			userSavedPlaylistsState[1](
 				await userSavedPlaylistsCache.getOrLoad(
-					`core:${discordId}`,
+					`/gjallar/lists/user-root?discordUserId=${discordId}`,
 					async () => {
 						const response = await fetch(
-							`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/playlists?discordUserId=${discordId}`,
+							`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/user-root?discordUserId=${discordId}`,
 							{
 								method: "GET",
 							},
