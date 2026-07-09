@@ -34,7 +34,6 @@ export function TracksLoader({
 							},
 						);
 						const { refinedData } = await response.json();
-						console.log(refinedData);
 						return refinedData;
 					},
 				),

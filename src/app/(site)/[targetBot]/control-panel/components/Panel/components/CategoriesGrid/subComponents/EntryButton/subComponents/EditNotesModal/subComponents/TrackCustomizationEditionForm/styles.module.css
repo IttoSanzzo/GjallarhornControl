@@ -1,0 +1,39 @@
+.trackCustomizationEditionFormForm {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: var(--sp-1);
+	background-color: var(--cl-gray-600);
+	padding: var(--sp-1);
+	border-radius: var(--rd-md);
+
+	& > input,
+	textarea {
+		width: 100%;
+		background-color: var(--cl-gray-700);
+		border: none;
+		border-radius: var(--rd-sm);
+		padding: var(--sp-2);
+		color: var(--cl-gray-200);
+		&:focus {
+			outline: 1px solid var(--cl-gray-400);
+		}
+	}
+
+	& > button {
+		background-color: var(--cl-green-700);
+		border: none;
+		padding: var(--sp-1);
+		border-radius: var(--rd-sm);
+		cursor: pointer;
+		color: var(--cl-green-300);
+		transition:
+			0.25s linear color,
+			0.25s linear background-color;
+
+		&:hover {
+			background-color: var(--cl-green-600);
+			color: var(--cl-green-200);
+		}
+	}
+}

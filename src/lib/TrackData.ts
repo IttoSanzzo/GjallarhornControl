@@ -8,6 +8,18 @@ export interface TrackInfo {
 	link: string;
 	artworkUrl?: string;
 }
+
+export interface TrackCustomization {
+	id: string;
+	discordUserId: string;
+	trackSource: keyof typeof PlaylistPlataformType;
+	trackId: string;
+	nickname: string;
+	notes: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
 export interface TrackCategory {
 	title: string;
 	tracks: TrackInfo[];

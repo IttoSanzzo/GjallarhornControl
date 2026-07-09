@@ -22,9 +22,10 @@ const PlaylistCategoryLinkandIcon = newStyledElement.a(
 
 interface CategoriesGridProps {
 	categoriesData: TrackCategory[];
+	discordUserId: string;
 }
 export const CategoriesGrid = React.memo(
-	({ categoriesData }: CategoriesGridProps) => {
+	({ categoriesData, discordUserId }: CategoriesGridProps) => {
 		return (
 			<CategoriesGridContainer id="categoriesGridContainer">
 				{categoriesData.map((category, index) => (
@@ -34,6 +35,7 @@ export const CategoriesGrid = React.memo(
 							{category.tracks.map((track, index) => (
 								<EntryButton
 									key={`${track.link}${index}`}
+									discordUserId={discordUserId}
 									trackInfo={track}
 								/>
 							))}

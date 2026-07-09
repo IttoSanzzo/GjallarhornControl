@@ -9,9 +9,9 @@ import { Dispatch, SetStateAction } from "react";
 const AddUserPlaylistForm = newStyledElement.form(styles.addUserPlaylistForm);
 
 const schema = z.object({
-	nickname: z.string().min(1, "A Name must be provided."),
-	targetType: z.string().min(1, "A Target Type must be provided."),
-	targetLink: z.string().min(1, "A Target Link must be provided."),
+	nickname: z.string().min(1, "Name must be provided."),
+	targetType: z.string().min(1, "Target Type must be provided."),
+	targetLink: z.string().min(1, "Target Link must be provided."),
 });
 
 type FormData = z.infer<typeof schema>;

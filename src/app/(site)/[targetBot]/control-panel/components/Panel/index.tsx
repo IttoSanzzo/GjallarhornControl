@@ -65,7 +65,10 @@ export default function Panel() {
 				firstTrackLink={refinedTrackCategories[0]?.tracks[0]?.link}
 			/>
 			<Notification data={notificationData} />
-			<CategoriesGrid categoriesData={refinedTrackCategories} />
+			<CategoriesGrid
+				categoriesData={refinedTrackCategories}
+				discordUserId={userSessionData.userId}
+			/>
 		</PanelContainer>
 	);
 }
