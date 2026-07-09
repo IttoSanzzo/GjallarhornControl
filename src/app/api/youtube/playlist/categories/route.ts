@@ -16,7 +16,12 @@ export async function GET(req: NextRequest) {
 	}
 	if (!playlistId) return;
 
-	const playlist = await youtubeApi.getPlaylist(playlistId);
+	let playlist;
+	try {
+		playlist = await youtubeApi.getPlaylist(playlistId);
+	} catch {
+		return NextResponse.error();
+	}
 
 	const tracks: TrackInfo[] = playlist.videos.map((video: LintIgnoredAny) => {
 		switch (video.type) {

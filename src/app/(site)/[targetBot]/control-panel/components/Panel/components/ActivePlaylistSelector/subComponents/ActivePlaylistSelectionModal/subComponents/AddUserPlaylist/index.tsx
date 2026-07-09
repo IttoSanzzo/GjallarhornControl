@@ -3,16 +3,30 @@ import styles from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserSavedPlaylists } from "@/lib/types/UserSavedPlaylist";
+import {
+	PlaylistPlataformType,
+	UserSavedPlaylists,
+} from "@/lib/types/UserSavedPlaylist";
 import { Dispatch, SetStateAction } from "react";
+import { LintIgnoredAny } from "@/lib/types/LintIgnoredAny";
 
 const AddUserPlaylistForm = newStyledElement.form(styles.addUserPlaylistForm);
 
-const schema = z.object({
-	nickname: z.string().min(1, "Name must be provided."),
-	targetType: z.string().min(1, "Target Type must be provided."),
-	targetLink: z.string().min(1, "Target Link must be provided."),
-});
+const schema = z
+	.object({
+		nickname: z.string().min(1, "Name must be provided."),
+		targetType: z.string().min(1, "Target Type must be provided."),
+		targetLink: z.string(),
+	})
+	.superRefine((data, ctx) => {
+		if (data.targetType !== "Gjallar" && data.targetLink.trim() === "") {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				path: ["targetLink"],
+				message: "Target Link must be provided.",
+			});
+		}
+	});
 
 type FormData = z.infer<typeof schema>;
 
@@ -35,6 +49,7 @@ export function AddUserPlaylist({
 			targetType: "Youtube",
 		},
 	});
+	const watchedValues = form.watch();
 
 	async function handleSubmit(formData: FormData) {
 		const response = await fetch(
@@ -66,14 +81,28 @@ export function AddUserPlaylist({
 				placeholder="Name"
 				{...form.register("nickname")}
 			/>
-			<input
-				placeholder="Type"
-				{...form.register("targetType")}
-			/>
-			<input
-				placeholder="Link"
-				{...form.register("targetLink")}
-			/>
+			<select {...form.register("targetType")}>
+				{Object.keys(PlaylistPlataformType)
+					.filter(
+						(key) =>
+							isNaN(key as LintIgnoredAny) &&
+							(key as keyof typeof PlaylistPlataformType) != "Unknown" &&
+							(key as keyof typeof PlaylistPlataformType) != "Default",
+					)
+					.map((option) => (
+						<option
+							key={option}
+							value={option}>
+							{option}
+						</option>
+					))}
+			</select>
+			{watchedValues.targetType != "Gjallar" && (
+				<input
+					placeholder="Link"
+					{...form.register("targetLink")}
+				/>
+			)}
 			<button type="submit">Save</button>
 		</AddUserPlaylistForm>
 	);

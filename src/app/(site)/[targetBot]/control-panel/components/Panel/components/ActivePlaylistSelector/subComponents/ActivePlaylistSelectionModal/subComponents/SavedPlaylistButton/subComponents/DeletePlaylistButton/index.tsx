@@ -51,7 +51,10 @@ export function DeletePlaylistButton({
 					}
 				: null,
 		);
-		if (activeSavedPlaylistState[0].id == savedPlaylist.id)
+		if (
+			activeSavedPlaylistState[0] &&
+			activeSavedPlaylistState[0].id == savedPlaylist.id
+		)
 			activeSavedPlaylistState[1]({
 				targetType: "Default",
 				id: "",

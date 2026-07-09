@@ -7,7 +7,8 @@
 	padding: var(--sp-1);
 	border-radius: var(--rd-md);
 
-	& > input {
+	& > input,
+	select {
 		width: 100%;
 		background-color: var(--cl-gray-700);
 		border: none;
