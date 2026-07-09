@@ -72,6 +72,8 @@ export function DeletePlaylistButton({
 			onClick={async (event) => {
 				event.preventDefault();
 				await deletePlaylist();
-			}}></DeletePlaylistButtonButton>
+			}}>
+			X
+		</DeletePlaylistButtonButton>
 	);
 }

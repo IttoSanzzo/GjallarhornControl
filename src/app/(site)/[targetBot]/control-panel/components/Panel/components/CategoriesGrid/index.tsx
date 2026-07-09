@@ -48,7 +48,7 @@ export const CategoriesGrid = React.memo(
 									category.targetLink && (
 										<>
 											<PlayPlaylistButton
-												position="unset"
+												type="normal"
 												playlistLink={category.targetLink}
 											/>
 											<PlaylistCategoryLinkandIcon

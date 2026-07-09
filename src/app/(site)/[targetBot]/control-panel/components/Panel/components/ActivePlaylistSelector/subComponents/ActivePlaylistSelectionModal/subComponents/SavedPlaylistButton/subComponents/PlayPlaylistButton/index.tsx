@@ -1,7 +1,9 @@
 import { newStyledElement } from "@setsu-tp/styled-components";
 import styles from "./styles.module.css";
-import { CSSProperties, Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { ApiCommandsHandlerContext } from "@/app/(site)/[targetBot]/control-panel/components/ControlPanelContextProvider";
+import Image from "next/image";
+import PlayIcon from "@/assets/CircularPlayIcon.png";
 
 const PlayPlaylistButtonButton = newStyledElement.button(
 	styles.playPlaylistButtonButton,
@@ -10,22 +12,27 @@ const PlayPlaylistButtonButton = newStyledElement.button(
 interface PlayPlaylistButtonProps {
 	playlistLink: string;
 	setModalOpenState?: Dispatch<SetStateAction<boolean>>;
-	position?: CSSProperties["position"];
+	type?: "absolute" | "normal";
 }
 export function PlayPlaylistButton({
 	playlistLink,
 	setModalOpenState,
-	position,
+	type = "absolute",
 }: PlayPlaylistButtonProps) {
 	const { postPlayCommand } = useContext(ApiCommandsHandlerContext);
 
 	return (
 		<PlayPlaylistButtonButton
-			style={{ position }}
+			className={styles[type]}
 			onClick={async () => {
 				await postPlayCommand(playlistLink);
 				if (setModalOpenState) setModalOpenState(false);
-			}}
-		/>
+			}}>
+			<Image
+				src={PlayIcon}
+				alt=""
+				fill
+			/>
+		</PlayPlaylistButtonButton>
 	);
 }

@@ -1,15 +1,26 @@
 .playPlaylistButtonButton {
-	position: absolute;
-	right: 70px;
+	&.absolute {
+		position: absolute;
+		right: 70px;
+	}
+	&.normal {
+		position: relative;
+	}
 	height: 15px;
 	width: 15px;
 	border-radius: var(--rd-xs);
 	border: none;
-	background-color: var(--cl-blue-700);
+	background-color: var(--cl-gray-500);
 	cursor: pointer;
 	transition: 0.25s linear background-color;
 
 	&:hover {
-		background-color: var(--cl-blue-400);
+		background-color: var(--cl-gray-400);
+	}
+
+	& > image {
+		position: absolute;
+		width: 100%;
+		height: 100%;
 	}
 }
