@@ -2,11 +2,16 @@ import { TrackCategory } from "@/lib/TrackData";
 import styles from "./styles.module.css";
 import { newStyledElement } from "@setsu-tp/styled-components";
 import { EntryButton } from "./subComponents/EntryButton";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { plataformIcons } from "@/lib/PlataformIcons";
-import { PlaylistPlataformType } from "@/lib/types/UserSavedPlaylist";
+import {
+	PlaylistPlataformType,
+	SavedPlaylist,
+} from "@/lib/types/UserSavedPlaylist";
 import { PlayPlaylistButton } from "../ActivePlaylistSelector/subComponents/ActivePlaylistSelectionModal/subComponents/SavedPlaylistButton/subComponents/PlayPlaylistButton";
+import { AddPlaylistToGjallarList } from "./subComponents/AddPlaylistToGjallarList";
+import { DeletePlaylistFromGjallarList } from "./subComponents/DeletePlaylistFromGjallarList";
 
 const CategoriesGridContainer = newStyledElement.div(
 	styles.categoriesGridContainer,
@@ -22,14 +27,26 @@ const PlaylistCategoryLinkandIcon = newStyledElement.a(
 
 interface CategoriesGridProps {
 	categoriesData: TrackCategory[];
+	activeSavedPlaylistState: [
+		SavedPlaylist,
+		Dispatch<SetStateAction<SavedPlaylist>>,
+	];
+	type: keyof typeof PlaylistPlataformType;
 	discordUserId: string;
 }
 export const CategoriesGrid = React.memo(
-	({ categoriesData, discordUserId }: CategoriesGridProps) => {
+	({
+		categoriesData,
+		type,
+		discordUserId,
+		activeSavedPlaylistState,
+	}: CategoriesGridProps) => {
+		const isEditable = type == "Gjallar";
 		return (
 			<CategoriesGridContainer id="categoriesGridContainer">
 				{categoriesData.map((category, index) => (
-					<CategoryContainer key={`${category.title}${index}`}>
+					<CategoryContainer
+						key={`${category.title}${index}${activeSavedPlaylistState[0]?.id ?? ""}`}>
 						<h2>{category.title}</h2>
 						<EntriesContainer>
 							{category.tracks.map((track, index) => (
@@ -66,12 +83,25 @@ export const CategoriesGrid = React.memo(
 													fill
 												/>
 											</PlaylistCategoryLinkandIcon>
+											{isEditable && category.id && (
+												<DeletePlaylistFromGjallarList
+													activeSavedPlaylistState={activeSavedPlaylistState}
+													discordUserId={discordUserId}
+													category={category}
+												/>
+											)}
 										</>
 									)}
 							</CategoryUtilitiesContainer>
 						)}
 					</CategoryContainer>
 				))}
+				{isEditable && (
+					<AddPlaylistToGjallarList
+						discordId={discordUserId}
+						activeSavedPlaylistState={activeSavedPlaylistState}
+					/>
+				)}
 			</CategoriesGridContainer>
 		);
 	},

@@ -1,0 +1,16 @@
+.deletePlaylistFromGjallarListButton {
+	width: 15px;
+	height: 15px;
+	border: none;
+	background-color: var(--cl-red-900);
+	margin: auto;
+	border-radius: var(--rd-xs);
+	transition: 0.25s linear background-color;
+	cursor: pointer;
+	color: var(--cl-black-1);
+	line-height: 100%;
+
+	&:hover {
+		background-color: var(--cl-red-700);
+	}
+}

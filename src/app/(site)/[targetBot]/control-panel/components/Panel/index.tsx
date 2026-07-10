@@ -17,7 +17,7 @@ const PanelContainer = newStyledElement.div(styles.panelContainer);
 
 export default function Panel() {
 	const userSessionData = useContext(UserSessionDataContext);
-	const [trackCategories, setTrackCategories] = useState<TrackCategory[]>([]);
+	const trackCategoriesState = useState<TrackCategory[]>([]);
 	const [refinedTrackCategories, setRefinedTrackCategories] = useState<
 		TrackCategory[]
 	>([]);
@@ -35,8 +35,8 @@ export default function Panel() {
 	}
 
 	useEffect(() => {
-		if (searchQuery === "") setRefinedTrackCategories(trackCategories);
-		const filteredData: TrackCategory[] = (trackCategories ?? [])
+		if (searchQuery === "") setRefinedTrackCategories(trackCategoriesState[0]);
+		const filteredData: TrackCategory[] = (trackCategoriesState[0] ?? [])
 			.map((category) => ({
 				...category,
 				tracks: category.tracks.filter((track) =>
@@ -46,7 +46,7 @@ export default function Panel() {
 			.filter((category) => category.tracks.length > 0)
 			.sort((a, b) => b.tracks.length - a.tracks.length);
 		setRefinedTrackCategories(filteredData);
-	}, [trackCategories, searchQuery]);
+	}, [trackCategoriesState[0], searchQuery]);
 
 	return (
 		<PanelContainer>
@@ -57,7 +57,7 @@ export default function Panel() {
 			<TracksLoader
 				playslistMeta={activeSavedPlaylistState[0]}
 				targetBot={userSessionData.targetBot}
-				setTrackCategories={setTrackCategories}
+				setTrackCategories={trackCategoriesState[1]}
 			/>
 			<SearchBar
 				setSearchQuery={onSearchQueryChange}
@@ -67,6 +67,8 @@ export default function Panel() {
 			<Notification data={notificationData} />
 			<CategoriesGrid
 				categoriesData={refinedTrackCategories}
+				activeSavedPlaylistState={activeSavedPlaylistState}
+				type={activeSavedPlaylistState[0]?.targetType ?? "Unknown"}
 				discordUserId={userSessionData.userId}
 			/>
 		</PanelContainer>

@@ -21,6 +21,7 @@ export interface TrackCustomization {
 }
 
 export interface TrackCategory {
+	id?: string;
 	title: string;
 	tracks: TrackInfo[];
 	targetType?: keyof typeof PlaylistPlataformType;
