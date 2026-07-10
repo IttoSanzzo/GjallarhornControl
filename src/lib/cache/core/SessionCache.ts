@@ -13,7 +13,7 @@ export class SessionCache<TKey, TValue> {
 	private readonly prefix: string;
 	private readonly ttlMs: number;
 
-	private readonly pending = new Map<string, Promise<TValue>>();
+	private readonly pending = new Map<string, Promise<TValue | null>>();
 
 	constructor(prefix: string, options?: SessionCacheOptions) {
 		this.prefix = prefix;
@@ -24,31 +24,35 @@ export class SessionCache<TKey, TValue> {
 		return `${this.prefix}:${JSON.stringify(key)}`;
 	}
 
-	public get(key: TKey): TValue | null {
+	public get(key: TKey): TValue | null | undefined {
 		const storageKey = this.buildKey(key);
 
 		const raw = sessionStorage.getItem(storageKey);
-		if (raw == null) return null;
+		if (raw == null) return undefined;
 
 		try {
 			const entry = JSON.parse(raw) as CacheEntry<TValue>;
 
 			if (entry.expiresAt <= Date.now()) {
 				sessionStorage.removeItem(storageKey);
-				return null;
+				return undefined;
 			}
 
 			return entry.value;
 		} catch {
 			sessionStorage.removeItem(storageKey);
-			return null;
+			return undefined;
 		}
 	}
 
-	public set(key: TKey, value: TValue | null): void {
+	public set(key: TKey, value: TValue | null | undefined): void {
 		const storageKey = this.buildKey(key);
+		if (value === undefined) {
+			sessionStorage.removeItem(storageKey);
+			return;
+		}
 
-		const entry: CacheEntry<TValue> = {
+		const entry: CacheEntry<TValue | null> = {
 			value,
 			expiresAt: Date.now() + this.ttlMs,
 		};
@@ -75,14 +79,12 @@ export class SessionCache<TKey, TValue> {
 
 	public async getOrLoad(
 		key: TKey,
-		loader: () => Promise<TValue>,
-	): Promise<TValue> {
+		loader: () => Promise<TValue | null>,
+	): Promise<TValue | null> {
 		const cached = this.get(key);
-
-		if (cached != null) return cached;
+		if (cached !== undefined) return cached;
 
 		const storageKey = this.buildKey(key);
-
 		const pending = this.pending.get(storageKey);
 		if (pending) return pending;
 
