@@ -13,7 +13,11 @@ import {
 } from "@/lib/types/UserSavedPlaylist";
 import { ActivePlaylistSelectionModal } from "./subComponents/ActivePlaylistSelectionModal";
 import { userSavedPlaylistsCache } from "@/lib/cache/userSavedPlaylistsCache";
+import { AddPlaylistToGjallarList } from "./subComponents/AddPlaylistToGjallarList";
 
+const ActivePlaylistSelectorMainContainer = newStyledElement.div(
+	styles.activePlaylistSelectorMainContainer,
+);
 const ActivePlaylistSelectorContainer = newStyledElement.div(
 	styles.activePlaylistSelectorContainer,
 );
@@ -91,22 +95,29 @@ export function ActivePlaylistSelector({
 	]);
 
 	return (
-		<ActivePlaylistSelectorContainer>
-			<ActivePlaylistSelectorModalButton
-				onClick={() => modalOpenState[1](true)}
-				style={
-					userSavedPlaylistsState[0] == null
-						? { display: "none", opacity: 0 }
-						: undefined
-				}>
-				<p>{userSavedPlaylistsState[0]?.playlists.length ?? 0}</p>
-			</ActivePlaylistSelectorModalButton>
-			<ActivePlaylistSelectionModal
-				activeSavedPlaylistState={activeSavedPlaylistState}
+		<ActivePlaylistSelectorMainContainer>
+			<ActivePlaylistSelectorContainer>
+				<ActivePlaylistSelectorModalButton
+					onClick={() => modalOpenState[1](true)}
+					style={
+						userSavedPlaylistsState[0] == null
+							? { display: "none", opacity: 0 }
+							: undefined
+					}>
+					<p>{userSavedPlaylistsState[0]?.playlists.length ?? 0}</p>
+				</ActivePlaylistSelectorModalButton>
+				<ActivePlaylistSelectionModal
+					activeSavedPlaylistState={activeSavedPlaylistState}
+					discordId={discordId}
+					modalOpenState={modalOpenState}
+					userSavedPlaylistsState={userSavedPlaylistsState}
+				/>
+			</ActivePlaylistSelectorContainer>
+			<AddPlaylistToGjallarList
 				discordId={discordId}
-				modalOpenState={modalOpenState}
-				userSavedPlaylistsState={userSavedPlaylistsState}
+				activePlaylist={activeSavedPlaylistState[0]}
+				activeSavedPlaylistState={activeSavedPlaylistState}
 			/>
-		</ActivePlaylistSelectorContainer>
+		</ActivePlaylistSelectorMainContainer>
 	);
 }

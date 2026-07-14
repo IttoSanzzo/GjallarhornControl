@@ -10,7 +10,6 @@ import {
 	SavedPlaylist,
 } from "@/lib/types/UserSavedPlaylist";
 import { PlayPlaylistButton } from "../ActivePlaylistSelector/subComponents/ActivePlaylistSelectionModal/subComponents/SavedPlaylistButton/subComponents/PlayPlaylistButton";
-import { AddPlaylistToGjallarList } from "./subComponents/AddPlaylistToGjallarList";
 import { DeletePlaylistFromGjallarList } from "./subComponents/DeletePlaylistFromGjallarList";
 
 const CategoriesGridContainer = newStyledElement.div(
@@ -96,12 +95,6 @@ export const CategoriesGrid = React.memo(
 						)}
 					</CategoryContainer>
 				))}
-				{isEditable && (
-					<AddPlaylistToGjallarList
-						discordId={discordUserId}
-						activeSavedPlaylistState={activeSavedPlaylistState}
-					/>
-				)}
 			</CategoriesGridContainer>
 		);
 	},
