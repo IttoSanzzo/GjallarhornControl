@@ -112,6 +112,7 @@ export function AddPlaylistToGjallarList({
 								<AddPlaylistToGjallarListForm
 									onSubmit={form.handleSubmit(handleSubmit)}>
 									<input
+										autoFocus
 										placeholder="Name"
 										{...form.register("nickname")}
 									/>

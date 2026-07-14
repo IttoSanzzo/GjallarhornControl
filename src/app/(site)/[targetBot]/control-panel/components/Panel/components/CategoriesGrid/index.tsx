@@ -11,6 +11,7 @@ import {
 } from "@/lib/types/UserSavedPlaylist";
 import { PlayPlaylistButton } from "../ActivePlaylistSelector/subComponents/ActivePlaylistSelectionModal/subComponents/SavedPlaylistButton/subComponents/PlayPlaylistButton";
 import { DeletePlaylistFromGjallarList } from "./subComponents/DeletePlaylistFromGjallarList";
+import { PatchPlaylistFromGjallarList } from "./subComponents/PatchPlaylistFromGjallarList";
 
 const CategoriesGridContainer = newStyledElement.div(
 	styles.categoriesGridContainer,
@@ -58,6 +59,13 @@ export const CategoriesGrid = React.memo(
 						</EntriesContainer>
 						{category.targetLink && category.targetLink && (
 							<CategoryUtilitiesContainer>
+								{isEditable && category.id && (
+									<PatchPlaylistFromGjallarList
+										discordId={discordUserId}
+										activeSavedPlaylistState={activeSavedPlaylistState}
+										category={category}
+									/>
+								)}
 								{category.targetType != "Unknown" &&
 									category.targetType != "Gjallar" &&
 									category.targetType != "Default" &&
