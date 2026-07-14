@@ -52,3 +52,38 @@
 		opacity: 1;
 	}
 }
+
+.floatingArtworkContainer {
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 10px);
+	transform: translateX(-50%);
+	display: flex;
+	width: 200px;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--rd-md);
+	border: 3px solid var(--cl-gray-600);
+	transition: 0.25s linear opacity;
+	opacity: 0;
+	animation: none;
+	pointer-events: none;
+	z-index: 1;
+	overflow: hidden;
+}
+
+.entryButtonContainer:hover .floatingArtworkContainer {
+	opacity: 1;
+	animation: 1s linear delayed-fade-in;
+}
+
+@keyframes delayed-fade-in {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

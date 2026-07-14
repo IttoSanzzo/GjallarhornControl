@@ -12,6 +12,9 @@ import { EditNotesModal } from "./subComponents/EditNotesModal";
 const EntryButtonContainer = newStyledElement.div(styles.entryButtonContainer);
 const EntryButtonButton = newStyledElement.button(styles.entryButtonButton);
 const ArtworkContainer = newStyledElement.div(styles.artworkContainer);
+const FloatingArtworkContainer = newStyledElement.div(
+	styles.floatingArtworkContainer,
+);
 
 interface EntryButtonProps {
 	trackInfo: TrackInfo;
@@ -60,13 +63,22 @@ export function EntryButton({ trackInfo, discordUserId }: EntryButtonProps) {
 				onClick={() => handlePlay(trackInfo)}
 				title={`${trackInfo.name}${(trackCustomizationState[0]?.notes ?? "" != "") ? `\n\n${trackCustomizationState[0]!.notes}` : ""}${trackInfo.description != "" ? `\n\n${trackInfo.description}` : ""}\n\n${trackInfo.link}`}>
 				{trackInfo.artworkUrl && (
-					<ArtworkContainer>
-						<Image
-							src={trackInfo.artworkUrl}
-							alt={`${trackInfo.name}`}
-							fill
-						/>
-					</ArtworkContainer>
+					<>
+						<ArtworkContainer>
+							<Image
+								src={trackInfo.artworkUrl}
+								alt={`${trackInfo.name}`}
+								fill
+							/>
+						</ArtworkContainer>
+						<FloatingArtworkContainer>
+							<Image
+								src={trackInfo.artworkUrl}
+								alt=""
+								fill
+							/>
+						</FloatingArtworkContainer>
+					</>
 				)}
 				{(trackCustomizationState[0]?.nickname ?? "" != "")
 					? trackCustomizationState[0]!.nickname
