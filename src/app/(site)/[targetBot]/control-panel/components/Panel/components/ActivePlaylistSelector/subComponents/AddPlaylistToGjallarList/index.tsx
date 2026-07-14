@@ -109,6 +109,7 @@ export function AddPlaylistToGjallarList({
 								}}
 							/>
 							<Dialog.Content className={styles.modalContent}>
+								<h1>Add a Playlist</h1>
 								<AddPlaylistToGjallarListForm
 									onSubmit={form.handleSubmit(handleSubmit)}>
 									<input
