@@ -57,13 +57,10 @@ export function TracksLoader({
 					`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/${listId}`,
 					{
 						method: "GET",
-						next: {
-							revalidate: 60 * 60 * 24, // 24 hours,
-						},
 					},
 				);
 				if (!response.ok) return null;
-				return response.json();
+				return await response.json();
 			});
 		} catch {
 			alert("ChariotAPI is Offline");
@@ -118,7 +115,6 @@ export function TracksLoader({
 		);
 		if (customGjallar == null) return null;
 		const allPlaylists = customGjallar.playlists.map(async (playlist) => {
-			console.log(playlist.nickname);
 			if (playlist.targetType == "Youtube")
 				return getYoutubeCategory(
 					playlist.targetLink,
@@ -146,7 +142,8 @@ export function TracksLoader({
 					break;
 				}
 				case "Gjallar": {
-					setTrackCategories((await getGjallarCategories()) ?? []);
+					const gjallarCategories = await getGjallarCategories();
+					setTrackCategories(gjallarCategories ?? []);
 					break;
 				}
 				case "Youtube": {

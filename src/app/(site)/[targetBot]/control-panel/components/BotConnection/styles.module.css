@@ -14,6 +14,7 @@
 	width: var(--sp-13);
 	height: var(--sp-13);
 	overflow: hidden;
+	z-index: 4;
 
 	& > img {
 		object-fit: contain;

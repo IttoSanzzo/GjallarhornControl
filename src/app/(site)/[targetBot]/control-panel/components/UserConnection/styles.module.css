@@ -16,6 +16,8 @@
 	overflow: hidden;
 	animation: fade-in 1s linear;
 
+	z-index: 4;
+
 	& > img {
 		object-fit: contain;
 		border-radius: inherit;

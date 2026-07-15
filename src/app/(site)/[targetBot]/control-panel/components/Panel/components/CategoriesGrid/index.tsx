@@ -1,29 +1,105 @@
 import { TrackCategory } from "@/lib/TrackData";
 import styles from "./styles.module.css";
 import { newStyledElement } from "@setsu-tp/styled-components";
-import { EntryButton } from "./subComponents/EntryButton";
-import React, { Dispatch, SetStateAction } from "react";
-import Image from "next/image";
-import { plataformIcons } from "@/lib/PlataformIcons";
+import React, { Dispatch, ReactNode, SetStateAction } from "react";
 import {
 	PlaylistPlataformType,
 	SavedPlaylist,
 } from "@/lib/types/UserSavedPlaylist";
-import { PlayPlaylistButton } from "../ActivePlaylistSelector/subComponents/ActivePlaylistSelectionModal/subComponents/SavedPlaylistButton/subComponents/PlayPlaylistButton";
-import { DeletePlaylistFromGjallarList } from "./subComponents/DeletePlaylistFromGjallarList";
-import { PatchPlaylistFromGjallarList } from "./subComponents/PatchPlaylistFromGjallarList";
+
+import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
+import {
+	arrayMove,
+	rectSortingStrategy,
+	SortableContext,
+} from "@dnd-kit/sortable";
+import { CategoryDisplay } from "./subComponents/CategoryDisplay";
+import { userSavedPlaylistsCache } from "@/lib/cache/userSavedPlaylistsCache";
 
 const CategoriesGridContainer = newStyledElement.div(
 	styles.categoriesGridContainer,
 );
-const CategoryContainer = newStyledElement.main(styles.categoryContainer);
-const EntriesContainer = newStyledElement.div(styles.entriesContainer);
-const CategoryUtilitiesContainer = newStyledElement.div(
-	styles.categoryUtilitiesContainer,
-);
-const PlaylistCategoryLinkandIcon = newStyledElement.a(
-	styles.playlistCategoryLinkandIcon,
-);
+
+function CoreContext({
+	isEditable,
+	discordUserId,
+	activeSavedPlaylistState,
+	setTrackCategories,
+	categoriesData,
+	children,
+}: {
+	isEditable: boolean;
+	discordUserId: string;
+	setTrackCategories: Dispatch<SetStateAction<TrackCategory[]>>;
+	activeSavedPlaylistState: [
+		SavedPlaylist,
+		Dispatch<SetStateAction<SavedPlaylist>>,
+	];
+	categoriesData: TrackCategory[];
+	children: ReactNode;
+}) {
+	if (!isEditable) return children;
+	async function handleDragEnd(event: DragEndEvent) {
+		const { active, over } = event;
+		if (!over || active.id === over.id) return;
+
+		const oldIndex = categoriesData.findIndex(
+			(category) => category.id === active.id,
+		);
+		const newIndex = categoriesData.findIndex(
+			(category) => category.id === over.id,
+		);
+		const newTrackCategories = arrayMove(categoriesData, oldIndex, newIndex);
+		setTrackCategories(newTrackCategories);
+
+		const response = await fetch(
+			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/${activeSavedPlaylistState[0].targetLink}/${active.id}/reorder?discordUserId=${discordUserId}`,
+			{
+				method: "PATCH",
+				body: JSON.stringify({
+					newPosition: newIndex + 1,
+				}),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
+		if (response.ok)
+			userSavedPlaylistsCache.invalidate(
+				activeSavedPlaylistState[0].targetLink,
+			);
+	}
+
+	return (
+		<DndContext
+			collisionDetection={closestCenter}
+			onDragEnd={handleDragEnd}
+			children={children}
+		/>
+	);
+}
+
+function InnerContext({
+	isEditable,
+	categoriesData,
+	children,
+}: {
+	isEditable: boolean;
+	categoriesData: TrackCategory[];
+	children: ReactNode;
+}) {
+	return isEditable ? (
+		<SortableContext
+			items={categoriesData.map(
+				(category) => category.id ?? category.targetLink ?? category.title,
+			)}
+			strategy={rectSortingStrategy}
+			children={children}
+		/>
+	) : (
+		children
+	);
+}
 
 interface CategoriesGridProps {
 	categoriesData: TrackCategory[];
@@ -31,6 +107,7 @@ interface CategoriesGridProps {
 		SavedPlaylist,
 		Dispatch<SetStateAction<SavedPlaylist>>,
 	];
+	setTrackCategories: Dispatch<SetStateAction<TrackCategory[]>>;
 	type: keyof typeof PlaylistPlataformType;
 	discordUserId: string;
 }
@@ -40,70 +117,33 @@ export const CategoriesGrid = React.memo(
 		type,
 		discordUserId,
 		activeSavedPlaylistState,
+		setTrackCategories,
 	}: CategoriesGridProps) => {
 		const isEditable = type == "Gjallar";
+
 		return (
-			<CategoriesGridContainer id="categoriesGridContainer">
-				{categoriesData.map((category, index) => (
-					<CategoryContainer
-						key={`${category.title}${index}${activeSavedPlaylistState[0]?.id ?? ""}`}>
-						<h2>{category.title}</h2>
-						<EntriesContainer>
-							{category.tracks.map((track, index) => (
-								<EntryButton
-									key={`${track.link}${index}`}
-									discordUserId={discordUserId}
-									trackInfo={track}
-								/>
-							))}
-						</EntriesContainer>
-						{category.targetLink && category.targetLink && (
-							<CategoryUtilitiesContainer>
-								{isEditable && category.id && (
-									<PatchPlaylistFromGjallarList
-										discordId={discordUserId}
-										activeSavedPlaylistState={activeSavedPlaylistState}
-										category={category}
-									/>
-								)}
-								{category.targetType != "Unknown" &&
-									category.targetType != "Gjallar" &&
-									category.targetType != "Default" &&
-									category.targetLink && (
-										<>
-											<PlayPlaylistButton
-												type="normal"
-												playlistLink={category.targetLink}
-											/>
-											<PlaylistCategoryLinkandIcon
-												href={category.targetLink}
-												target="_blank">
-												<Image
-													src={
-														plataformIcons[
-															PlaylistPlataformType[
-																category.targetType as keyof typeof PlaylistPlataformType
-															]
-														]
-													}
-													alt={"Current track plataform icon"}
-													fill
-												/>
-											</PlaylistCategoryLinkandIcon>
-											{isEditable && category.id && (
-												<DeletePlaylistFromGjallarList
-													activeSavedPlaylistState={activeSavedPlaylistState}
-													discordUserId={discordUserId}
-													category={category}
-												/>
-											)}
-										</>
-									)}
-							</CategoryUtilitiesContainer>
-						)}
-					</CategoryContainer>
-				))}
-			</CategoriesGridContainer>
+			<CoreContext
+				isEditable={isEditable}
+				activeSavedPlaylistState={activeSavedPlaylistState}
+				setTrackCategories={setTrackCategories}
+				categoriesData={categoriesData}
+				discordUserId={discordUserId}>
+				<CategoriesGridContainer id="categoriesGridContainer">
+					<InnerContext
+						isEditable={isEditable}
+						categoriesData={categoriesData}>
+						{categoriesData.map((category, index) => (
+							<CategoryDisplay
+								key={`${category.title}${index}${activeSavedPlaylistState[0]?.id ?? ""}`}
+								activeSavedPlaylistState={activeSavedPlaylistState}
+								category={category}
+								discordUserId={discordUserId}
+								isEditable={isEditable}
+							/>
+						))}
+					</InnerContext>
+				</CategoriesGridContainer>
+			</CoreContext>
 		);
 	},
 );

@@ -2,6 +2,7 @@
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
+	z-index: 4;
 
 	display: flex;
 	flex-direction: column;
@@ -29,5 +30,7 @@
 		cursor: pointer;
 	}
 
-	transition: 0.1s linear background, 0.5s linear border;
+	transition:
+		0.1s linear background,
+		0.5s linear border;
 }

@@ -35,7 +35,10 @@ export default function Panel() {
 	}
 
 	useEffect(() => {
-		if (searchQuery === "") setRefinedTrackCategories(trackCategoriesState[0]);
+		if (searchQuery === "") {
+			setRefinedTrackCategories(trackCategoriesState[0]);
+			return;
+		}
 		const filteredData: TrackCategory[] = (trackCategoriesState[0] ?? [])
 			.map((category) => ({
 				...category,
@@ -67,6 +70,7 @@ export default function Panel() {
 			<Notification data={notificationData} />
 			<CategoriesGrid
 				categoriesData={refinedTrackCategories}
+				setTrackCategories={trackCategoriesState[1]}
 				activeSavedPlaylistState={activeSavedPlaylistState}
 				type={activeSavedPlaylistState[0]?.targetType ?? "Unknown"}
 				discordUserId={userSessionData.userId}
