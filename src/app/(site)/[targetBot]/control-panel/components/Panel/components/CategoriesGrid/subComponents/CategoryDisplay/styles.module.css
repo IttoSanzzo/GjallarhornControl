@@ -15,12 +15,12 @@
 		}
 	}
 	border: 1px solid transparent;
-	transition: 0.5s linear border-color;
 
 	&:hover {
 		z-index: 3;
-		border: 1px solid var(--cl-teal-400);
+		border: 1px solid var(--cl-teal-700);
 	}
+	transition: 0.3s linear border-color !important;
 }
 @keyframes fade-in {
 	from {

@@ -134,7 +134,7 @@ export const CategoriesGrid = React.memo(
 						categoriesData={categoriesData}>
 						{categoriesData.map((category, index) => (
 							<CategoryDisplay
-								key={`${category.title}${index}${activeSavedPlaylistState[0]?.id ?? ""}`}
+								key={`${category.id ?? category.title}|${index}|${activeSavedPlaylistState[0].id}`}
 								activeSavedPlaylistState={activeSavedPlaylistState}
 								category={category}
 								discordUserId={discordUserId}
@@ -146,4 +146,6 @@ export const CategoriesGrid = React.memo(
 			</CoreContext>
 		);
 	},
+	(prevProps, nextProps) =>
+		prevProps.categoriesData == nextProps.categoriesData,
 );
