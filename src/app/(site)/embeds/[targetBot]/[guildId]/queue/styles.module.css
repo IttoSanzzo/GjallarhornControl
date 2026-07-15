@@ -50,8 +50,14 @@
 	background-color: var(--cl-gray-900);
 }
 
+.trackEntryContainer {
+	position: relative;
+	width: 100%;
+}
+
 .trackEntry {
 	position: relative;
+	width: 100%;
 	color: var(--cl-gray-100);
 	background-color: var(--cl-gray-700);
 	border: 1px solid var(--cl-gray-600);
@@ -165,13 +171,17 @@
 	transition: color 0.5s ease;
 }
 
-.plataformIcon {
-	position: relative;
-	margin-left: 5px;
-	width: 15px;
+.plataformIconLink {
+	position: absolute;
+	width: 18px;
 	aspect-ratio: 1;
-	left: 0;
+	left: 25px;
+	top: 50%;
 	opacity: 0.25;
+	transform: translateY(-50%);
+	cursor: pointer;
+	z-index: 5;
+	transition: 0.25s linear opacity;
 
 	& > img {
 		margin-top: 1px;
@@ -179,6 +189,43 @@
 		object-fit: contain;
 		transition: opacity 0.75s ease;
 	}
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.removeTrackEntryButton {
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	line-height: 100%;
+	right: -1px;
+	bottom: -1px;
+	opacity: 0.25;
+	cursor: pointer;
+	background-color: var(--cl-red-900);
+	border: none;
+	border-radius: var(--rd-xs);
+	border-bottom-right-radius: var(--rd-full);
+	z-index: 5;
+	opacity: 0;
+	transition:
+		0.25s linear opacity,
+		0.25s linear background-color;
+
+	& > img {
+		margin-top: 1px;
+		position: absolute;
+		object-fit: contain;
+		transition: opacity 0.75s ease;
+	}
+	&:hover {
+		background-color: var(--cl-red-500);
+	}
+}
+
+.trackEntryContainer:hover .removeTrackEntryButton {
+	opacity: 0.5;
 }
 
 .artworkPreview {
