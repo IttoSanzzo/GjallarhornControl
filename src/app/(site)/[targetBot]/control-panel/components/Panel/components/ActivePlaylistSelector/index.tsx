@@ -30,11 +30,13 @@ interface ActivePlaylistSelectorProps {
 		SavedPlaylist,
 		Dispatch<SetStateAction<SavedPlaylist>>,
 	];
+	targetBot: string;
 	discordId: string;
 }
 export function ActivePlaylistSelector({
 	activeSavedPlaylistState,
 	discordId,
+	targetBot,
 }: ActivePlaylistSelectorProps) {
 	const modalOpenState = useState<boolean>(false);
 	const userSavedPlaylistsState = useState<UserSavedPlaylists | null>(null);
@@ -70,18 +72,27 @@ export function ActivePlaylistSelector({
 	}, [modalOpenState[0], modalOpenState[1]]);
 
 	useLayoutEffect(() => {
+		function setActiveToDefault() {
+			activeSavedPlaylistState[1]((state) => ({
+				...state,
+				targetType: "Default",
+			}));
+		}
+
 		if (
 			activeSavedPlaylistState[0] != null &&
 			activeSavedPlaylistState[0].id != ""
 		)
 			return;
-		const memorySavedId = localStorage.getItem(`LastActivePlaylistId`);
-		if (!memorySavedId) return;
+		const memorySavedId = localStorage.getItem(
+			`LastActivePlaylistId-|${targetBot}|`,
+		);
+		if (!memorySavedId) return setActiveToDefault();
 		const playlistIndexToActivate =
 			userSavedPlaylistsState[0]?.playlists.findIndex(
 				(playlist) => playlist.id == memorySavedId,
 			);
-		if (playlistIndexToActivate == -1) return;
+		if (playlistIndexToActivate == -1) return setActiveToDefault();
 		activeSavedPlaylistState[1](
 			(userSavedPlaylistsState[0]?.playlists ?? [])[
 				playlistIndexToActivate ?? 0
@@ -90,8 +101,8 @@ export function ActivePlaylistSelector({
 	}, [
 		userSavedPlaylistsState[0],
 		userSavedPlaylistsState[1],
-		activeSavedPlaylistState[0],
 		activeSavedPlaylistState[1],
+		targetBot,
 	]);
 
 	return (
@@ -111,6 +122,7 @@ export function ActivePlaylistSelector({
 					discordId={discordId}
 					modalOpenState={modalOpenState}
 					userSavedPlaylistsState={userSavedPlaylistsState}
+					targetBot={targetBot}
 				/>
 			</ActivePlaylistSelectorContainer>
 			<AddPlaylistToGjallarList

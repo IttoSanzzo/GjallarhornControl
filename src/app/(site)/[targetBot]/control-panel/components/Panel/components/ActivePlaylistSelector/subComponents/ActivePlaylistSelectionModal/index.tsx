@@ -24,12 +24,14 @@ interface ActivePlaylistSelectionModalProps {
 		UserSavedPlaylists | null,
 		Dispatch<SetStateAction<UserSavedPlaylists | null>>,
 	];
+	targetBot: string;
 }
 export function ActivePlaylistSelectionModal({
 	discordId,
 	activeSavedPlaylistState,
 	modalOpenState,
 	userSavedPlaylistsState,
+	targetBot,
 }: ActivePlaylistSelectionModalProps) {
 	return (
 		<Dialog.Root
@@ -45,6 +47,7 @@ export function ActivePlaylistSelectionModal({
 					<PlaylistListContainer>
 						<SavedPlaylistButton
 							isDefault
+							targetBot={targetBot}
 							savedPlaylist={{
 								id: "",
 								targetLink: "",
@@ -61,6 +64,7 @@ export function ActivePlaylistSelectionModal({
 						{userSavedPlaylistsState[0]?.playlists.map((entry, index) => (
 							<SavedPlaylistButton
 								key={entry.id}
+								targetBot={targetBot}
 								savedPlaylist={entry}
 								activeSavedPlaylistState={activeSavedPlaylistState}
 								userSavedPlaylistsState={userSavedPlaylistsState}

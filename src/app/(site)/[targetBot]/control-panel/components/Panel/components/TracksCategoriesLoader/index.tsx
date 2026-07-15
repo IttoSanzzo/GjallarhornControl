@@ -133,9 +133,11 @@ export function TracksLoader({
 			if (!playslistMeta) return;
 			if (
 				playslistMeta.targetType != "Default" &&
+				playslistMeta.targetType != "Unknown" &&
 				playslistMeta.targetLink == ""
 			)
 				playslistMeta.targetType = "Default";
+			if (playslistMeta.targetType == "Unknown") return;
 			switch (playslistMeta.targetType) {
 				case "Default": {
 					await loadDefaultCategories();

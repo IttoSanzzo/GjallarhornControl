@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+	inferPlaylistPlataformType,
 	PlaylistPlataformType,
 	UserSavedPlaylists,
 } from "@/lib/types/UserSavedPlaylist";
@@ -46,12 +47,17 @@ export function AddUserPlaylist({
 		defaultValues: {
 			nickname: "",
 			targetLink: "",
-			targetType: "Youtube",
+			targetType: "Auto",
 		},
 	});
 	const watchedValues = form.watch();
 
 	async function handleSubmit(formData: FormData) {
+		if (formData.targetType == "Auto") {
+			formData.targetType =
+				inferPlaylistPlataformType(formData.targetLink) ?? "";
+		}
+		if (formData.targetType == "") return;
 		const response = await fetch(
 			`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/${userSavedPlaylistsState[0]?.id}?discordUserId=${discordId}`,
 			{
@@ -62,8 +68,8 @@ export function AddUserPlaylist({
 				},
 			},
 		);
-		const newPlaylist = await response.json();
 		if (!response.ok) return;
+		const newPlaylist = await response.json();
 		form.reset();
 		userSavedPlaylistsState[1]((state) =>
 			state
@@ -96,6 +102,9 @@ export function AddUserPlaylist({
 							{option}
 						</option>
 					))}
+				<option value={"Auto"}>
+					{"Auto ( Youtube / Soundcloud / Spotify )"}
+				</option>
 			</select>
 			{watchedValues.targetType != "Gjallar" && (
 				<input

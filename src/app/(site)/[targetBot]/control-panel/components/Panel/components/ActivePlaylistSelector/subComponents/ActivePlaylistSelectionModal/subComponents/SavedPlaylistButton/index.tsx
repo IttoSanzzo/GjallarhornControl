@@ -38,6 +38,7 @@ interface SavedPlaylistButtonProps {
 	position: number;
 	maxPosition: number;
 	isDefault?: boolean;
+	targetBot: string;
 }
 export function SavedPlaylistButton({
 	savedPlaylist,
@@ -47,6 +48,7 @@ export function SavedPlaylistButton({
 	modalOpenState,
 	maxPosition,
 	position,
+	targetBot,
 	isDefault = false,
 }: SavedPlaylistButtonProps) {
 	function moveFocusToPreviousPlaylist() {
@@ -93,7 +95,10 @@ export function SavedPlaylistButton({
 						: () => {
 								activeSavedPlaylistState[1](savedPlaylist);
 								modalOpenState[1](false);
-								localStorage.setItem("LastActivePlaylistId", savedPlaylist.id);
+								localStorage.setItem(
+									`LastActivePlaylistId-|${targetBot}|`,
+									savedPlaylist.id,
+								);
 							}
 				}
 				onKeyDown={handleKeyDown}>

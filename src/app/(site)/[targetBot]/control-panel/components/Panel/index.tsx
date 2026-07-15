@@ -25,7 +25,7 @@ export default function Panel() {
 		id: "",
 		nickname: "",
 		targetLink: "",
-		targetType: "Default",
+		targetType: "Unknown",
 	});
 	const [searchQuery, setSearchQuery] = useState<string>("");
 	const [notificationData] = useState<NotificationData>(newNotification());
@@ -56,6 +56,7 @@ export default function Panel() {
 			<ActivePlaylistSelector
 				activeSavedPlaylistState={activeSavedPlaylistState}
 				discordId={userSessionData.userId}
+				targetBot={userSessionData.targetBot}
 			/>
 			<TracksLoader
 				playslistMeta={activeSavedPlaylistState[0]}
