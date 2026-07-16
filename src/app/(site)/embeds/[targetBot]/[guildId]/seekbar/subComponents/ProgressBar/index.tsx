@@ -57,22 +57,21 @@ export default function ProgressBar({
 
 	useLayoutEffect(() => {
 		const interval = setInterval(() => {
-			if (!isPaused && !isInteracting) {
-				const newPosition =
-					Math.floor(Date.now() / 1000) -
-					unixTimestamp +
-					currentPositionInSeconds;
-				if (isFinished || newPosition >= totalLengthInSeconds) {
-					form.setValue("currentPosition", totalLengthInSeconds, {
-						shouldValidate: false,
-					});
-					clearInterval(interval);
-					return;
-				}
-				form.setValue("currentPosition", newPosition - 2, {
+			if (isPaused || isInteracting) return;
+			const newPosition =
+				Math.floor(Date.now() / 1000) -
+				unixTimestamp +
+				currentPositionInSeconds;
+			if (isFinished || newPosition >= totalLengthInSeconds) {
+				form.setValue("currentPosition", totalLengthInSeconds, {
 					shouldValidate: false,
 				});
+				clearInterval(interval);
+				return;
 			}
+			form.setValue("currentPosition", newPosition - 2, {
+				shouldValidate: false,
+			});
 		}, 950);
 		return () => clearInterval(interval);
 	}, [

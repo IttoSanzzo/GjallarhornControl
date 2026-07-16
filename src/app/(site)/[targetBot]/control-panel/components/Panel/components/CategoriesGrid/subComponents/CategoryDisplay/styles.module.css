@@ -10,15 +10,16 @@
 		color: var(--textGolden);
 		margin-left: 10px;
 		cursor: grab;
+
 		&:active {
 			cursor: grabbing;
 		}
 	}
 	border: 1px solid transparent;
 
-	&:hover {
+	&:has(h2:active) {
+		border-color: var(--cl-teal-700);
 		z-index: 3;
-		border: 1px solid var(--cl-teal-700);
 	}
 	transition: 0.3s linear border-color !important;
 }

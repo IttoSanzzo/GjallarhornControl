@@ -5,7 +5,7 @@ export async function POST(
 	{ params }: { params: Promise<{ targetBot: string; guildId: string }> },
 ) {
 	try {
-		const { action, channelId, userId, seekSeconds, trackPosition } =
+		const { action, channelId, userId, seekSeconds, trackPosition, volume } =
 			await req.json();
 		const { targetBot, guildId } = await params;
 		console.log(`ACTN [${targetBot}:${guildId}] <- ${userId} -> [${action}]`);
@@ -22,6 +22,7 @@ export async function POST(
 					userId: userId,
 					trackPosition: trackPosition,
 					seekSeconds: seekSeconds,
+					volume: volume,
 					channelId: channelId,
 				}),
 			},

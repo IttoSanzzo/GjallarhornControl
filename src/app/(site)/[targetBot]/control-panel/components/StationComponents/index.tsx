@@ -10,10 +10,11 @@ import CurrentTrackPeekContainer from "./subComponents/CurrentTrackPeekContainer
 import ControlBar from "./subComponents/ControlBar";
 import { UserSessionDataContext } from "../ControlPanelContextProvider";
 import { PlayerStationContext } from "@/components/PlayerStationContextProvider";
+import VolumeBar from "./subComponents/VolumeBar";
 
 const SeekbarContainer = newStyledElement.div(styles.seekbarContainer);
 const CurrentTrackContainer = newStyledElement.div(
-	styles.currentTrackContainer
+	styles.currentTrackContainer,
 );
 const TrackInfoDisplay = newStyledElement.div(styles.trackInfoDisplay);
 
@@ -46,6 +47,10 @@ export default function StationComponents() {
 					: styles.displayOut
 			}>
 			<ControlBar />
+			<VolumeBar
+				userId={userSessionData.userId}
+				targetBot={userSessionData.targetBot}
+			/>
 
 			<PreviewContainer
 				userId={userSessionData.userId}

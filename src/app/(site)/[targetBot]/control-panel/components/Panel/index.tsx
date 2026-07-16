@@ -3,8 +3,6 @@
 import { TrackCategory } from "@/lib/TrackData";
 import { useContext, useEffect, useState } from "react";
 import { CategoriesGrid } from "./components/CategoriesGrid";
-import { Notification, NotificationData } from "@/components/Notification";
-import { newNotification } from "@/lib/utils";
 import { UserSessionDataContext } from "../ControlPanelContextProvider";
 import SearchBar from "./components/SearchBar";
 import styles from "./styles.module.css";
@@ -28,7 +26,6 @@ export default function Panel() {
 		targetType: "Unknown",
 	});
 	const [searchQuery, setSearchQuery] = useState<string>("");
-	const [notificationData] = useState<NotificationData>(newNotification());
 
 	function onSearchQueryChange(newQuery: string) {
 		setSearchQuery(newQuery);
@@ -68,7 +65,6 @@ export default function Panel() {
 				value={searchQuery}
 				firstTrackLink={refinedTrackCategories[0]?.tracks[0]?.link}
 			/>
-			<Notification data={notificationData} />
 			<CategoriesGrid
 				categoriesData={refinedTrackCategories}
 				setTrackCategories={trackCategoriesState[1]}

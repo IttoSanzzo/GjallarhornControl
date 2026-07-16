@@ -9,9 +9,7 @@ import OneIconLoop from "@/assets/CircularOneLoopIcon.png";
 import IconShuffle from "@/assets/CircularShuffleIcon.png";
 import IconReset from "@/assets/CircularResetIcon.png";
 import IconStop from "@/assets/CircularRemoveIcon.png";
-import { useContext, useState } from "react";
-import { Notification, NotificationData } from "@/components/Notification";
-import { newNotification } from "@/lib/utils";
+import { useContext } from "react";
 import { ApiCommandsHandlerContext } from "../../../ControlPanelContextProvider";
 import styles from "./styles.module.css";
 import { newStyledElement } from "@setsu-tp/styled-components";
@@ -23,11 +21,9 @@ const ActionButton = newStyledElement.button(styles.actionButton);
 export default function ControlBar() {
 	const { postActionCommand } = useContext(ApiCommandsHandlerContext);
 	const playerState = useContext(PlayerStationContext);
-	const [notificationData] = useState<NotificationData>(newNotification());
 
 	return (
 		<>
-			<Notification data={notificationData} />
 			<ControlBarContainer>
 				<ActionButton
 					onClick={() => postActionCommand("Pause")}

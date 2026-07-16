@@ -23,6 +23,7 @@ export type PlayerStationState = {
 	chatChannelId?: string;
 	isPaused: boolean;
 	loopState: number;
+	volume: number;
 	isFinished: boolean;
 	currentIndex: number;
 	lastCommandResult: PlayerCommandResult;
