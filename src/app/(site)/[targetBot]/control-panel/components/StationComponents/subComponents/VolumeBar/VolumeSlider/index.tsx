@@ -6,6 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Slider from "@radix-ui/react-slider";
 import clsx from "clsx";
+import toast from "react-hot-toast";
 
 const VolumeSliderContainer = newStyledElement.div(
 	styles.volumeSliderContainer,
@@ -44,8 +45,9 @@ export function VolumeSlider({
 	}, [currentVolume]);
 
 	async function handleSeekAction(volume: number) {
+		const toastId = toast.loading("Volume");
 		if (userId == null) return;
-		fetch(`/api/${targetBot}/${guildId}/action`, {
+		const response = await fetch(`/api/${targetBot}/${guildId}/action`, {
 			method: "POST",
 			body: JSON.stringify({
 				userId,
@@ -55,6 +57,9 @@ export function VolumeSlider({
 			headers: {
 				contentType: "application/json",
 			},
+		});
+		toast[response.ok ? "success" : "error"]("Volume", {
+			id: toastId,
 		});
 	}
 
