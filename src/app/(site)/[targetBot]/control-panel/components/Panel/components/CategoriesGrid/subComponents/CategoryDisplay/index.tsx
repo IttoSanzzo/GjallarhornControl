@@ -14,6 +14,7 @@ import { PlayPlaylistButton } from "../../../ActivePlaylistSelector/subComponent
 import { DeletePlaylistFromGjallarList } from "../DeletePlaylistFromGjallarList";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { savedPlaylistCategoriesCache } from "@/lib/cache/savedPlaylistCategoriesCache";
 
 const CategoryContainer = newStyledElement.main(styles.categoryContainer);
 const EntriesContainer = newStyledElement.div(styles.entriesContainer);
@@ -22,6 +23,9 @@ const CategoryUtilitiesContainer = newStyledElement.div(
 );
 const PlaylistCategoryLinkandIcon = newStyledElement.a(
 	styles.playlistCategoryLinkandIcon,
+);
+const InvalidateCategoryButton = newStyledElement.button(
+	styles.invalidateCategoryButton,
 );
 
 interface CategoryDisplayProps {
@@ -59,6 +63,15 @@ export function CategoryDisplay({
 			ref={setNodeRef}
 			style={style}
 			{...attributes}>
+			{category.targetLink && (
+				<InvalidateCategoryButton
+					onClick={() => {
+						savedPlaylistCategoriesCache.invalidate(category.targetLink!);
+						window.location.reload();
+					}}>
+					R
+				</InvalidateCategoryButton>
+			)}
 			<h2 {...listeners}>{category.title}</h2>
 			<EntriesContainer>
 				{category.tracks.map((track, index) => (
@@ -69,49 +82,51 @@ export function CategoryDisplay({
 					/>
 				))}
 			</EntriesContainer>
-			{category.targetLink && category.targetLink && (
-				<CategoryUtilitiesContainer>
-					{isEditable && category.id && (
-						<PatchPlaylistFromGjallarList
-							discordId={discordUserId}
-							activeSavedPlaylistState={activeSavedPlaylistState}
-							category={category}
-						/>
-					)}
-					{category.targetType != "Unknown" &&
-						category.targetType != "Gjallar" &&
-						category.targetType != "Default" &&
-						category.targetLink && (
-							<>
-								<PlayPlaylistButton
-									type="normal"
-									playlistLink={category.targetLink}
-								/>
-								<PlaylistCategoryLinkandIcon
-									href={category.targetLink}
-									target="_blank">
-									<Image
-										src={
-											plataformIcons[
-												PlaylistPlataformType[
-													category.targetType as keyof typeof PlaylistPlataformType
-												]
-											]
-										}
-										alt={"Current track plataform icon"}
-										fill
-									/>
-								</PlaylistCategoryLinkandIcon>
-								{isEditable && category.id && (
-									<DeletePlaylistFromGjallarList
-										activeSavedPlaylistState={activeSavedPlaylistState}
-										discordUserId={discordUserId}
-										category={category}
-									/>
-								)}
-							</>
+			{category.targetLink && (
+				<>
+					<CategoryUtilitiesContainer>
+						{isEditable && category.id && (
+							<PatchPlaylistFromGjallarList
+								discordId={discordUserId}
+								activeSavedPlaylistState={activeSavedPlaylistState}
+								category={category}
+							/>
 						)}
-				</CategoryUtilitiesContainer>
+						{category.targetType != "Unknown" &&
+							category.targetType != "Gjallar" &&
+							category.targetType != "Default" &&
+							category.targetLink && (
+								<>
+									<PlayPlaylistButton
+										type="normal"
+										playlistLink={category.targetLink}
+									/>
+									<PlaylistCategoryLinkandIcon
+										href={category.targetLink}
+										target="_blank">
+										<Image
+											src={
+												plataformIcons[
+													PlaylistPlataformType[
+														category.targetType as keyof typeof PlaylistPlataformType
+													]
+												]
+											}
+											alt={"Current track plataform icon"}
+											fill
+										/>
+									</PlaylistCategoryLinkandIcon>
+									{isEditable && category.id && (
+										<DeletePlaylistFromGjallarList
+											activeSavedPlaylistState={activeSavedPlaylistState}
+											discordUserId={discordUserId}
+											category={category}
+										/>
+									)}
+								</>
+							)}
+					</CategoryUtilitiesContainer>
+				</>
 			)}
 		</CategoryContainer>
 	);

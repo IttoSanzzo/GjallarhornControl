@@ -56,3 +56,20 @@
 	height: 100%;
 	aspect-ratio: 1;
 }
+
+.invalidateCategoryButton {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	border-radius: var(--rd-xs);
+	border-bottom-right-radius: inherit;
+	padding: 1px 5px;
+	border: none;
+	background-color: var(--cl-gray-600);
+	cursor: pointer;
+	transition: 0.25s linear background-color;
+
+	&:hover {
+		background-color: var(--cl-gray-500);
+	}
+}
