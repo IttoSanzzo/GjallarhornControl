@@ -7,6 +7,7 @@ export interface TrackInfo {
 	description: string;
 	link: string;
 	artworkUrl?: string;
+	trackCustomization?: TrackCustomization;
 }
 
 export interface TrackCustomization {

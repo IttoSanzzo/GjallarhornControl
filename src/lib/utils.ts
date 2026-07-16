@@ -1,12 +1,4 @@
-import { NotificationData } from "@/components/Notification";
 import { PlaylistPlataformType } from "./types/UserSavedPlaylist";
-
-export function newNotification(
-	message: string = "",
-	hasError: boolean = false,
-): NotificationData {
-	return { message, hasError, timestamp: Date.now() };
-}
 
 export function capitalize(src: string) {
 	return src.charAt(0).toUpperCase() + src.slice(1);
@@ -112,4 +104,11 @@ export function scrollChildIntoParentCenter(
 	activeAnimations.set(parent, { rafId, cancel });
 
 	return { cancel };
+}
+
+export function normalizeDiacriticText(text: string) {
+	return text
+		.normalize("NFD")
+		.replace(/\p{Diacritic}/gu, "")
+		.toLowerCase();
 }

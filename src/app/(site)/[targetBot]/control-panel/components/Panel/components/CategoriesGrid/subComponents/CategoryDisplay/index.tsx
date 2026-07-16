@@ -36,12 +36,14 @@ interface CategoryDisplayProps {
 	discordUserId: string;
 	category: TrackCategory;
 	isEditable: boolean;
+	setTrackCategories: Dispatch<SetStateAction<TrackCategory[]>>;
 }
 export function CategoryDisplay({
 	activeSavedPlaylistState,
 	discordUserId,
 	category,
 	isEditable,
+	setTrackCategories,
 }: CategoryDisplayProps) {
 	const stableIdRef = useRef(
 		category.id ?? category.targetLink ?? category.title ?? crypto.randomUUID(),
@@ -79,6 +81,7 @@ export function CategoryDisplay({
 						key={`${track.link}${index}`}
 						discordUserId={discordUserId}
 						trackInfo={track}
+						setTrackCategories={setTrackCategories}
 					/>
 				))}
 			</EntriesContainer>

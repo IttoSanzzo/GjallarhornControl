@@ -4,7 +4,7 @@ import { newStyledElement } from "@setsu-tp/styled-components";
 import * as Dialog from "@radix-ui/react-dialog";
 import CSHeads from "@/../public/station_assets/CSHeads.png";
 import Image from "next/image";
-import { TrackCustomization, TrackInfo } from "@/lib/TrackData";
+import { TrackCategory, TrackInfo } from "@/lib/TrackData";
 import { TrackCustomizationEditionForm } from "./subComponents/TrackCustomizationEditionForm";
 
 const EditNotesModalOpenButton = newStyledElement.button(
@@ -13,16 +13,13 @@ const EditNotesModalOpenButton = newStyledElement.button(
 
 interface EditNotesModalProps {
 	trackInfo: TrackInfo;
-	trackCustomizationState: [
-		TrackCustomization | null,
-		Dispatch<SetStateAction<TrackCustomization | null>>,
-	];
+	setTrackCategories: Dispatch<SetStateAction<TrackCategory[]>>;
 	discordId: string;
 }
 export function EditNotesModal({
 	trackInfo,
-	trackCustomizationState,
 	discordId,
+	setTrackCategories,
 }: EditNotesModalProps) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	return (
@@ -52,9 +49,9 @@ export function EditNotesModal({
 						</h1>
 						<TrackCustomizationEditionForm
 							discordId={discordId}
-							trackCustomizationState={trackCustomizationState}
 							trackInfo={trackInfo}
 							setIsModalOpen={setIsOpen}
+							setTrackCategories={setTrackCategories}
 						/>
 					</Dialog.Content>
 				</Dialog.Portal>

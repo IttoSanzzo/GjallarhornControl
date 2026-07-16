@@ -20,6 +20,10 @@
 		font-size: var(--fs-lg);
 		text-align: center;
 		width: 100%;
+
+		&:focus {
+			outline: none;
+		}
 	}
 	margin-top: -20px;
 }

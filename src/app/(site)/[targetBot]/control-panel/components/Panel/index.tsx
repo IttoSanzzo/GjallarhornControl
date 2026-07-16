@@ -10,6 +10,7 @@ import { newStyledElement } from "@setsu-tp/styled-components";
 import { TracksLoader } from "./components/TracksCategoriesLoader";
 import { ActivePlaylistSelector } from "./components/ActivePlaylistSelector";
 import { SavedPlaylist } from "@/lib/types/UserSavedPlaylist";
+import { normalizeDiacriticText } from "@/lib/utils";
 
 const PanelContainer = newStyledElement.div(styles.panelContainer);
 
@@ -36,11 +37,24 @@ export default function Panel() {
 			setRefinedTrackCategories(trackCategoriesState[0]);
 			return;
 		}
+		const normalizedSearchQuery = normalizeDiacriticText(searchQuery);
 		const filteredData: TrackCategory[] = (trackCategoriesState[0] ?? [])
 			.map((category) => ({
 				...category,
-				tracks: category.tracks.filter((track) =>
-					track.name.toLowerCase().includes(searchQuery.toLowerCase()),
+				tracks: category.tracks.filter(
+					(track) =>
+						normalizeDiacriticText(track.name).includes(
+							normalizedSearchQuery,
+						) ||
+						normalizeDiacriticText(track.description).includes(
+							normalizedSearchQuery,
+						) ||
+						normalizeDiacriticText(
+							track.trackCustomization?.nickname ?? "",
+						).includes(normalizedSearchQuery) ||
+						normalizeDiacriticText(
+							track.trackCustomization?.notes ?? "",
+						).includes(normalizedSearchQuery),
 				),
 			}))
 			.filter((category) => category.tracks.length > 0)
@@ -59,6 +73,7 @@ export default function Panel() {
 				playslistMeta={activeSavedPlaylistState[0]}
 				targetBot={userSessionData.targetBot}
 				setTrackCategories={trackCategoriesState[1]}
+				discordUserId={userSessionData.userId}
 			/>
 			<SearchBar
 				setSearchQuery={onSearchQueryChange}

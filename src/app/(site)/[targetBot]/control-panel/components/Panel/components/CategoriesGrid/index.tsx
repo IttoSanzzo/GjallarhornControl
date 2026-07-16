@@ -136,6 +136,7 @@ export const CategoriesGrid = React.memo(
 							<CategoryDisplay
 								key={`${category.id ?? category.title}|${index}|${activeSavedPlaylistState[0].id}`}
 								activeSavedPlaylistState={activeSavedPlaylistState}
+								setTrackCategories={setTrackCategories}
 								category={category}
 								discordUserId={discordUserId}
 								isEditable={isEditable}

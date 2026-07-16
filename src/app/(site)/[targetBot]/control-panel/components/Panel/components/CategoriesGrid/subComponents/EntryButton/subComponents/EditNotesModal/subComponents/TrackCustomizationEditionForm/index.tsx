@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { TrackCustomization, TrackInfo } from "@/lib/TrackData";
+import { TrackCategory, TrackCustomization, TrackInfo } from "@/lib/TrackData";
 import toast from "react-hot-toast";
 import { getPlataformName } from "@/lib/utils";
 import { trackCustomizationCache } from "@/lib/cache/trackCustomizationCache";
@@ -23,17 +23,14 @@ type FormData = z.infer<typeof schema>;
 interface TrackCustomizationEditionFormProps {
 	discordId: string;
 	trackInfo: TrackInfo;
-	trackCustomizationState: [
-		TrackCustomization | null,
-		Dispatch<SetStateAction<TrackCustomization | null>>,
-	];
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+	setTrackCategories: Dispatch<SetStateAction<TrackCategory[]>>;
 }
 export function TrackCustomizationEditionForm({
 	discordId,
-	trackCustomizationState,
 	trackInfo,
 	setIsModalOpen,
+	setTrackCategories,
 }: TrackCustomizationEditionFormProps) {
 	const formRef = useRef<HTMLFormElement | null>(null);
 	const form = useForm<FormData>({
@@ -45,7 +42,7 @@ export function TrackCustomizationEditionForm({
 	});
 
 	useEffect(() => {
-		if (trackCustomizationState[0] == null) {
+		if (trackInfo.trackCustomization == null) {
 			form.reset({
 				nickname: "",
 				notes: "",
@@ -53,10 +50,10 @@ export function TrackCustomizationEditionForm({
 			return;
 		}
 		form.reset({
-			nickname: trackCustomizationState[0].nickname,
-			notes: trackCustomizationState[0].notes,
+			nickname: trackInfo.trackCustomization.nickname,
+			notes: trackInfo.trackCustomization.notes,
 		});
-	}, [trackCustomizationState[0]]);
+	}, [trackInfo.trackCustomization]);
 
 	async function handleSubmit(formData: FormData) {
 		const toastId = toast.loading("Saving...");
@@ -85,7 +82,17 @@ export function TrackCustomizationEditionForm({
 			}
 			toast.success("Saved", { id: toastId });
 			form.reset(formData);
-			trackCustomizationState[1](isDeletion ? null : await response.json());
+			const newTrackCustomization: TrackCustomization = await response.json();
+			setTrackCategories((state) =>
+				state.map((category) => ({
+					...category,
+					tracks: category.tracks.map((track) =>
+						track.link == trackInfo.link
+							? { ...track, trackCustomization: newTrackCustomization }
+							: track,
+					),
+				})),
+			);
 			trackCustomizationCache.invalidate(trackInfo.link);
 			setIsModalOpen(false);
 		} catch {

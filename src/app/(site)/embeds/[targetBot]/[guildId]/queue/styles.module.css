@@ -192,6 +192,7 @@
 	&:hover {
 		opacity: 1;
 	}
+	animation: sliding-fade-in 1s ease;
 }
 
 .removeTrackEntryButton {
@@ -222,6 +223,7 @@
 	&:hover {
 		background-color: var(--cl-red-500);
 	}
+	animation: sliding-fade-in 1s ease;
 }
 
 .trackEntryContainer:hover .removeTrackEntryButton {

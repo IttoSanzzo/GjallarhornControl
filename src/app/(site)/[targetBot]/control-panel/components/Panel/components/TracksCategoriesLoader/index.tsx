@@ -4,6 +4,7 @@ import {
 	savedPlaylistCategorieArraysCache,
 	savedPlaylistCategoriesCache,
 } from "@/lib/cache/savedPlaylistCategoriesCache";
+import { trackCustomizationCache } from "@/lib/cache/trackCustomizationCache";
 import { userSavedPlaylistsCache } from "@/lib/cache/userSavedPlaylistsCache";
 import { TrackCategory } from "@/lib/TrackData";
 import {
@@ -16,11 +17,13 @@ interface TracksLoaderProps {
 	playslistMeta: SavedPlaylist;
 	targetBot: string;
 	setTrackCategories: Dispatch<SetStateAction<TrackCategory[]>>;
+	discordUserId: string;
 }
 export function TracksLoader({
 	playslistMeta,
 	targetBot,
 	setTrackCategories,
+	discordUserId,
 }: TracksLoaderProps) {
 	async function loadDefaultCategories() {
 		try {
@@ -83,19 +86,43 @@ export function TracksLoader({
 						revalidate: 60 * 60 * 1, // 1 hours,
 					},
 				});
-				if (!response.ok) return;
+				if (!response.ok) return null;
 				return await response.json();
 			});
 		} catch {
 			category = null;
 		}
-		return category
-			? {
-					...category,
-					id: categoryId,
-					title: categoryNickname ?? category.title,
-				}
-			: null;
+		if (category == null) return null;
+
+		const customizationPromises = category.tracks.map(async (track) => {
+			track.trackCustomization =
+				(await trackCustomizationCache.getOrLoad(track.link, async () => {
+					try {
+						const response = await fetch(
+							`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/track-customization/${encodeURIComponent(track.link)}?discordUserId=${discordUserId}`,
+							{
+								method: "GET",
+								next: {
+									revalidate: 60 * 60 * 1, // 1 hours,
+								},
+							},
+						);
+						if (!response.ok) return null;
+						return await response.json();
+					} catch {
+						return null;
+					}
+				})) ?? undefined;
+			return track;
+		});
+
+		await Promise.all(customizationPromises);
+
+		return {
+			...category,
+			id: categoryId,
+			title: categoryNickname ?? category.title,
+		};
 	}
 	async function getYoutubeCategory(
 		link: string,
