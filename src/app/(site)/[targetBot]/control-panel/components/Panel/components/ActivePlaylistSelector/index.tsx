@@ -43,21 +43,37 @@ export function ActivePlaylistSelector({
 
 	useEffect(() => {
 		async function loadSavedUserPlayslists() {
-			userSavedPlaylistsState[1](
-				await userSavedPlaylistsCache.getOrLoad(
-					`/gjallar/lists/user-root?discordUserId=${discordId}`,
-					async () => {
-						const response = await fetch(
-							`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/user-root?discordUserId=${discordId}`,
-							{
-								method: "GET",
-							},
-						);
-						if (!response.ok) return null;
-						return await response.json();
-					},
-				),
-			);
+			let userSavedPlaylists: UserSavedPlaylists | null = null;
+
+			while (userSavedPlaylists == null) {
+				console.log("Trying");
+				try {
+					userSavedPlaylists = await userSavedPlaylistsCache.getOrLoad(
+						`/gjallar/lists/user-root?discordUserId=${discordId}`,
+						async () => {
+							const response = await fetch(
+								`${process.env.NEXT_PUBLIC_CHARIOT_API_FULL_ADDRESS}/gjallar/lists/user-root?discordUserId=${discordId}`,
+								{
+									method: "GET",
+								},
+							);
+							if (!response.ok) return null;
+							return await response.json();
+						},
+					);
+				} catch (ex) {
+					void ex;
+				}
+				if (userSavedPlaylists != null) break;
+				else {
+					console.log("Will Retry");
+					userSavedPlaylistsCache.invalidate(
+						`/gjallar/lists/user-root?discordUserId=${discordId}`,
+					);
+					await new Promise((resolve) => setTimeout(resolve, 4000));
+				}
+			}
+			userSavedPlaylistsState[1](userSavedPlaylists);
 		}
 		loadSavedUserPlayslists();
 	}, [discordId]);
