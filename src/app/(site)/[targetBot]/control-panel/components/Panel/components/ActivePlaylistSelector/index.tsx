@@ -46,7 +46,6 @@ export function ActivePlaylistSelector({
 			let userSavedPlaylists: UserSavedPlaylists | null = null;
 
 			while (userSavedPlaylists == null) {
-				console.log("Trying");
 				try {
 					userSavedPlaylists = await userSavedPlaylistsCache.getOrLoad(
 						`/gjallar/lists/user-root?discordUserId=${discordId}`,
@@ -66,7 +65,6 @@ export function ActivePlaylistSelector({
 				}
 				if (userSavedPlaylists != null) break;
 				else {
-					console.log("Will Retry");
 					userSavedPlaylistsCache.invalidate(
 						`/gjallar/lists/user-root?discordUserId=${discordId}`,
 					);
