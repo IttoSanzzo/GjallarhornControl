@@ -3,6 +3,7 @@
 	height: 100vh;
 	background-color: var(--cl-gray-900);
 	opacity: 0.5;
+	animation: 0.25s linear fadeIn;
 }
 .modalContent {
 	position: absolute;
@@ -49,5 +50,11 @@
 	100% {
 		opacity: 1;
 		margin-top: 0;
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
 	}
 }

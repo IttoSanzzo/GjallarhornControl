@@ -1,0 +1,84 @@
+.youtubeSearchModalButtonContainer {
+	position: absolute;
+	right: -20px;
+	bottom: 5%;
+	height: 34px;
+	width: 40px;
+	z-index: 4;
+	border-radius: var(--rd-md);
+	background-color: var(--cl-gray-800);
+	border: 2px solid var(--cl-yellow-700);
+	transition: 0.25s linear background-color;
+
+	&:has(*:hover) {
+		background-color: var(--cl-red-600);
+	}
+
+	& > button {
+		background-color: transparent;
+		border: none;
+		height: 100%;
+		width: 100%;
+		border-radius: inherit;
+		outline: none;
+
+		& > img {
+			object-fit: cover;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+}
+
+.modalOverlay {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--cl-gray-900);
+	opacity: 0.5;
+	animation: 0.25s linear fadeIn;
+}
+
+.modalContent {
+	position: absolute;
+	height: 95vh;
+	width: 80vw;
+	min-width: 450px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--cl-gray-800);
+	border-radius: var(--rd-xl);
+	box-shadow: 0 0 15px 0 var(--cl-black-3);
+	padding: var(--sp-5);
+	animation: 0.25s ease-in slide-fade-in;
+	display: flex;
+	outline: none;
+
+	& > h1 {
+		color: var(--cl-gray-200);
+	}
+}
+
+/* .youtubeIFrame { */
+/* height: 100%; */
+/* width: 100%; */
+/* } */
+
+@keyframes slide-fade-in {
+	0% {
+		opacity: 0;
+		margin-top: var(--sp-5);
+	}
+	100% {
+		opacity: 1;
+		margin-top: 0;
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+}

@@ -1,0 +1,49 @@
+.youtubeSearchEngineContainer {
+	width: 100%;
+	height: 100%;
+	background-color: var(--cl-gray-900);
+	border-radius: var(--rd-md);
+	padding: var(--sp-3);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: var(--sp-3);
+}
+
+.formContainer {
+	width: 95%;
+	height: fit-content;
+	padding: var(--sp-2);
+	background-color: var(--cl-gray-700);
+	border-radius: var(--rd-md);
+	margin: auto;
+
+	& > form {
+		width: 100%;
+		border-radius: inherit;
+
+		& > input {
+			width: 100%;
+			background-color: var(--cl-gray-600);
+			border: none;
+			border-radius: inherit;
+			padding: var(--sp-2);
+			color: var(--cl-gray-100);
+			outline: none;
+		}
+	}
+}
+
+.queriedTracksContainer {
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	padding: var(--sp-4) var(--sp-4);
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 348px);
+	grid-auto-rows: 296px;
+	gap: var(--sp-6);
+	justify-content: center;
+	align-content: start;
+	overflow-y: auto;
+}

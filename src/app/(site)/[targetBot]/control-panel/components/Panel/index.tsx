@@ -11,6 +11,7 @@ import { TracksLoader } from "./components/TracksCategoriesLoader";
 import { ActivePlaylistSelector } from "./components/ActivePlaylistSelector";
 import { SavedPlaylist } from "@/lib/types/UserSavedPlaylist";
 import { normalizeDiacriticText } from "@/lib/utils";
+import { YoutubeSearchModalButton } from "./components/YoutubeSearchModalButton";
 
 const PanelContainer = newStyledElement.div(styles.panelContainer);
 
@@ -80,6 +81,7 @@ export default function Panel() {
 				value={searchQuery}
 				firstTrackLink={refinedTrackCategories[0]?.tracks[0]?.link}
 			/>
+			<YoutubeSearchModalButton />
 			<CategoriesGrid
 				categoriesData={refinedTrackCategories}
 				setTrackCategories={trackCategoriesState[1]}
