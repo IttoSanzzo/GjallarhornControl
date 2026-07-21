@@ -198,16 +198,15 @@
 .removeTrackEntryButton {
 	position: absolute;
 	width: 15px;
-	height: 15px;
+	height: 100%;
 	line-height: 100%;
 	right: -1px;
-	bottom: -1px;
 	opacity: 0.25;
 	cursor: pointer;
 	background-color: var(--cl-red-900);
 	border: none;
-	border-radius: var(--rd-xs);
-	border-bottom-right-radius: var(--rd-full);
+	border-top-right-radius: var(--rd-md);
+	border-bottom-right-radius: var(--rd-md);
 	z-index: 5;
 	opacity: 0;
 	transition:

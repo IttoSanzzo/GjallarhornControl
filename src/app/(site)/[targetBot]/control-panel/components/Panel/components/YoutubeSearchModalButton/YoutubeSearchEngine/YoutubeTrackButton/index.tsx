@@ -45,32 +45,44 @@ export function YoutubeTrackButton({
 					fill
 				/>
 				<DurationSpan>
-					<p>{track.length}</p>
+					<p>
+						{track.type == "video"
+							? (track?.length ?? "")
+							: track.type == "shorts"
+								? "Short"
+								: "Playlist"}
+					</p>
 				</DurationSpan>
 			</ArtworkContainer>
 			<VideoInfoContainer>
 				<HeaderContainer>
-					<div>
-						<Image
-							src={track.channelThumbnail}
-							alt=""
-							fill
-						/>
-					</div>
+					{track.channelThumbnail && (
+						<div>
+							<Image
+								src={track.channelThumbnail}
+								alt=""
+								fill
+							/>
+						</div>
+					)}
 					<p>{track.title}</p>
 				</HeaderContainer>
 				<MiscContainer>
-					<a
-						tabIndex={-1}
-						onClick={(event) => {
-							event.stopPropagation();
-						}}
-						href={track.channelUrl}
-						target="_blank">
-						{track.channelName}
-					</a>
+					{track.type == "playlist" && <p>{track.length ?? "?"}</p>}
+					{track.channelUrl && track.channelName && (
+						<a
+							tabIndex={-1}
+							onClick={(event) => {
+								event.stopPropagation();
+							}}
+							href={track.channelUrl}
+							target="_blank">
+							{track.channelName}
+						</a>
+					)}
 					<p>
-						{track.viewCount} • {track.published}
+						{track.viewCount ?? ""}
+						{track.published && <> • {track.published}</>}
 					</p>
 				</MiscContainer>
 			</VideoInfoContainer>
