@@ -14,7 +14,8 @@ export default function ResetButton({
 	return (
 		<ResetButtonContainer
 			disabled={disabled}
-			onClick={resetSearchQuery}>
+			onClick={resetSearchQuery}
+			tabIndex={-1}>
 			<Image
 				src={ResetIcon}
 				alt="Reset Search Button"

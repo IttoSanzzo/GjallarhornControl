@@ -77,7 +77,8 @@ export function PatchPlaylistFromGjallarList({
 					<PatchPlaylistFromGjallarListModalButton
 						onClick={() => {
 							modalOpenState[1](true);
-						}}>
+						}}
+						tabIndex={-1}>
 						{"R"}
 					</PatchPlaylistFromGjallarListModalButton>
 				</Dialog.Trigger>

@@ -42,7 +42,8 @@ export function DeletePlaylistFromGjallarList({
 			onClick={async (event) => {
 				event.preventDefault();
 				await deletePlaylist();
-			}}>
+			}}
+			tabIndex={-1}>
 			X
 		</DeletePlaylistFromGjallarListButton>
 	);

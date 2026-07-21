@@ -28,7 +28,8 @@ export function EditNotesModal({
 				onClick={(event) => {
 					event.preventDefault();
 					setIsOpen(true);
-				}}>
+				}}
+				tabIndex={-1}>
 				<Image
 					src={CSHeads}
 					alt="Edit Notes"

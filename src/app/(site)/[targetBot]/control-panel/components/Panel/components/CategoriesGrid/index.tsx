@@ -128,7 +128,9 @@ export const CategoriesGrid = React.memo(
 				setTrackCategories={setTrackCategories}
 				categoriesData={categoriesData}
 				discordUserId={discordUserId}>
-				<CategoriesGridContainer id="categoriesGridContainer">
+				<CategoriesGridContainer
+					id="categoriesGridContainer"
+					tabIndex={-1}>
 					<InnerContext
 						isEditable={isEditable}
 						categoriesData={categoriesData}>

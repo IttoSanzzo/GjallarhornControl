@@ -16,7 +16,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { savedPlaylistCategoriesCache } from "@/lib/cache/savedPlaylistCategoriesCache";
 
-const CategoryContainer = newStyledElement.main(styles.categoryContainer);
+const CategoryContainer = newStyledElement.div(styles.categoryContainer);
 const EntriesContainer = newStyledElement.div(styles.entriesContainer);
 const CategoryUtilitiesContainer = newStyledElement.div(
 	styles.categoryUtilitiesContainer,
@@ -64,13 +64,15 @@ export function CategoryDisplay({
 		<CategoryContainer
 			ref={setNodeRef}
 			style={style}
-			{...attributes}>
+			{...attributes}
+			tabIndex={-1}>
 			{category.targetLink && (
 				<InvalidateCategoryButton
 					onClick={() => {
 						savedPlaylistCategoriesCache.invalidate(category.targetLink!);
 						window.location.reload();
-					}}>
+					}}
+					tabIndex={-1}>
 					R
 				</InvalidateCategoryButton>
 			)}
@@ -106,7 +108,8 @@ export function CategoryDisplay({
 									/>
 									<PlaylistCategoryLinkandIcon
 										href={category.targetLink}
-										target="_blank">
+										target="_blank"
+										tabIndex={-1}>
 										<Image
 											src={
 												plataformIcons[

@@ -27,7 +27,8 @@ export function PlayPlaylistButton({
 			onClick={async () => {
 				await postPlayCommand(playlistLink);
 				if (setModalOpenState) setModalOpenState(false);
-			}}>
+			}}
+			tabIndex={-1}>
 			<Image
 				src={PlayIcon}
 				alt=""

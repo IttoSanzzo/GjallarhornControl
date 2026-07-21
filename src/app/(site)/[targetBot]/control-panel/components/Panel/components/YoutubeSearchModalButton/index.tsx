@@ -32,7 +32,9 @@ export function YoutubeSearchModalButton() {
 	return (
 		<YoutubeSearchModalButtonContainer>
 			<Dialog.Root open={isOpen}>
-				<Dialog.Trigger onClick={() => setIsOpen(true)}>
+				<Dialog.Trigger
+					onClick={() => setIsOpen(true)}
+					tabIndex={-1}>
 					<Image
 						src={YoutubeIcon}
 						alt=""

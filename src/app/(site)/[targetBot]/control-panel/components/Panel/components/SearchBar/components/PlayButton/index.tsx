@@ -13,7 +13,8 @@ export default function PlayButton({ disabled, handlePlay }: PlayButtonProps) {
 	return (
 		<PlayButtonContainer
 			disabled={disabled}
-			onClick={handlePlay}>
+			onClick={handlePlay}
+			tabIndex={-1}>
 			<Image
 				src={PlayIcon}
 				alt="Reset Search Button"
