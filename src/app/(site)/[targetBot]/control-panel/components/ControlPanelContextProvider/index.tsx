@@ -10,7 +10,7 @@ export interface UserSessionData {
 }
 type ApiCommands = {
 	postActionCommand: (command: string) => Promise<void>;
-	postPlayCommand: (trackLink: string) => Promise<void>;
+	postPlayCommand: (trackLink: string, priority?: boolean) => Promise<void>;
 };
 
 export const UserSessionDataContext = createContext<UserSessionData>(null!);
@@ -78,7 +78,10 @@ export default function ControlPanelContextProvider({
 			});
 		}
 	}
-	async function postPlayCommand(trackLink: string): Promise<void> {
+	async function postPlayCommand(
+		trackLink: string,
+		priority = true,
+	): Promise<void> {
 		const toastId = toast.loading(`Using Play`);
 		const userSessionData = userSessionDataRef.current;
 		if (
@@ -104,6 +107,7 @@ export default function ControlPanelContextProvider({
 						userId,
 						trackLink,
 						channelId: userSessionData.presenceState.chat?.channelId,
+						priority: priority,
 					}),
 					headers: {
 						"Content-Type": "application/json",

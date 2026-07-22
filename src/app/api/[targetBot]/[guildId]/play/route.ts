@@ -2,10 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
 	req: NextRequest,
-	{ params }: { params: Promise<{ targetBot: string; guildId: string }> }
+	{ params }: { params: Promise<{ targetBot: string; guildId: string }> },
 ) {
 	try {
-		const { trackLink, channelId, userId } = await req.json();
+		const {
+			trackLink,
+			channelId,
+			userId,
+			priority,
+		}: {
+			trackLink: string;
+			channelId: string;
+			userId: string;
+			priority?: boolean;
+		} = await req.json();
 		const { targetBot, guildId } = await params;
 		console.log(`PLAY [${targetBot}:${guildId}] <- ${userId} -> ${trackLink}`);
 
@@ -21,8 +31,9 @@ export async function POST(
 					userId: userId,
 					trackUrl: trackLink,
 					channelId: channelId,
+					priority: priority,
 				}),
-			}
+			},
 		);
 		const responseBody: {
 			success: boolean;

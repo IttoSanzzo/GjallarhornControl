@@ -2,6 +2,7 @@ import { newStyledElement } from "@setsu-tp/styled-components";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import YoutubeIcon from "@/assets/YoutubeIcon.png";
+import QueueIcon from "@/assets/CircularQueueIcon.png";
 import { SearchedYoutubeTrack } from "@/lib/types/Youtube/SearchedYoutubeTrack";
 import { useContext } from "react";
 import { ApiCommandsHandlerContext } from "../../../../../ControlPanelContextProvider";
@@ -16,6 +17,7 @@ const VideoInfoContainer = newStyledElement.div(styles.videoInfoContainer);
 const HeaderContainer = newStyledElement.div(styles.headerContainer);
 const MiscContainer = newStyledElement.div(styles.miscContainer);
 const ExternalVideoLink = newStyledElement.a(styles.externalVideoLink);
+const QueueTrackButton = newStyledElement.button(styles.queueTrackButton);
 
 interface YoutubeTrackButtonProps {
 	track: SearchedYoutubeTrack;
@@ -28,8 +30,14 @@ export function YoutubeTrackButton({
 	const { postPlayCommand } = useContext(ApiCommandsHandlerContext);
 
 	async function handleClick(event: React.MouseEvent) {
-		await postPlayCommand(track.link);
 		event.preventDefault();
+		await postPlayCommand(track.link);
+		resetModal();
+	}
+	async function handleQueueButton(event: React.MouseEvent) {
+		event.preventDefault();
+		event.stopPropagation();
+		await postPlayCommand(track.link, false);
 		resetModal();
 	}
 
@@ -86,6 +94,15 @@ export function YoutubeTrackButton({
 					</p>
 				</MiscContainer>
 			</VideoInfoContainer>
+			<QueueTrackButton
+				onClick={handleQueueButton}
+				tabIndex={-1}>
+				<Image
+					src={QueueIcon}
+					alt="Queue track"
+					fill
+				/>
+			</QueueTrackButton>
 			<ExternalVideoLink
 				onClick={(event) => {
 					event.stopPropagation();
